@@ -1,4 +1,4 @@
 /db/*
-app/test_project/project2/__pycache__/*
-app/test_project/test_project/__pycache__/*
+*.pyc
+*.pyo
 bashcommands.txt
