@@ -6,7 +6,7 @@ from . import fields
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    # owner = models.ForeignKey(User)
+    owner = models.ForeignKey('auth.User')
     # song_file = models.FileField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
