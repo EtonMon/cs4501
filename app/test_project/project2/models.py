@@ -6,9 +6,13 @@ from . import fields
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    owner = models.ForeignKey(User)
-    song_file = models.FileField()
-    time_posted = models.TimeField()
+    # owner = models.ForeignKey(User)
+    # song_file = models.FileField()
+    time_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.title)
 
 class Music_Video(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
@@ -17,12 +21,20 @@ class Music_Video(models.Model):
     video_file = models.FileField()
     time_posted = models.TimeField()
 
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.title)
+
 class Image(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
     owner = models.ForeignKey(User)
     image_file = models.FileField()
     time_posted = models.TimeField()
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.title)
 
 class Story(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
@@ -31,12 +43,20 @@ class Story(models.Model):
     text = models.TextField()
     time_posted = models.TimeField()
 
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.title)
+
 class Poem(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
     owner = models.ForeignKey(User)
     text = models.TextField()
     time_posted = models.TimeField()
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.title)
 
 class Feedback(models.Model):
     owner = models.ForeignKey(User)
@@ -48,3 +68,7 @@ class Feedback(models.Model):
     image = models.ForeignKey(Image, default=None)
     story = models.ForeignKey(Story, default=None)
     poem = models.ForeignKey(Poem, default=None)
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.owner)

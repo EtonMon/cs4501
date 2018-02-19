@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+# from project2.resources import SongResource
+
+
+# song_resource = SongResource()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^project2/', include('project2.urls')),
+    # url(r'^api/v1/', include(song_resource.urls)),
 ]
