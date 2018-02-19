@@ -17,9 +17,9 @@ class Song(models.Model):
 class Music_Video(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    owner = models.ForeignKey(User)
-    video_file = models.FileField()
-    time_posted = models.TimeField()
+    #owner = models.ForeignKey(User)
+    #video_file = models.FileField()
+    time_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -28,9 +28,9 @@ class Music_Video(models.Model):
 class Image(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    owner = models.ForeignKey(User)
-    image_file = models.FileField()
-    time_posted = models.TimeField()
+    #owner = models.ForeignKey(User)
+    #image_file = models.FileField()
+    time_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -39,9 +39,9 @@ class Image(models.Model):
 class Story(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    owner = models.ForeignKey(User)
-    text = models.TextField()
-    time_posted = models.TimeField()
+    #owner = models.ForeignKey(User)
+    #text = models.TextField()
+    time_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -50,9 +50,9 @@ class Story(models.Model):
 class Poem(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    owner = models.ForeignKey(User)
+    #owner = models.ForeignKey(User)
     text = models.TextField()
-    time_posted = models.TimeField()
+    time_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -62,7 +62,7 @@ class Feedback(models.Model):
     owner = models.ForeignKey(User)
     ratings = fields.IntegerRangeField(min_value=0, max_value=5)
     comment = models.TextField()
-    time_posted = models.TimeField()
+    time_posted = models.DateTimeField(auto_now_add=True)
     song = models.ForeignKey(Song, default=None)
     music_video = models.ForeignKey(Music_Video, default=None)
     image = models.ForeignKey(Image, default=None)
