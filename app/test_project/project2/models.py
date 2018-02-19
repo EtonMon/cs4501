@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from . import fields
 
+
+class Custom_User(models.Model):
+    username = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}".format(self.username)
+
 # Create your models here.
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
@@ -63,11 +73,11 @@ class Feedback(models.Model):
     ratings = fields.IntegerRangeField(min_value=0, max_value=5)
     comment = models.TextField()
     time_posted = models.DateTimeField(auto_now_add=True)
-    song = models.ForeignKey(Song, default=None)
-    music_video = models.ForeignKey(Music_Video, default=None)
-    image = models.ForeignKey(Image, default=None)
-    story = models.ForeignKey(Story, default=None)
-    poem = models.ForeignKey(Poem, default=None)
+    # song = models.ForeignKey(Song, default=None)
+    # music_video = models.ForeignKey(Music_Video, default=None)
+    # image = models.ForeignKey(Image, default=None)
+    # story = models.ForeignKey(Story, default=None)
+    # poem = models.ForeignKey(Poem, default=None)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

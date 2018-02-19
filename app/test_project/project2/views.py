@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics
-from .serializers import SongSerializer, ImageSerializer, StorySerializer, FeedbackSerializer, Music_Video_Serializer, Poem_Serializer
-from .models import Song, Image, Story, Feedback, Music_Video, Poem
+from .serializers import SongSerializer, ImageSerializer, StorySerializer, FeedbackSerializer, Music_Video_Serializer, Poem_Serializer, CustomUserSerializer
+from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 from rest_framework.documentation import include_docs_urls
 
 def index(request):
@@ -124,5 +124,22 @@ class FeedbackDetailsView(generics.RetrieveUpdateDestroyAPIView):
         feedback = Feedback.objects.get(pk=pk)
         feedback.delete()
 
+class CustomUserCreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Custom_User.objects.all()
+    serializer_class = CustomUserSerializer
 
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
+
+class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Custom_User.objects.all()
+    serializer_class = CustomUserSerializer
+
+    def delete(self, request, pk, format=None):
+        feedback = Custom_User.objects.get(pk=pk)
+        feedback.delete()
 
