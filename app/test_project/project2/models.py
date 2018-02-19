@@ -16,7 +16,7 @@ class Custom_User(models.Model):
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    # owner = models.ForeignKey('auth.User')
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     # song_file = models.FileField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
@@ -27,7 +27,7 @@ class Song(models.Model):
 class Music_Video(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    #owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     #video_file = models.FileField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
@@ -38,7 +38,7 @@ class Music_Video(models.Model):
 class Image(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    #owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     #image_file = models.FileField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
@@ -49,7 +49,7 @@ class Image(models.Model):
 class Story(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    # owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     text = models.TextField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
@@ -60,7 +60,7 @@ class Story(models.Model):
 class Poem(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
-    #owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     text = models.TextField()
     time_posted = models.DateTimeField(auto_now_add=True)
 
@@ -69,7 +69,7 @@ class Poem(models.Model):
         return "{}".format(self.title)
 
 class Feedback(models.Model):
-    # owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
     ratings = fields.IntegerRangeField(min_value=0, max_value=5)
     comment = models.TextField()
     time_posted = models.DateTimeField(auto_now_add=True)
