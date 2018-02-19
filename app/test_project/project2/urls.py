@@ -1,8 +1,8 @@
 from . import views
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import SongCreateView, ImageCreateView, StoryCreateView, FeedbackCreateView
-from .views import SongDetailsView, ImageDetailsView, StoryDetailsView, FeedbackDetailsView
+from .views import SongCreateView, ImageCreateView, StoryCreateView, FeedbackCreateView, Music_Video_CreateView, Poem_CreateView
+from .views import SongDetailsView, ImageDetailsView, StoryDetailsView, FeedbackDetailsView, Music_Video_DetailsView, Poem_DetailsView
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -18,6 +18,12 @@ urlpatterns = [
     url(r'^api/v1/feedback/create/$', FeedbackCreateView.as_view(), name="create"),
     url(r'^api/v1/feedback/(?P<pk>[0-9]+)/$',
         FeedbackDetailsView.as_view(), name="details"),
-]
+    url(r'^api/v1/music_videos/create/$', Music_Video_CreateView.as_view(), name="create"),
+    url(r'^api/v1/music_videos/(?P<pk>[0-9]+)/$',
+        Music_Video_DetailsView.as_view(), name="details"),
+    url(r'^api/v1/poems/create/$', Poem_CreateView.as_view(), name="create"),
+    url(r'^api/v1/poems/(?P<pk>[0-9]+)/$',
+        Poem_DetailsView.as_view(), name="details"),
+]    
 
 urlpatterns = format_suffix_patterns(urlpatterns)

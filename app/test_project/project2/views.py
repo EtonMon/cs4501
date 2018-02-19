@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics
-from .serializers import SongSerializer, ImageSerializer, StorySerializer, FeedbackSerializer
-from .models import Song, Image, Story, Feedback
+from .serializers import SongSerializer, ImageSerializer, StorySerializer, FeedbackSerializer, Music_Video_Serializer, Poem_Serializer
+from .models import Song, Image, Story, Feedback, Music_Video, Poem
 from rest_framework.documentation import include_docs_urls
 
 def index(request):
@@ -33,20 +33,58 @@ class ImageCreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-
+    
     def perform_create(self, serializer):
         """Save the post data when creating a new bucketlist."""
         serializer.save()
 
 class ImageDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
+    
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-
+    
     def delete(self, request, pk, format=None):
         image = Image.objects.get(pk=pk)
         image.delete()
+
+
+class Music_Video_CreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Music_Video.objects.all()
+    serializer_class = Music_Video_Serializer
+    
+    def perform_create(self, serializer):
+    	serializer.save()
+
+class Music_Video_DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Music_Video.objects.all()
+    serializer_class = Music_Video_Serializer
+
+    def delete(self, request, pk, format=None):
+        vid = Music_Video.objects.get(pk=pk)
+        vid.delete()
+
+class Poem_CreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Poem.objects.all()
+    serializer_class = Poem_Serializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
+
+class Poem_DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+    
+    queryset = Poem.objects.all()
+    serializer_class = Poem_Serializer
+
+    def delete(self, request, pk, format=None):
+        poem = Poem.objects.get(pk=pk)
+        poem.delete()
 
 class StoryCreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -85,4 +123,6 @@ class FeedbackDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, pk, format=None):
         feedback = Feedback.objects.get(pk=pk)
         feedback.delete()
+
+
 
