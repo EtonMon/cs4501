@@ -1,4 +1,5 @@
 /db/*
+/olddb/*
 *.pyc
 *.pyo
 bashcommands.txt
