@@ -1,8 +1,6 @@
+/db/*
+/olddb/*
 *.pyc
 *.pyo
-/db/*
-/__pycache__
-.DS_Store
-**/migrations/
 bashcommands.txt
 
