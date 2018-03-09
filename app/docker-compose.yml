@@ -1,0 +1,19 @@
+models:
+    image: tp33/django
+    external_links:
+      -  mysql:db
+      # -  groupmysql:./db
+    volumes:
+      - ./:/app
+      # - ~/Documents/uva/isa/cs4501/:/app
+    ports:
+      - "8001:8000"
+#    command: find . -name auto.cnf
+#    command: python ./app/test_project/manage.py makemigrations
+#    command: python ./app/test_project/manage.py migrate
+#    command: python manage.py loaddata db.json
+    # command: bash -c "pip install djangorestframework && python ./app/test_project/manage.py makemigrations && python ./app/test_project/manage.py migrate && python ./app/test_project/manage.py loaddata ./app/test_project/db.json && mod_wsgi-express start-server --working-directory /app/app/test_project --reload-on-changes /app/app/test_project/test_project/wsgi.py"
+#    command: bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app/test_project /app/test_project/test_project/wsgi.py"
+
+
+    command: bash -c "pip install djangorestframework && python /app/test_project/manage.py makemigrations && python /app/test_project/manage.py migrate && python /app/test_project/manage.py loaddata /app/test_project/db.json && mod_wsgi-express start-server --working-directory /app/test_project --reload-on-changes /app/test_project/test_project/wsgi.py"
