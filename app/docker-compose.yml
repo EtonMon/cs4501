@@ -17,3 +17,30 @@ models:
 
 
     command: bash -c "pip install djangorestframework && python /app/test_project/manage.py makemigrations && python /app/test_project/manage.py migrate && python /app/test_project/manage.py loaddata /app/test_project/db.json && mod_wsgi-express start-server --working-directory /app/test_project --reload-on-changes /app/test_project/test_project/wsgi.py"
+
+exp:
+    image: tp33/django
+    links:
+      -  models:models-api
+      
+    volumes:
+      - ./:/app
+  
+    ports:
+      - "8002:8000"
+
+    command: bash -c "pip install djangorestframework && python /app/exp/manage.py makemigrations && python /app/exp/manage.py migrate && python /app/exp/manage.py && mod_wsgi-express start-server --working-directory /app/exp --reload-on-changes /app/exp/exp/wsgi.py"
+
+web:
+    image: tp33/django
+    links:
+      -  exp:exp-api
+      
+    volumes:
+      - ./:/app
+  
+    ports:
+      - "8000:8000"
+
+    command: bash -c "pip install djangorestframework && python /app/web/manage.py makemigrations && python /app/web/manage.py migrate && python /app/web/manage.py && mod_wsgi-express start-server --working-directory /app/web --reload-on-changes /app/web/web/wsgi.py"
+
