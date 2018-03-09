@@ -4,7 +4,7 @@ models:
       -  mysql:db
       # -  groupmysql:./db
     volumes:
-      - ./:/app
+      - ./test_project/:/app
       # - ~/Documents/uva/isa/cs4501/:/app
     ports:
       - "8001:8000"
@@ -16,31 +16,30 @@ models:
 #    command: bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app/test_project /app/test_project/test_project/wsgi.py"
 
 
-    command: bash -c "pip install djangorestframework && python /app/test_project/manage.py makemigrations && python /app/test_project/manage.py migrate && python /app/test_project/manage.py loaddata /app/test_project/db.json && mod_wsgi-express start-server --working-directory /app/test_project --reload-on-changes /app/test_project/test_project/wsgi.py"
+    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
 
 exp:
     image: tp33/django
     links:
       -  models:models-api
-      
+
     volumes:
-      - ./:/app
-  
+      - ./exp/:/app
+
     ports:
       - "8002:8000"
 
-    command: bash -c "pip install djangorestframework && python /app/exp/manage.py makemigrations && python /app/exp/manage.py migrate && python /app/exp/manage.py && mod_wsgi-express start-server --working-directory /app/exp --reload-on-changes /app/exp/exp/wsgi.py"
+    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/exp/wsgi.py"
 
 web:
     image: tp33/django
     links:
       -  exp:exp-api
-      
+
     volumes:
-      - ./:/app
-  
+      - ./web/:/app
+
     ports:
       - "8000:8000"
 
-    command: bash -c "pip install djangorestframework && python /app/web/manage.py makemigrations && python /app/web/manage.py migrate && python /app/web/manage.py && mod_wsgi-express start-server --working-directory /app/web --reload-on-changes /app/web/web/wsgi.py"
-
+    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
