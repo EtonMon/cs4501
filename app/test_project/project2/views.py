@@ -7,7 +7,7 @@ from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 from rest_framework.documentation import include_docs_urls
 
 def index(request):
-    return HttpResponse("Hello, world.")
+    return HttpResponse("Models API")
 
 class SongCreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
