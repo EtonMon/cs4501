@@ -1,0 +1,74 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+    font-family: 'Muli', sans-serif;
+}
+
+h1 {
+    font-size: 47px;
+
+}
+
+p {
+    font-size: 20px;
+}
+
+h1,p {
+    font-family: 'Muli', sans-serif;
+}
+
+label {
+    display: inline-block;
+    width:115px;
+    text-align: right;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.report_list th, .report_list tr, .report_list td{
+    width:100%;
+    border: 1px solid black;
+    padding:2px;
+    color:black;
+    height: 1px;
+}
+/*.report_list th{*/
+    /*background-color: cadetblue;*/
+    /*color: white;*/
+/*}*/
+
+.report_list tr:nth-child(odd) {background: #FFF}
+.report_list tr:nth-child(even) {background: #CCC}
+.report_list tr:hover {background-color: #CEF6EC}
+
+.report_list {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    border-collapse:separate;
+    background-color: #fff;
+}
+
+.report_list th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: cadetblue;
+    color: white;
+}
+
+.report_list th:nth-child(2){
+    width: 200px;
+}
+
