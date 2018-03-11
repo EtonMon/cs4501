@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^home/$', views.index, name='index'),
     url(r'^songs/$', views.songs, name='songs'),
     url(r'^songs/(?P<id>\d+)/$', views.SongDetailView, name='song_detail'),
     url(r'^music_videos/$', views.music_videos, name='music_videos'),

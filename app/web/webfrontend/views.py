@@ -30,10 +30,17 @@ def SongDetailView(request, id):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
+    # retreiving 'username' that is associated with the object from Custom_User json data
+
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/'+userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+
     return render(
         request,
         'song_detail.html',
-        context={'data': json_data}
+        context={'data': json_data, 'username': user_data['username']}
     )
 
 def music_videos(request):
@@ -57,10 +64,17 @@ def MusicVideoDetailView(request, id):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
+    # retreiving 'username' that is associated with the object from Custom_User json data
+
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+
     return render(
         request,
         'music_video_detail.html',
-        context={'data': json_data}
+        context={'data': json_data, 'username': user_data['username']}
     )
 
 def stories(request):
@@ -84,10 +98,17 @@ def StoryDetailView(request, id):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
+    # retreiving 'username' that is associated with the object from Custom_User json data
+
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+
     return render(
         request,
         'story_detail.html',
-        context={'data': json_data}
+        context={'data': json_data, 'username': user_data['username']}
     )
 
 def feedbacks(request):
@@ -125,10 +146,17 @@ def ImageDetailView(request, id):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
+    # retreiving 'username' that is associated with the object from Custom_User json data
+
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+
     return render(
         request,
         'image_detail.html',
-        context={'data': json_data}
+        context={'data': json_data, 'username': user_data['username']}
     )
 
 
@@ -153,8 +181,15 @@ def PoemDetailView(request, id):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
+    # retreiving 'username' that is associated with the object from Custom_User json data
+
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+
     return render(
         request,
         'poem_detail.html',
-        context={'data': json_data}
+        context={'data': json_data, 'username': user_data['username']}
     )

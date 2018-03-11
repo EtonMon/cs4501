@@ -1,12 +1,11 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="jumbotron">
-<!--    Parsing json data. Accessing 'title' in json.-->
     <ul>
-        <li>Title: {{data.title}} </li>
-        <li>Artist: {{data.artists}} </li>
-        <li>Time Posted: {{data.time_posted}} </li>
-        <li>Owner ID: {{data.owner}} </li>
+        <li><b>Title</b>: {{data.title}} </li>
+        <li><b>Artist</b>: {{data.artists}} </li>
+        <li><b>Time Posted</b>: {{data.time_posted}} </li>
+        <li><b>Posted by</b>: {{username}} </li>
     </ul>
 </div>
 {% endblock %}
