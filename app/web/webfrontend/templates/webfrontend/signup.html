@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="wrapper"> 
+<form class="form-signin" method="post" action="#">
+    <h2 class="form-signin-heading">Sign up</h2>
+        <input type="text" name="email" class="form-control" placeholder="Email Address" id="email">
+        <input type="text" name="username" class="form-control" placeholder="Username" id="username">
+        <input type="password" name="Password" class="form-control" placeholder="Password" id="password">
+        <input type="password" name="PasswordValidate" class="form-control" placeholder="Enter Password Again" id="passwordValidate">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="return false" id="loginbutton">Submit</button>  
+    <br/>
+</form>
+</div>
+
+{% endblock %}

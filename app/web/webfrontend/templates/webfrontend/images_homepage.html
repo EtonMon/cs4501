@@ -1,11 +1,9 @@
 {% extends "base_generic.html" %}
 {% block content %}
-<div class="jumbotron">
 <!--    Parsing json data. Accessing 'title' in json.-->
-    <ol>
+    <ul class="list-group">
     {% for object in data%}
-        <li><a href="{% url 'image_detail' object.id %}"> {{object.title}} </a></li>
+       <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}} </a>
     {% endfor%}
-    </ol>
-</div>
+    </ul>
 {% endblock %}

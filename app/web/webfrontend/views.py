@@ -9,6 +9,9 @@ from django.http import JsonResponse
 def index(request):
     return render(request, 'index.html')
 
+def signup(request):
+    return render(request, 'signup.html')
+
 def songs(request):
     #retreiving data from url and converting to json format
 
