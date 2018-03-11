@@ -8,22 +8,37 @@ from . import modelsapi
 def index(request):
     return HttpResponse("Exp API")
 
-def songs(request):
+def songs_json(request):
     page = request.GET.get('page', 1)
     return JsonResponse(modelsapi.get_songs(page))
 
-def images(request):
+def song_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_song(pk))
+
+def images_json(request):
     page = request.GET.get('page', 1)
     return JsonResponse(modelsapi.get_images(page))
 
-def stories(request):
+def image_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_image(pk))
+
+def stories_json(request):
     page = request.GET.get('page', 1)
     return JsonResponse(modelsapi.get_stories(page))
 
-def music_videos(request):
+def story_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_story(pk))
+
+def music_videos_json(request):
     page = request.GET.get('page', 1)
     return JsonResponse(modelsapi.get_music_videos(page))
 
-def poems(request):
+def music_video_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_music_video(pk))
+
+def poems_json(request):
     page = request.GET.get('page', 1)
     return JsonResponse(modelsapi.get_poems(page))
+
+def poem_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_poem(pk))
