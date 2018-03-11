@@ -163,5 +163,10 @@ class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CustomUserSerializer
 
     def delete(self, request, pk, format=None):
-        feedback = Custom_User.objects.get(pk=pk)
-        feedback.delete()
+        user = Custom_User.objects.get(pk=pk)
+        user.delete()
+
+class CustomUserListView(generics.ListCreateAPIView):
+    """This class handles the http GET and PUT requests for multiple instances of a user."""
+    queryset = Custom_User.objects.all()
+    serializer_class = CustomUserSerializer

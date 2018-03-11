@@ -29,9 +29,11 @@ urlpatterns = [
     url(r'^api/v1/poems/(?P<pk>[0-9]+)/$',
         Poem_DetailsView.as_view(), name="details"),
     url(r'^api/v1/poems/$', views.Poem_ListView.as_view()),
-    url(r'^api/v1/user/create/$', CustomUserCreateView.as_view(), name="create"),
-    url(r'^api/v1/user/(?P<pk>[0-9]+)/$',
+    url(r'^api/v1/users/create/$', CustomUserCreateView.as_view(), name="create"),
+    url(r'^api/v1/users/(?P<pk>[0-9]+)/$',
         CustomUserDetailsView.as_view(), name="details"),
+    url(r'^api/v1/users/$',
+        views.CustomUserListView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
