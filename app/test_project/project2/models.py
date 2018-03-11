@@ -4,7 +4,7 @@ from . import fields
 
 
 class Custom_User(models.Model):
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
