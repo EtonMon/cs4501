@@ -16,23 +16,30 @@ def songs(request):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
-    #parsing json data
-
-    for element in json_data['results']:
-        artist = element['artists']
-        owner = element['owner']
-        title = element['title']
-        time_posted = element['time_posted']
     return render(
         request,
         'songs_homepage.html',
         context={'data': json_data['results']}
     )
 
+def SongDetailView(request, id):
+    #retreiving data from url and converting to json format
+    #getting information from a specific object
+
+    req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    return render(
+        request,
+        'song_detail.html',
+        context={'data': json_data}
+    )
+
 def music_videos(request):
     # retreiving data from url and converting to json format
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
 
@@ -40,6 +47,20 @@ def music_videos(request):
         request,
         'music_videos_homepage.html',
         context={'data': json_data['results']}
+    )
+
+def MusicVideoDetailView(request, id):
+    #retreiving data from url and converting to json format
+    #getting information from a specific object
+
+    req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    return render(
+        request,
+        'music_video_detail.html',
+        context={'data': json_data}
     )
 
 def stories(request):
@@ -55,8 +76,23 @@ def stories(request):
         context={'data': json_data['results']}
     )
 
+def StoryDetailView(request, id):
+    #retreiving data from url and converting to json format
+    #getting information from a specific object
+
+    req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    return render(
+        request,
+        'story_detail.html',
+        context={'data': json_data}
+    )
+
 def feedbacks(request):
     # retreiving data from url and converting to json format
+    # getting information from a specific object
 
     req = urllib.request.Request('http://exp-api:8000/api/v1/feedbacks/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -81,6 +117,21 @@ def images(request):
         context={'data': json_data['results']}
     )
 
+def ImageDetailView(request, id):
+    #retreiving data from url and converting to json format
+    #getting information from a specific object
+
+    req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    return render(
+        request,
+        'image_detail.html',
+        context={'data': json_data}
+    )
+
+
 def poems(request):
     # retreiving data from url and converting to json format
 
@@ -92,4 +143,18 @@ def poems(request):
         request,
         'poems_homepage.html',
         context={'data': json_data['results']}
+    )
+
+def PoemDetailView(request, id):
+    #retreiving data from url and converting to json format
+    #getting information from a specific object
+
+    req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    return render(
+        request,
+        'poem_detail.html',
+        context={'data': json_data}
     )

@@ -4,7 +4,7 @@
 <!--    Parsing json data. Accessing 'title' in json.-->
     <ol>
     {% for object in data%}
-        <li><a href="#"> {{object.title}} </a></li>
+        <li><a href="{% url 'music_video_detail' object.id %}"> {{object.title}} </a></li>
     {% endfor%}
     </ol>
 </div>
