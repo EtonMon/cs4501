@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 
 class SongSerializer(serializers.ModelSerializer):
+	
 	class Meta:
 		model = Song
 		fields = ('id', 'title', 'artists', 'time_posted', 'owner')
