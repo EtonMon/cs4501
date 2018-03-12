@@ -523,7 +523,7 @@ class FeedbackAPITestCase(TestCase):
         self.assertEqual(Feedback.objects.get().ratings, 2)
         self.assertEqual(Feedback.objects.get().comment, 'this site is ok')
 
-    def test_api_can_get_a_poem(self):
+    def test_api_can_get_a_feedback(self):
         """GET: Test the api can get a given feedback."""
         feedback = Feedback.objects.get()
         response = self.client.get(

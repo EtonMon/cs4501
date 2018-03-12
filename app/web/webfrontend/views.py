@@ -1,8 +1,11 @@
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.shortcuts import render
 import urllib.request, json
+from django.http import HttpResponseNotFound
 from urllib.request import urlopen
 from django.http import JsonResponse
-
+from django.http import Http404
 
 # Create your views here.
 
@@ -37,16 +40,19 @@ def SongDetailView(request, id):
     #retreiving data from url and converting to json format
     #getting information from a specific object
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    # retreiving 'username' that is associated with the object from Custom_User json data
+        # retreiving 'username' that is associated with the object from Custom_User json data
 
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/'+userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/'+userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
@@ -70,17 +76,19 @@ def music_videos(request):
 def MusicVideoDetailView(request, id):
     #retreiving data from url and converting to json format
     #getting information from a specific object
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+        # retreiving 'username' that is associated with the object from Custom_User json data
 
-    # retreiving 'username' that is associated with the object from Custom_User json data
-
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
@@ -105,16 +113,19 @@ def StoryDetailView(request, id):
     #retreiving data from url and converting to json format
     #getting information from a specific object
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    # retreiving 'username' that is associated with the object from Custom_User json data
+        # retreiving 'username' that is associated with the object from Custom_User json data
 
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
@@ -152,18 +163,19 @@ def images(request):
 def ImageDetailView(request, id):
     #retreiving data from url and converting to json format
     #getting information from a specific object
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+        # retreiving 'username' that is associated with the object from Custom_User json data
 
-    # retreiving 'username' that is associated with the object from Custom_User json data
-
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
-
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
     return render(
         request,
         'image_detail.html',
@@ -188,19 +200,33 @@ def PoemDetailView(request, id):
     #retreiving data from url and converting to json format
     #getting information from a specific object
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id)
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    # retreiving 'username' that is associated with the object from Custom_User json data
+        # retreiving 'username' that is associated with the object from Custom_User json data
 
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'poem_detail.html',
         context={'data': json_data, 'username': user_data['username']}
     )
+
+
+def handler404(request):
+    return render(request, '404.html', status=404)
+
+def handler400(request):
+    return render(request, '400.html', status=400)
+
+def handler500(request):
+    return render(request, '500.html', status=500)
+
