@@ -1,4 +1,5 @@
 from django.test import TestCase
+from rest_framework.test import APITestCase
 from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -16,7 +17,7 @@ class SongTestCase(TestCase):
         self.object = Song(title=self.title, artists=self.artist, owner=self.owner)
 
     def test_model_can_create_a_song(self):
-        """Test the api has song creation capability."""
+        """Test song creation capability."""
         old_count = Song.objects.count()
         self.object.save()
         new_count = Song.objects.count()
@@ -26,6 +27,17 @@ class SongTestCase(TestCase):
         """test Song __str__() returns the title """
         object = Song(title="Alphabet Song")
         self.assertEqual(str(object), object.title)
+
+class GetSongDetailsTestCase(TestCase):
+        #setUp method is called before each test in this class
+        def setUp(self):
+            """Define the song instance and other test variables."""
+            self.title = "Root"
+            self.artist = "Tom"
+            user = Custom_User.objects.create(username="user1", first_name="tom", last_name="jerry")
+            self.owner = user
+            self.object = Song(title=self.title, artists=self.artist, owner=self.owner)
+
 
 class ImageTestCase(TestCase):
     def setUp(self):
@@ -37,7 +49,7 @@ class ImageTestCase(TestCase):
         self.object = Image(title=self.title, artists=self.artist, owner=self.owner)
 
     def test_model_can_create_a_image(self):
-        """Test the api has image creation capability."""
+        """Test image creation capability."""
         old_count =Image.objects.count()
         self.object.save()
         new_count = Image.objects.count()
@@ -58,7 +70,7 @@ class PoemTestCase(TestCase):
         self.object = Poem(title=self.title, artists=self.artist, owner=self.owner)
 
     def test_model_can_create_a_poem(self):
-        """Test the api has poem creation capability."""
+        """Test poem creation capability."""
         old_count = Poem.objects.count()
         self.object.save()
         new_count = Poem.objects.count()
@@ -79,7 +91,7 @@ class Music_VideoTestCase(TestCase):
         self.object = Music_Video(title=self.title, artists=self.artist, owner=self.owner)
 
     def test_model_can_create_a_music_video(self):
-        """Test the api has music video creation capability."""
+        """Test music video creation capability."""
         old_count = Music_Video.objects.count()
         self.object.save()
         new_count = Music_Video.objects.count()
@@ -100,7 +112,7 @@ class StoryTestCase(TestCase):
         self.object = Story(title=self.title, artists=self.artist, owner=self.owner)
 
     def test_model_can_create_a_story(self):
-        """Test the api has story creation capability."""
+        """Test story creation capability."""
         old_count = Story.objects.count()
         self.object.save()
         new_count = Story.objects.count()
@@ -111,7 +123,7 @@ class StoryTestCase(TestCase):
         object = Story(title="The Roads Are Split")
         self.assertEqual(str(object), object.title)
 
-class Custom_UserTestCase(TestCase):
+class Custom_UserTestCase(APITestCase):
     def setUp(self):
         """Define the customer_user instance and other test variables."""
         self.first_name = "Tom"
@@ -120,16 +132,34 @@ class Custom_UserTestCase(TestCase):
         self.object = Custom_User(first_name=self.first_name, last_name=self.last_name, username=self.username)
 
     def test_model_can_create_a_story(self):
-        """Test the api has custom_user creation capability."""
+        """Test custom_user creation capability."""
         old_count = Custom_User.objects.count()
         self.object.save()
         new_count = Custom_User.objects.count()
         self.assertNotEqual(old_count, new_count)
+        # self.assertEqual(self.object.status_code, status.HTTP_201_CREATED)
 
     def test_string_representation(self):
         """test Custom User __str__() returns the title """
         object = Custom_User(username="12jj42jer")
         self.assertEqual(str(object), object.username)
+
+class ViewTestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.song_data = {'title': 'No Promises', 'artists': 'Cheat Codes', 'owner': user.id}
+        self.response = self.client.post(
+            reverse('create_song'),
+            self.song_data,
+            format="json")
+
+    def test_api_can_create_a_song(self):
+        """Test the api has song creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
 # class ViewTestCase(TestCase):
 #     """Test suite for the api views."""
