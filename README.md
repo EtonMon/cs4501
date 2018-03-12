@@ -3,5 +3,5 @@
 **PUT** /project2/api/v1/thing/id/  
 **DELETE** /project2/api/v1/thing/id/  
 **POST** /project2/api/v1/thing/create/  
-**GET** (all information in table) /project2/api/v1/thing/create/?format=json  
+**GET** (a list of all data) /project2/api/v1/thing/create/?format=json  
 
