@@ -23,9 +23,9 @@ class SongDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
 
-    def delete(self, request, pk, format=None):
-        song = Song.objects.get(pk=pk)
-        song.delete()
+    # def delete(self, request, pk, format=None):
+    #     song = Song.objects.get(pk=pk)
+    #     song.delete()
 
 class SongListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a song."""
@@ -46,9 +46,9 @@ class ImageDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
-    def delete(self, request, pk, format=None):
-        image = Image.objects.get(pk=pk)
-        image.delete()
+    # def delete(self, request, pk, format=None):
+    #     image = Image.objects.get(pk=pk)
+    #     image.delete()
 
 class ImageListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of an image."""
@@ -68,9 +68,9 @@ class Music_Video_DetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Music_Video.objects.all()
     serializer_class = Music_Video_Serializer
 
-    def delete(self, request, pk, format=None):
-        vid = Music_Video.objects.get(pk=pk)
-        vid.delete()
+    # def delete(self, request, pk, format=None):
+    #     vid = Music_Video.objects.get(pk=pk)
+    #     vid.delete()
 
 class Music_Video_ListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a music video."""
@@ -91,9 +91,9 @@ class Poem_DetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Poem.objects.all()
     serializer_class = Poem_Serializer
 
-    def delete(self, request, pk, format=None):
-        poem = Poem.objects.get(pk=pk)
-        poem.delete()
+    # def delete(self, request, pk, format=None):
+    #     poem = Poem.objects.get(pk=pk)
+    #     poem.delete()
 
 class Poem_ListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a poem."""
@@ -114,9 +114,9 @@ class StoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Story.objects.all()
     serializer_class = StorySerializer
 
-    def delete(self, request, pk, format=None):
-        story = Story.objects.get(pk=pk)
-        story.delete()
+    # def delete(self, request, pk, format=None):
+    #     story = Story.objects.get(pk=pk)
+    #     story.delete()
 
 class Story_ListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a story."""
@@ -137,9 +137,9 @@ class FeedbackDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
-    def delete(self, request, pk, format=None):
-        feedback = Feedback.objects.get(pk=pk)
-        feedback.delete()
+    # def delete(self, request, pk, format=None):
+    #     feedback = Feedback.objects.get(pk=pk)
+    #     feedback.delete()
 
 class CustomUserCreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -155,9 +155,9 @@ class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Custom_User.objects.all()
     serializer_class = CustomUserSerializer
 
-    def delete(self, request, pk, format=None):
-        user = Custom_User.objects.get(pk=pk)
-        user.delete()
+    # def delete(self, request, pk, format=None):
+    #     user = Custom_User.objects.get(pk=pk)
+    #     user.delete()
 
 class CustomUserListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a user."""

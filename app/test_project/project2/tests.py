@@ -28,17 +28,6 @@ class SongTestCase(TestCase):
         object = Song(title="Alphabet Song")
         self.assertEqual(str(object), object.title)
 
-class GetSongDetailsTestCase(TestCase):
-        #setUp method is called before each test in this class
-        def setUp(self):
-            """Define the song instance and other test variables."""
-            self.title = "Root"
-            self.artist = "Tom"
-            user = Custom_User.objects.create(username="user1", first_name="tom", last_name="jerry")
-            self.owner = user
-            self.object = Song(title=self.title, artists=self.artist, owner=self.owner)
-
-
 class ImageTestCase(TestCase):
     def setUp(self):
         """Define the image instance and other test variables."""
@@ -123,7 +112,7 @@ class StoryTestCase(TestCase):
         object = Story(title="The Roads Are Split")
         self.assertEqual(str(object), object.title)
 
-class Custom_UserTestCase(APITestCase):
+class Custom_UserTestCase(TestCase):
     def setUp(self):
         """Define the custom_user instance and other test variables."""
         self.first_name = "Tom"
@@ -144,7 +133,30 @@ class Custom_UserTestCase(APITestCase):
         object = Custom_User(username="12jj42jer")
         self.assertEqual(str(object), object.username)
 
-class ViewTestCase(TestCase):
+
+class FeedbackTestCase(TestCase):
+    def setUp(self):
+        """Define the custom_user instance and other test variables."""
+        self.ratings = 5
+        self.comment = "Awesome"
+        user = Custom_User.objects.create(username="user1", first_name="tom", last_name="jerry")
+        self.owner = user
+        self.object = Feedback(ratings=self.ratings, comment=self.comment, owner=self.owner)
+
+    def test_model_can_create_feedback(self):
+        """Test feedback creation capability."""
+        old_count = Feedback.objects.count()
+        self.object.save()
+        new_count = Feedback.objects.count()
+        self.assertNotEqual(old_count, new_count)
+        # self.assertEqual(self.object.status_code, status.HTTP_201_CREATED)
+
+    def test_string_representation(self):
+        """test feedback __str__() returns the ratings """
+        object = Feedback(ratings=4)
+        self.assertEqual(str(object), str(object.ratings))
+
+class SongAPITestCase(TestCase):
     """Test suite for the api views."""
 
     def setUp(self):
@@ -158,51 +170,316 @@ class ViewTestCase(TestCase):
             format="json")
 
     def test_api_can_create_a_song(self):
-        """Test the api has song creation capability."""
+        """POST: Test the api has song creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
-# class ViewTestCase(TestCase):
-#     """Test suite for the api views."""
-#
-#     def setUp(self):
-#         """Define the test client and other test variables."""
-#         self.client = APIClient()
-#         self.song_data = {'title': 'No Promises', 'artists': 'Cheat Codes'}
-#         self.response = self.client.post(
-#             reverse('create'),
-#             self.song_data,
-#             format="json")
-#
-#     def test_api_can_create_a_song(self):
-#         """Test the api has bucket creation capability."""
-#         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
-#
-#     def test_api_can_get_a_song(self):
-#         """Test the api can get a given bucketlist."""
-#         song = Song.objects.get()
-#         response = self.client.get(
-#             reverse('details',
-#             kwargs={'pk': song.id}), format="json")
-#
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertContains(response, song)
-#
-#     def test_api_can_update_song(self):
-#         """Test the api can update a given bucketlist."""
-#         song = Song.objects.get()
-#         change_song = {'title': 'Something new', 'artists': 'Something new again...'}
-#         res = self.client.put(
-#             reverse('details', kwargs={'pk': song.id}),
-#             change_song, format='json'
-#         )
-#         self.assertEqual(res.status_code, status.HTTP_200_OK)
+    def test_api_can_get_a_song(self):
+        """GET: Test the api can get a given song."""
+        song = Song.objects.get()
+        response = self.client.get(
+            reverse('song_details',
+            kwargs={'pk': song.id}), format="json")
 
-    # def test_api_can_delete_song(self):
-    #     """Test the api can delete a bucketlist."""
-    #     song = Song.objects.get()
-    #     response = self.client.delete(
-    #         reverse('details', kwargs={'pk': song.id}),
-    #         format='json',
-    #         follow=True)
-    #
-    #     self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, song)
+
+    def test_api_can_update_song(self):
+        """PUT: Test the api can update a given song."""
+        song = Song.objects.get()
+        change_song = {'title': 'Something new', 'artists': 'Something new again...'}
+        res = self.client.put(
+            reverse('song_details', kwargs={'pk': song.id}),
+            change_song, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_song(self):
+        """DELETE: Test the api can delete a song."""
+        song = Song.objects.get()
+        response = self.client.delete(
+            reverse('song_details', kwargs={'pk': song.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class ImageAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.image_data = {'title': 'No Promises', 'artists': 'Cheat Codes', 'owner': user.id}
+        self.response = self.client.post(
+            reverse('create_image'),
+            self.image_data,
+            format="json")
+
+    def test_api_can_create_an_image(self):
+        """POST: Test the api has image creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_an_image(self):
+        """GET: Test the api can get a given image."""
+        image = Image.objects.get()
+        response = self.client.get(
+            reverse('image_details',
+            kwargs={'pk': image.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, image)
+
+    def test_api_can_update_image(self):
+        """PUT: Test the api can update a given image."""
+        image = Image.objects.get()
+        change_image = {'title': 'Something new', 'artists': 'Something new again...'}
+        res = self.client.put(
+            reverse('image_details', kwargs={'pk': image.id}),
+            change_image, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_image(self):
+        """DELETE: Test the api can delete an image."""
+        image = Image.objects.get()
+        response = self.client.delete(
+            reverse('image_details', kwargs={'pk': image.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class StoryAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.story_data = {'title': 'No Promises', 'artists': 'Cheat Codes', 'owner': user.id, 'text': 'hi there'}
+        self.response = self.client.post(
+            reverse('create_story'),
+            self.story_data,
+            format="json")
+
+    def test_api_can_create_a_story(self):
+        """POST: Test the api has story creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_story(self):
+        """GET: Test the api can get a given story."""
+        story = Story.objects.get()
+        response = self.client.get(
+            reverse('story_details',
+            kwargs={'pk': story.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, story)
+
+    def test_api_can_update_story(self):
+        """PUT: Test the api can update a given story."""
+        story = Story.objects.get()
+        change_story = {'title': 'Something new', 'artists': 'Something new again...', 'text': 'updating story'}
+        res = self.client.put(
+            reverse('story_details', kwargs={'pk': story.id}),
+            change_story, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_story(self):
+        """DELETE: Test the api can delete a story."""
+        story = Story.objects.get()
+        response = self.client.delete(
+            reverse('story_details', kwargs={'pk': story.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class Music_VideoAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.music_video_data = {'title': 'No Promises', 'artists': 'Cheat Codes', 'owner': user.id}
+        self.response = self.client.post(
+            reverse('create_music_video'),
+            self.music_video_data,
+            format="json")
+
+    def test_api_can_create_a_music_video(self):
+        """POST: Test the api has music video creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_music_video(self):
+        """GET: Test the api can get a given music video."""
+        music_video = Music_Video.objects.get()
+        response = self.client.get(
+            reverse('music_video_details',
+            kwargs={'pk': music_video.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, music_video)
+
+    def test_api_can_update_music_video(self):
+        """PUT: Test the api can update a given music video."""
+        music_video = Music_Video.objects.get()
+        change_music_video = {'title': 'Something new', 'artists': 'Something new again...'}
+        res = self.client.put(
+            reverse('music_video_details', kwargs={'pk': music_video.id}),
+            change_music_video, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_music_video(self):
+        """DELETE: Test the api can delete a music video."""
+        music_video = Music_Video.objects.get()
+        response = self.client.delete(
+            reverse('music_video_details', kwargs={'pk': music_video.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class PoemAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.poem_data = {'title': 'No Promises', 'artists': 'Cheat Codes', 'owner': user.id, 'text': 'something in here'}
+        self.response = self.client.post(
+            reverse('create_poem'),
+            self.poem_data,
+            format="json")
+
+    def test_api_can_create_a_poem(self):
+        """POST: Test the api has poem creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_poem(self):
+        """GET: Test the api can get a given poem."""
+        poem = Poem.objects.get()
+        response = self.client.get(
+            reverse('poem_details',
+            kwargs={'pk': poem.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, poem)
+
+    def test_api_can_update_poem(self):
+        """PUT: Test the api can update a given poem."""
+        poem = Poem.objects.get()
+        change_poem = {'title': 'Something new', 'artists': 'Something new again...', 'text': 'updating...'}
+        res = self.client.put(
+            reverse('poem_details', kwargs={'pk': poem.id}),
+            change_poem, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_poem(self):
+        """DELETE: Test the api can delete a poem."""
+        poem = Poem.objects.get()
+        response = self.client.delete(
+            reverse('poem_details', kwargs={'pk': poem.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class Custom_UserAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        self.custom_user_data = {'first_name': 'Promises', 'last_name': 'Cheat', 'username': 'user12'}
+        self.response = self.client.post(
+            reverse('create_custom_user'),
+            self.custom_user_data,
+            format="json")
+
+    def test_api_can_create_a_custom_user(self):
+        """POST: Test the api has custom user creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_custom_user(self):
+        """GET: Test the api can get a given custom user."""
+        custom_user = Custom_User.objects.get()
+        response = self.client.get(
+            reverse('custom_user_details',
+            kwargs={'pk': custom_user.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, custom_user)
+
+    def test_api_can_update_custom_user(self):
+        """PUT: Test the api can update a given custom user."""
+        custom_user = Custom_User.objects.get()
+        change_custom_user = {'first_name': 'Bob', 'last_name': 'Billy', 'username': 'user12000'}
+        res = self.client.put(
+            reverse('custom_user_details', kwargs={'pk': custom_user.id}),
+            change_custom_user, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_custom_user(self):
+        """DELETE: Test the api can delete a custom user."""
+        custom_user = Custom_User.objects.get()
+        response = self.client.delete(
+            reverse('custom_user_details', kwargs={'pk': custom_user.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class FeedbackAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        user = Custom_User.objects.create(username="user12", first_name="tom", last_name="jerry")
+        self.feedback_data = {'ratings': 2, 'comment': 'this site is ok', 'owner': user.id}
+        self.response = self.client.post(
+            reverse('create_feedback'),
+            self.feedback_data,
+            format="json")
+
+    def test_api_can_create_a_feedback(self):
+        """POST: Test the api has feedback creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_poem(self):
+        """GET: Test the api can get a given feedback."""
+        feedback = Feedback.objects.get()
+        response = self.client.get(
+            reverse('feedback_details',
+            kwargs={'pk': feedback.id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, feedback)
+
+    def test_api_can_update_feedback(self):
+        """PUT: Test the api can update a given feedback."""
+        feedback = Feedback.objects.get()
+        change_feedback = {'ratings': 5, 'comment': 'Awesome.'}
+        res = self.client.put(
+            reverse('feedback_details', kwargs={'pk': feedback.id}),
+            change_feedback, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_feedback(self):
+        """DELETE: Test the api can delete a feedback."""
+        feedback = Feedback.objects.get()
+        response = self.client.delete(
+            reverse('feedback_details', kwargs={'pk': feedback.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)

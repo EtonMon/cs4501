@@ -82,8 +82,3 @@ class Feedback(models.Model):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.ratings)
-
-# class User(models.Model):
-#     username = models.CharField(max_length=50, default="NO_NAME")
-#     lastname = models.CharField(max_length=50, default="last_name")
-#     firstname = models.CharField(max_length=50, default="first_name")
