@@ -12,6 +12,14 @@ def index(request):
 def signup(request):
     return render(request, 'signup.html')
 
+def search(request):
+    req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+    return render(request,
+    'search.html',
+    context={'data': json_data['results']})
+
 def songs(request):
     #retreiving data from url and converting to json format
 

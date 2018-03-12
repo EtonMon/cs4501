@@ -113,7 +113,7 @@ class StoryTestCase(TestCase):
 
 class Custom_UserTestCase(TestCase):
     def setUp(self):
-        """Define the customer_user instance and other test variables."""
+        """Define the custom_user instance and other test variables."""
         self.first_name = "Tom"
         self.last_name = "Jerry"
         self.username = "TomJerry"
@@ -176,11 +176,3 @@ class Custom_UserTestCase(TestCase):
     #         follow=True)
     #
     #     self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-
-
-

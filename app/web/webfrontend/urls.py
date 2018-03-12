@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^images/(?P<id>\d+)/$', views.ImageDetailView, name='image_detail'),
     url(r'^poems/$', views.poems, name='poems'),
     url(r'^poems/(?P<id>\d+)/$', views.PoemDetailView, name='poem_detail'),
+    url(r'^search/$', views.search, name='search'),
 ]
