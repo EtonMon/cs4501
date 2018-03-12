@@ -1,9 +1,11 @@
 {% extends "base_generic.html" %}
 {% block content %}
+<div class="jumbotron">
     <ul>
         <li><b>Title</b>: {{data.title}} </li>
         <li><b>Artist</b>: {{data.artists}} </li>
         <li><b>Time Posted</b>: {{data.time_posted}} </li>
         <li><b>Posted by</b>: {{username}} </li>
     </ul>
+</div>
 {% endblock %}
