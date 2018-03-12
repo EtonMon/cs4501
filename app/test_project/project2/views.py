@@ -20,7 +20,6 @@ class SongCreateView(generics.ListCreateAPIView):
 
 class SongDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Song.objects.all()
     serializer_class = SongSerializer
 
@@ -44,7 +43,6 @@ class ImageCreateView(generics.ListCreateAPIView):
 
 class ImageDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
@@ -67,7 +65,6 @@ class Music_Video_CreateView(generics.ListCreateAPIView):
 
 class Music_Video_DetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Music_Video.objects.all()
     serializer_class = Music_Video_Serializer
 
@@ -91,7 +88,6 @@ class Poem_CreateView(generics.ListCreateAPIView):
 
 class Poem_DetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Poem.objects.all()
     serializer_class = Poem_Serializer
 
@@ -115,7 +111,6 @@ class StoryCreateView(generics.ListCreateAPIView):
 
 class StoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Story.objects.all()
     serializer_class = StorySerializer
 
@@ -139,7 +134,6 @@ class FeedbackCreateView(generics.ListCreateAPIView):
 
 class FeedbackDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
@@ -158,7 +152,6 @@ class CustomUserCreateView(generics.ListCreateAPIView):
 
 class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-
     queryset = Custom_User.objects.all()
     serializer_class = CustomUserSerializer
 
