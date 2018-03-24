@@ -1,6 +1,7 @@
 import urllib.request
 import urllib.parse
 import json
+import requests
 
 def get_songs(page):
     # make a GET request and parse the returned JSON
@@ -157,3 +158,9 @@ def get_user(pk):
 
     print(resp)
     return resp
+
+def create_user(post_request):
+    response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_request)
+    content = response.content
+    print(content)
+    return response.content

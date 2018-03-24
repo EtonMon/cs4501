@@ -5,6 +5,8 @@ from rest_framework import generics
 from .serializers import SongSerializer, ImageSerializer, StorySerializer, FeedbackSerializer, Music_Video_Serializer, Poem_Serializer, CustomUserSerializer
 from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 from rest_framework.documentation import include_docs_urls
+from . import models
+from . import serializers
 
 def index(request):
     return HttpResponse("Models API")
@@ -163,3 +165,8 @@ class CustomUserListView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a user."""
     queryset = Custom_User.objects.all()
     serializer_class = CustomUserSerializer
+
+class AuthCreateView(generics.CreateAPIView):
+    """Handles POST requests for authenticators"""
+    queryset = models.Authenticator.objects.all()
+    serializer_class = serializers.AuthenticatorSerializer

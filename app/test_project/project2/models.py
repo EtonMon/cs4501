@@ -12,6 +12,11 @@ class Custom_User(models.Model):
     def __str__(self):
         return "{}".format(self.username)
 
+class Authenticator(models.Model):
+    user_id = models.IntegerField()
+    authenticator = models.AutoField(primary_key=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
 # Create your models here.
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")

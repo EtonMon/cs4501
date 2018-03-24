@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^api/v1/users/(?P<pk>[0-9]+)/$',
         CustomUserDetailsView.as_view(), name="custom_user_details"),
     url(r'^api/v1/users/$',
+        views.CustomUserListView.as_view(), name="custom_user_list"),
+    url(r'^api/v1/auth/verify/$',
         views.CustomUserListView.as_view(), name="custom_user_list")
 ]
 
