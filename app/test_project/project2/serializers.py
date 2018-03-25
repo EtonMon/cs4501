@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
-
+from . import models
 
 class SongSerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,4 +48,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Custom_User
         fields = ('id', 'username', 'first_name', 'last_name', 'date_created')
+        read_only_fields = ('date_created', 'date_created')
+
+class AuthenticatorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Authenticator
+        fields = ('user_id', 'authenticator')
         read_only_fields = ('date_created', 'date_created')

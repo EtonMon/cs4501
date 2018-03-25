@@ -1,6 +1,12 @@
 import urllib.request
 import urllib.parse
 import json
+import requests
+import os
+import hmac
+
+# import django settings file
+from django.conf import settings
 
 def get_songs(page):
     # make a GET request and parse the returned JSON
@@ -157,3 +163,23 @@ def get_user(pk):
 
     print(resp)
     return resp
+
+def get_user_by_username(username):
+    payload = {'username':username}
+    response = requests.get('http://models-api:8000/project2/api/v1/users/', params=payload)
+    return response.json()
+
+def create_user(post_request):
+    response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_request)
+    return response.json()
+
+def create_auth(username):
+    user = get_user_by_username(username)
+    id = user["id"]
+    authenticator = hmac.new(
+        key = settings.SECRET_KEY.encode('utf-8'),
+        msg = os.urandom(32),
+        digestmod = 'sha256',
+    ).hexdigest()
+    payload={"id":id, "authenticator":authenticator}
+    response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=post_request)

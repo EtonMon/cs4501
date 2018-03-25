@@ -1,16 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import hashers
 from . import fields
 
 
 class Custom_User(models.Model):
     username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=1000, default="password")
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "{}".format(self.username)
+
+class Authenticator(models.Model):
+    user_id = models.IntegerField()
+    authenticator = models.AutoField(primary_key=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")

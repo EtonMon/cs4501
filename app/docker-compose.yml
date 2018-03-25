@@ -9,8 +9,8 @@ models:
     ports:
       - "8001:8000"
 
-    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py test && python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
-
+    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
+    # && python /app/manage.py test
 exp:
     image: tp33/django
     links:
@@ -22,7 +22,8 @@ exp:
     ports:
       - "8002:8000"
 
-    command: bash -c "pip install djangorestframework && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/exp/wsgi.py"
+    command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/exp/wsgi.py"
+  #pipenv install requests &&
 
 web:
     image: tp33/django

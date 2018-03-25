@@ -44,8 +44,13 @@ def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))
 
 def users_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_users(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_users(page))
+    elif request.method == 'POST':
+        create_user_response = modelsapi.create_user(request)
+        modelsapi.create_auth(create_user_response["username"])
+        return create_user_response
 
 def user_detail_json(request, pk):
     return JsonResponse(modelsapi.get_user(pk))
