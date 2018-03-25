@@ -1,7 +1,6 @@
 import urllib.request
 import urllib.parse
 import json
-import requests
 import os
 import hmac
 

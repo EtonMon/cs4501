@@ -47,7 +47,7 @@ class Poem_Serializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Custom_User
-        fields = ('id', 'username', 'first_name', 'last_name', 'date_created')
+        fields = ('id', 'username', 'password','first_name', 'last_name', 'date_created')
         read_only_fields = ('date_created', 'date_created')
 
 class AuthenticatorSerializer(serializers.ModelSerializer):
