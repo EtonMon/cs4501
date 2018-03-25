@@ -1,24 +1,24 @@
 {% extends "base_generic.html" %}
 {% block content %}
-<!-- <div class="wrapper">
-<form class="form-signin" method="post">
+<div class="wrapper">
+<form class="form-signin" method="post" action="#">
     <h2 class="form-signin-heading">Login</h2>
         <input name="username" class="form-control" placeholder="Username" id="username">
         <input type="password" name="Password" class="form-control" placeholder="Password" id="password">
         <label class="checkbox">
             <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
         </label>
-        <button class="btn btn-lg btn-primary btn-block" id="loginbutton">Submit</button>
+        <button class="btn btn-lg btn-primary btn-block" onclick="return false" id="loginbutton">Submit</button>
+        <a href="http://localhost:8000/signup/"><p style="text-align:center">Sign Up</a>
     <br/>
 </form>
-</div> -->
-<form action="/login/" method="post">
+</div>
+<!-- <form action="/login/" method="post">
   {% csrf_token %}
     <label for="username">Your name: </label>
     <input id="username" type="text" name="username" value="{{ current_name }}">
     <label for="password">Password: </label>
     <input id="password" type="hidden" name="username" value="{{ current_name }}">
     <input type="submit" value="OK">
-</form>
-</form>
+</form> -->
 {% endblock %}
