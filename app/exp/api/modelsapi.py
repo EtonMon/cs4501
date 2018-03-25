@@ -4,6 +4,7 @@ import json
 import os
 import hmac
 import requests
+from django.views.decorators.csrf import csrf_exempt
 
 # import django settings file
 from django.conf import settings
@@ -169,6 +170,7 @@ def get_user_by_username(username):
     response = requests.get('http://models-api:8000/project2/api/v1/users/', params=payload)
     return response.json()
 
+@csrf_exempt
 def create_user(post_request):
     response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_request)
     return response.json()

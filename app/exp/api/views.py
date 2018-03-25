@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework import generics
 from django.http import JsonResponse
 from . import modelsapi
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -43,13 +44,14 @@ def poems_json(request):
 def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))
 
+@csrf_exempt
 def users_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         # create_user_response = modelsapi.create_user({"first_name": "using read", "last_name": "wtf", "username": "ihaethis", "password": "password"})
         return JsonResponse(modelsapi.get_users(page))
     elif request.method == 'POST':
-        create_user_response = modelsapi.create_user({"first_name": "11111 read", "last_name": "1111", "username": "12111", "password": "11111"})
+        create_user_response = modelsapi.create_user(request)
         modelsapi.create_auth(create_user_response["username"])
         return create_user_response
 
