@@ -1,1 +1,161 @@
-[{"model": "contenttypes.contenttype", "pk": 1, "fields": {"app_label": "admin", "model": "logentry"}}, {"model": "contenttypes.contenttype", "pk": 2, "fields": {"app_label": "auth", "model": "permission"}}, {"model": "contenttypes.contenttype", "pk": 3, "fields": {"app_label": "auth", "model": "group"}}, {"model": "contenttypes.contenttype", "pk": 4, "fields": {"app_label": "auth", "model": "user"}}, {"model": "contenttypes.contenttype", "pk": 5, "fields": {"app_label": "contenttypes", "model": "contenttype"}}, {"model": "contenttypes.contenttype", "pk": 6, "fields": {"app_label": "sessions", "model": "session"}}, {"model": "contenttypes.contenttype", "pk": 7, "fields": {"app_label": "project2", "model": "custom_user"}}, {"model": "contenttypes.contenttype", "pk": 8, "fields": {"app_label": "project2", "model": "authenticator"}}, {"model": "contenttypes.contenttype", "pk": 9, "fields": {"app_label": "project2", "model": "song"}}, {"model": "contenttypes.contenttype", "pk": 10, "fields": {"app_label": "project2", "model": "music_video"}}, {"model": "contenttypes.contenttype", "pk": 11, "fields": {"app_label": "project2", "model": "image"}}, {"model": "contenttypes.contenttype", "pk": 12, "fields": {"app_label": "project2", "model": "story"}}, {"model": "contenttypes.contenttype", "pk": 13, "fields": {"app_label": "project2", "model": "poem"}}, {"model": "contenttypes.contenttype", "pk": 14, "fields": {"app_label": "project2", "model": "feedback"}}, {"model": "project2.custom_user", "pk": 1, "fields": {"username": "sallielam", "password": "password", "first_name": "Sallie", "last_name": "Lam", "date_created": "2018-03-25T18:36:29.018Z"}}, {"model": "project2.custom_user", "pk": 2, "fields": {"username": "ethan", "password": "password", "first_name": "ethan", "last_name": "asdert", "date_created": "2018-03-25T18:36:56.355Z"}}, {"model": "project2.custom_user", "pk": 3, "fields": {"username": "sahana", "password": "password", "first_name": "sahana", "last_name": "ghjei", "date_created": "2018-03-25T18:37:12.438Z"}}, {"model": "project2.song", "pk": 1, "fields": {"title": "Lovely", "artists": "Awesome Person", "owner": 1, "time_posted": "2018-03-25T18:37:42.662Z"}}, {"model": "project2.song", "pk": 2, "fields": {"title": "Cheese Peas", "artists": "PB&J", "owner": 2, "time_posted": "2018-03-25T18:37:58.095Z"}}, {"model": "project2.song", "pk": 3, "fields": {"title": "Free", "artists": "Someone", "owner": 3, "time_posted": "2018-03-25T18:38:08.981Z"}}, {"model": "project2.music_video", "pk": 1, "fields": {"title": "Cat Video", "artists": "Unknown", "owner": 2, "time_posted": "2018-03-25T18:39:15.921Z"}}, {"model": "project2.image", "pk": 1, "fields": {"title": "Mona Lisa", "artists": "Someone", "owner": 3, "time_posted": "2018-03-25T18:39:53.387Z"}}, {"model": "project2.story", "pk": 1, "fields": {"title": "Harry Potter and the Sorcerer's Stone", "artists": "JK Rowling", "owner": 1, "text": "Harry Potter is awesome.", "time_posted": "2018-03-25T18:38:30.907Z"}}, {"model": "project2.poem", "pk": 1, "fields": {"title": "The Road Not Taken", "artists": "Robert Frost", "owner": 3, "text": "", "time_posted": "2018-03-25T18:38:52.263Z"}}, {"model": "project2.feedback", "pk": 1, "fields": {"owner": 1, "ratings": 10, "comment": "AWESOME!!!", "time_posted": "2018-03-25T18:40:23.862Z"}}, {"model": "auth.permission", "pk": 1, "fields": {"name": "Can add log entry", "content_type": 1, "codename": "add_logentry"}}, {"model": "auth.permission", "pk": 2, "fields": {"name": "Can change log entry", "content_type": 1, "codename": "change_logentry"}}, {"model": "auth.permission", "pk": 3, "fields": {"name": "Can delete log entry", "content_type": 1, "codename": "delete_logentry"}}, {"model": "auth.permission", "pk": 4, "fields": {"name": "Can add permission", "content_type": 2, "codename": "add_permission"}}, {"model": "auth.permission", "pk": 5, "fields": {"name": "Can change permission", "content_type": 2, "codename": "change_permission"}}, {"model": "auth.permission", "pk": 6, "fields": {"name": "Can delete permission", "content_type": 2, "codename": "delete_permission"}}, {"model": "auth.permission", "pk": 7, "fields": {"name": "Can add group", "content_type": 3, "codename": "add_group"}}, {"model": "auth.permission", "pk": 8, "fields": {"name": "Can change group", "content_type": 3, "codename": "change_group"}}, {"model": "auth.permission", "pk": 9, "fields": {"name": "Can delete group", "content_type": 3, "codename": "delete_group"}}, {"model": "auth.permission", "pk": 10, "fields": {"name": "Can add user", "content_type": 4, "codename": "add_user"}}, {"model": "auth.permission", "pk": 11, "fields": {"name": "Can change user", "content_type": 4, "codename": "change_user"}}, {"model": "auth.permission", "pk": 12, "fields": {"name": "Can delete user", "content_type": 4, "codename": "delete_user"}}, {"model": "auth.permission", "pk": 13, "fields": {"name": "Can add content type", "content_type": 5, "codename": "add_contenttype"}}, {"model": "auth.permission", "pk": 14, "fields": {"name": "Can change content type", "content_type": 5, "codename": "change_contenttype"}}, {"model": "auth.permission", "pk": 15, "fields": {"name": "Can delete content type", "content_type": 5, "codename": "delete_contenttype"}}, {"model": "auth.permission", "pk": 16, "fields": {"name": "Can add session", "content_type": 6, "codename": "add_session"}}, {"model": "auth.permission", "pk": 17, "fields": {"name": "Can change session", "content_type": 6, "codename": "change_session"}}, {"model": "auth.permission", "pk": 18, "fields": {"name": "Can delete session", "content_type": 6, "codename": "delete_session"}}, {"model": "auth.permission", "pk": 19, "fields": {"name": "Can add custom_ user", "content_type": 7, "codename": "add_custom_user"}}, {"model": "auth.permission", "pk": 20, "fields": {"name": "Can change custom_ user", "content_type": 7, "codename": "change_custom_user"}}, {"model": "auth.permission", "pk": 21, "fields": {"name": "Can delete custom_ user", "content_type": 7, "codename": "delete_custom_user"}}, {"model": "auth.permission", "pk": 22, "fields": {"name": "Can add authenticator", "content_type": 8, "codename": "add_authenticator"}}, {"model": "auth.permission", "pk": 23, "fields": {"name": "Can change authenticator", "content_type": 8, "codename": "change_authenticator"}}, {"model": "auth.permission", "pk": 24, "fields": {"name": "Can delete authenticator", "content_type": 8, "codename": "delete_authenticator"}}, {"model": "auth.permission", "pk": 25, "fields": {"name": "Can add song", "content_type": 9, "codename": "add_song"}}, {"model": "auth.permission", "pk": 26, "fields": {"name": "Can change song", "content_type": 9, "codename": "change_song"}}, {"model": "auth.permission", "pk": 27, "fields": {"name": "Can delete song", "content_type": 9, "codename": "delete_song"}}, {"model": "auth.permission", "pk": 28, "fields": {"name": "Can add music_ video", "content_type": 10, "codename": "add_music_video"}}, {"model": "auth.permission", "pk": 29, "fields": {"name": "Can change music_ video", "content_type": 10, "codename": "change_music_video"}}, {"model": "auth.permission", "pk": 30, "fields": {"name": "Can delete music_ video", "content_type": 10, "codename": "delete_music_video"}}, {"model": "auth.permission", "pk": 31, "fields": {"name": "Can add image", "content_type": 11, "codename": "add_image"}}, {"model": "auth.permission", "pk": 32, "fields": {"name": "Can change image", "content_type": 11, "codename": "change_image"}}, {"model": "auth.permission", "pk": 33, "fields": {"name": "Can delete image", "content_type": 11, "codename": "delete_image"}}, {"model": "auth.permission", "pk": 34, "fields": {"name": "Can add story", "content_type": 12, "codename": "add_story"}}, {"model": "auth.permission", "pk": 35, "fields": {"name": "Can change story", "content_type": 12, "codename": "change_story"}}, {"model": "auth.permission", "pk": 36, "fields": {"name": "Can delete story", "content_type": 12, "codename": "delete_story"}}, {"model": "auth.permission", "pk": 37, "fields": {"name": "Can add poem", "content_type": 13, "codename": "add_poem"}}, {"model": "auth.permission", "pk": 38, "fields": {"name": "Can change poem", "content_type": 13, "codename": "change_poem"}}, {"model": "auth.permission", "pk": 39, "fields": {"name": "Can delete poem", "content_type": 13, "codename": "delete_poem"}}, {"model": "auth.permission", "pk": 40, "fields": {"name": "Can add feedback", "content_type": 14, "codename": "add_feedback"}}, {"model": "auth.permission", "pk": 41, "fields": {"name": "Can change feedback", "content_type": 14, "codename": "change_feedback"}}, {"model": "auth.permission", "pk": 42, "fields": {"name": "Can delete feedback", "content_type": 14, "codename": "delete_feedback"}}]
+[
+{
+    "model": "project2.custom_user",
+    "pk": 1,
+    "fields": {
+        "username": "sallielam",
+        "password": "password",
+        "first_name": "Sallie",
+        "last_name": "Lam",
+        "date_created": "2018-03-25T18:36:29.018Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 2,
+    "fields": {
+        "username": "ethan",
+        "password": "password",
+        "first_name": "ethan",
+        "last_name": "asdert",
+        "date_created": "2018-03-25T18:36:56.355Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 3,
+    "fields": {
+        "username": "sahana",
+        "password": "password",
+        "first_name": "sahana",
+        "last_name": "ghjei",
+        "date_created": "2018-03-25T18:37:12.438Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 4,
+    "fields": {
+        "username": "something",
+        "password": "password",
+        "first_name": "testing",
+        "last_name": "signup",
+        "date_created": "2018-03-25T19:26:58.908Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 5,
+    "fields": {
+        "username": "pleasework",
+        "password": "password",
+        "first_name": "signup",
+        "last_name": "testing",
+        "date_created": "2018-03-25T20:03:46.661Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 6,
+    "fields": {
+        "username": "hahahahaha",
+        "password": "password",
+        "first_name": "hahahahahaha",
+        "last_name": "testing",
+        "date_created": "2018-03-25T20:28:20.742Z"
+    }
+},
+{
+    "model": "project2.custom_user",
+    "pk": 7,
+    "fields": {
+        "username": "bbbbbbb",
+        "password": "password",
+        "first_name": "bbbbbb",
+        "last_name": "testing",
+        "date_created": "2018-03-25T20:49:21.117Z"
+    }
+},
+{
+    "model": "project2.song",
+    "pk": 1,
+    "fields": {
+        "title": "Lovely",
+        "artists": "Awesome Person",
+        "owner": 1,
+        "time_posted": "2018-03-25T18:37:42.662Z"
+    }
+},
+{
+    "model": "project2.song",
+    "pk": 2,
+    "fields": {
+        "title": "Cheese Peas",
+        "artists": "PB&J",
+        "owner": 2,
+        "time_posted": "2018-03-25T18:37:58.095Z"
+    }
+},
+{
+    "model": "project2.song",
+    "pk": 3,
+    "fields": {
+        "title": "Free",
+        "artists": "Someone",
+        "owner": 3,
+        "time_posted": "2018-03-25T18:38:08.981Z"
+    }
+},
+{
+    "model": "project2.music_video",
+    "pk": 1,
+    "fields": {
+        "title": "Cat Video",
+        "artists": "Unknown",
+        "owner": 2,
+        "time_posted": "2018-03-25T18:39:15.921Z"
+    }
+},
+{
+    "model": "project2.image",
+    "pk": 1,
+    "fields": {
+        "title": "Mona Lisa",
+        "artists": "Someone",
+        "owner": 3,
+        "time_posted": "2018-03-25T18:39:53.387Z"
+    }
+},
+{
+    "model": "project2.story",
+    "pk": 1,
+    "fields": {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "artists": "JK Rowling",
+        "owner": 1,
+        "text": "Harry Potter is awesome.",
+        "time_posted": "2018-03-25T18:38:30.907Z"
+    }
+},
+{
+    "model": "project2.poem",
+    "pk": 1,
+    "fields": {
+        "title": "The Road Not Taken",
+        "artists": "Robert Frost",
+        "owner": 3,
+        "text": "",
+        "time_posted": "2018-03-25T18:38:52.263Z"
+    }
+},
+{
+    "model": "project2.feedback",
+    "pk": 1,
+    "fields": {
+        "owner": 1,
+        "ratings": 10,
+        "comment": "AWESOME!!!",
+        "time_posted": "2018-03-25T18:40:23.862Z"
+    }
+}
+]

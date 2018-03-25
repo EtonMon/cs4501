@@ -6,17 +6,63 @@ from django.http import HttpResponseNotFound
 from urllib.request import urlopen
 from django.http import JsonResponse
 from django.http import Http404
-
+from .forms import LoginForm, SignUpForm
+from django.http import HttpResponseRedirect
+import json
 # Create your views here.
 
 def index(request):
     return render(request, 'index.html')
 
 def signup(request):
-    return render(request, 'signup.html')
+    if request.method == 'GET':
+        form = SignUpForm()
+        return render(request, 'signup.html', {'form': form})
+    if request.method == 'POST':
+        print ("About to perform the POST request...")
+        post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
+        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        req = urllib.request.Request('http://exp-api:8000/api/v1/users/', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+        return render(request, 'index.html')
+
 
 def login(request):
     return render(request, 'login.html')
+
+# def login(request):
+#     # If we received a GET request instead of a POST request
+#     if request.method == 'GET':
+#         # display the login form page
+#         return render(request, 'login.html')
+#
+#     if not f.is_valid():
+#       # Form was bad -- send them back to login page and show them an error
+#       return render('signup.html', ...)
+#
+#     # Creates a new instance of our login_form and gives it our POST data
+#     f = login_form(request.POST)
+#     return render(request, 'signup.html')
+
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = LoginForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/login/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+
+    return render(request, 'login.html', {'form': form})
+
 
 def search(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')

@@ -3,6 +3,7 @@ import urllib.parse
 import json
 import os
 import hmac
+import requests
 
 # import django settings file
 from django.conf import settings
