@@ -3,6 +3,8 @@ from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.decorators.csrf import csrf_exempt
+
 # from django.conf.urls import (handler400, handler403, handler404, handler500)
 
 #
@@ -26,4 +28,4 @@ urlpatterns = [
     url(r'^poems/$', views.poems, name='poems'),
     url(r'^poems/(?P<id>\d+)/$', views.PoemDetailView, name='poem_detail'),
     url(r'^search/$', views.search, name='search'),
-] 
+]

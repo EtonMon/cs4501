@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% block content %}
-<div class="wrapper"> 
+<!-- <div class="wrapper">
 <form class="form-signin" method="post" action="#">
     <h2 class="form-signin-heading">Sign up</h2>
         <input type="text" name="email" class="form-control" placeholder="Email Address" id="email">
@@ -10,8 +10,21 @@
         <label class="checkbox">
             <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="return false" id="loginbutton">Submit</button>  
+        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="return false" id="loginbutton">Submit</button>
     <br/>
+</form>
+</div> -->
+<div class="wrapper">
+<form class="form-signin" action="/signup/" method="post">
+  {% csrf_token %}
+    <!-- <h2 class="form-signin-heading">Sign up</h2>
+    <input id="username" class="form-control" type="text" name="username" placeholder="Username" >
+    <input id="password" class="form-control" type="text" name="password" placeholder="Password" >
+    <input id="last_name" class="form-control" type="text" name="last_name" placeholder="Last Name" >
+    <input id="first_name" class="form-control" type="text" name="first_name" placeholder="First Name" >
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="loginbutton">Submit</button> -->
+    {{form}}
+    <input type="submit" value="Submit" />
 </form>
 </div>
 

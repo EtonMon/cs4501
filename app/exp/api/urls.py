@@ -1,6 +1,8 @@
 from . import views
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.views.decorators.csrf import csrf_exempt
+
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -15,7 +17,7 @@ urlpatterns = [
     url(r'^v1/poems/$', views.poems_json),
     url(r'^v1/poems/(?P<pk>[0-9]+)/$', views.poem_detail_json),
     url(r'^v1/users/$', views.users_json),
-    url(r'^v1/users/(?P<pk>[0-9]+)/$', views.user_detail_json)
+    url(r'^v1/users/(?P<pk>[0-9]+)/$', views.user_detail_json),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
