@@ -1,5 +1,8 @@
 from django.conf.urls import url, include
 from . import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 # from django.conf.urls import (handler400, handler403, handler404, handler500)
 
 #
@@ -10,6 +13,7 @@ handler500 = 'views.handler500'
 urlpatterns = [
     url(r'^home/$', views.index, name='index'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^login/$', views.login, name='login'),
     url(r'^songs/$', views.songs, name='songs'),
     url(r'^songs/(?P<id>\d+)/$', views.SongDetailView, name='song_detail'),
     url(r'^music_videos/$', views.music_videos, name='music_videos'),
@@ -22,4 +26,4 @@ urlpatterns = [
     url(r'^poems/$', views.poems, name='poems'),
     url(r'^poems/(?P<id>\d+)/$', views.PoemDetailView, name='poem_detail'),
     url(r'^search/$', views.search, name='search'),
-]
+] 

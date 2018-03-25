@@ -15,6 +15,9 @@ def index(request):
 def signup(request):
     return render(request, 'signup.html')
 
+def login(request):
+    return render(request, 'login.html')
+
 def search(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -24,8 +27,7 @@ def search(request):
     context={'data': json_data['results']})
 
 def songs(request):
-    #retreiving data from url and converting to json format
-
+    """sending an exp service request to retrieve json data for songs"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -37,16 +39,13 @@ def songs(request):
     )
 
 def SongDetailView(request, id):
-    #retreiving data from url and converting to json format
-    #getting information from a specific object
-
+    """sending an exp service request to retrieve json data for a specific song"""
     try:
         req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id)
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
-        # retreiving 'username' that is associated with the object from Custom_User json data
-
+        """this get's the owner's id and sends an exp service request to get their username back"""
         userid = str(json_data['owner'])
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/'+userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
@@ -61,8 +60,7 @@ def SongDetailView(request, id):
     )
 
 def music_videos(request):
-    # retreiving data from url and converting to json format
-
+    """sending an exp service request to retrieve json data for music videos"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -74,15 +72,13 @@ def music_videos(request):
     )
 
 def MusicVideoDetailView(request, id):
-    #retreiving data from url and converting to json format
-    #getting information from a specific object
+    """sending an exp service request to retrieve json data for a specific music video"""
     try:
         req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id)
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
-        # retreiving 'username' that is associated with the object from Custom_User json data
-
+        """this get's the owner's id and sends an exp service request to get their username back"""
         userid = str(json_data['owner'])
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
@@ -97,8 +93,7 @@ def MusicVideoDetailView(request, id):
     )
 
 def stories(request):
-    # retreiving data from url and converting to json format
-
+    """sending an exp service request to retrieve json data for stories"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/stories/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -110,16 +105,13 @@ def stories(request):
     )
 
 def StoryDetailView(request, id):
-    #retreiving data from url and converting to json format
-    #getting information from a specific object
-
+    """sending an exp service request to retrieve json data for a specific story"""
     try:
         req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id)
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
-        # retreiving 'username' that is associated with the object from Custom_User json data
-
+        """this get's the owner's id and sends an exp service request to get their username back"""
         userid = str(json_data['owner'])
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
@@ -134,9 +126,7 @@ def StoryDetailView(request, id):
     )
 
 def feedbacks(request):
-    # retreiving data from url and converting to json format
-    # getting information from a specific object
-
+    """sending an exp service request to retrieve json data for feedbacks"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/feedbacks/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -148,8 +138,7 @@ def feedbacks(request):
     )
 
 def images(request):
-    # retreiving data from url and converting to json format
-
+    """sending an exp service request to retrieve json data for images"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/images/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -161,15 +150,13 @@ def images(request):
     )
 
 def ImageDetailView(request, id):
-    #retreiving data from url and converting to json format
-    #getting information from a specific object
+    """sending an exp service request to retrieve json data for a specific image"""
     try:
         req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id)
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
-        # retreiving 'username' that is associated with the object from Custom_User json data
-
+        """this get's the owner's id and sends an exp service request to get their username back"""
         userid = str(json_data['owner'])
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
@@ -184,8 +171,7 @@ def ImageDetailView(request, id):
 
 
 def poems(request):
-    # retreiving data from url and converting to json format
-
+    """sending an exp service request to retrieve json data for poems"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/poems/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
@@ -197,16 +183,13 @@ def poems(request):
     )
 
 def PoemDetailView(request, id):
-    #retreiving data from url and converting to json format
-    #getting information from a specific object
-
+    """sending an exp service request to retrieve json data for a specific poem"""
     try:
         req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id)
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
-        # retreiving 'username' that is associated with the object from Custom_User json data
-
+        """this get's the owner's id and sends an exp service request to get their username back"""
         userid = str(json_data['owner'])
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')

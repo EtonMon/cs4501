@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n_#u%0q4f)mg_vcmlhly*aypgd#*j8ag*@t&33xsi)wkt3^rmv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webfrontend',
 ]
 
 MIDDLEWARE = [
@@ -117,8 +118,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'webfrontend/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'webfrontend/static'),
+#     '/app/web/webfrontend/static/'
+# ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
-]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+# Add these new lines
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'webfrontend/static'),
+# )
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# print(STATICFILES_DIRS)

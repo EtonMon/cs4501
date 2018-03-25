@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="wrapper"> 
+<form class="form-signin" method="post" action="#">
+    <h2 class="form-signin-heading">Login</h2>
+        <input name="username" class="form-control" placeholder="Username" id="username">
+        <input type="password" name="Password" class="form-control" placeholder="Password" id="password">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" onclick="return false" id="loginbutton">Submit</button>
+    <br/>
+</form>
+</div>
+
+{% endblock %}

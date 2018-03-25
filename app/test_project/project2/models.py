@@ -12,7 +12,6 @@ class Custom_User(models.Model):
     def __str__(self):
         return "{}".format(self.username)
 
-# Create your models here.
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
