@@ -46,9 +46,10 @@ def poem_detail_json(request, pk):
 def users_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
+        # create_user_response = modelsapi.create_user({"first_name": "using read", "last_name": "wtf", "username": "ihaethis", "password": "password"})
         return JsonResponse(modelsapi.get_users(page))
     elif request.method == 'POST':
-        create_user_response = modelsapi.create_user(request)
+        create_user_response = modelsapi.create_user({"first_name": "11111 read", "last_name": "1111", "username": "12111", "password": "11111"})
         modelsapi.create_auth(create_user_response["username"])
         return create_user_response
 
