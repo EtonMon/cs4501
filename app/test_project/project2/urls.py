@@ -1,7 +1,7 @@
 from . import views
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import SongCreateView, ImageCreateView, StoryCreateView, FeedbackCreateView, Music_Video_CreateView, Poem_CreateView, CustomUserCreateView
+from .views import SongCreateView, ImageCreateView, StoryCreateView, FeedbackCreateView, Music_Video_CreateView, Poem_CreateView, CustomUserListCreateView
 from .views import SongDetailsView, ImageDetailsView, StoryDetailsView, FeedbackDetailsView, Music_Video_DetailsView, Poem_DetailsView, CustomUserDetailsView
 
 urlpatterns = [
@@ -29,13 +29,13 @@ urlpatterns = [
     url(r'^api/v1/poems/(?P<pk>[0-9]+)/$',
         Poem_DetailsView.as_view(), name="poem_details"),
     url(r'^api/v1/poems/$', views.Poem_ListView.as_view(), name="poem_list"),
-    url(r'^api/v1/users/create/$', CustomUserCreateView.as_view(), name="create_custom_user"),
+    url(r'^api/v1/users/create/$', CustomUserListCreateView.as_view(), name="create_custom_user"),
     url(r'^api/v1/users/(?P<pk>[0-9]+)/$',
         CustomUserDetailsView.as_view(), name="custom_user_details"),
     url(r'^api/v1/users/$',
-        views.CustomUserListView.as_view(), name="custom_user_list"),
-    url(r'^api/v1/auth/verify/$',
-        views.CustomUserListView.as_view(), name="custom_user_list")
+        views.CustomUserListCreateView.as_view(), name="custom_user_list"),
+    url(r'^api/v1/auth/$',
+        views.AuthCreateView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -7,6 +7,8 @@ from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
 from rest_framework.documentation import include_docs_urls
 from . import models
 from . import serializers
+from django.contrib.auth import hashers
+
 
 def index(request):
     return HttpResponse("Models API")
@@ -143,15 +145,6 @@ class FeedbackDetailsView(generics.RetrieveUpdateDestroyAPIView):
     #     feedback = Feedback.objects.get(pk=pk)
     #     feedback.delete()
 
-class CustomUserCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of our rest api."""
-    queryset = Custom_User.objects.all()
-    serializer_class = CustomUserSerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new bucketlist."""
-        serializer.save()
-
 class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
     queryset = Custom_User.objects.all()
@@ -161,10 +154,21 @@ class CustomUserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     #     user = Custom_User.objects.get(pk=pk)
     #     user.delete()
 
-class CustomUserListView(generics.ListCreateAPIView):
+class CustomUserListCreateView(generics.ListCreateAPIView):
     """This class handles the http GET and PUT requests for multiple instances of a user."""
     queryset = Custom_User.objects.all()
     serializer_class = CustomUserSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned user to a given username,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Custom_User.objects.all()
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            queryset = queryset.filter(username="ethan")
+        return queryset
 
 class AuthCreateView(generics.CreateAPIView):
     """Handles POST requests for authenticators"""
