@@ -51,12 +51,8 @@ def users_json(request):
         # create_user_response = modelsapi.create_user({"first_name": "using read", "last_name": "wtf", "username": "ihaethis", "password": "password"})
         return JsonResponse(modelsapi.get_users(page))
     elif request.method == 'POST':
-        # last_name = request.POST.get('last_name','')
-        # first_name = request.POST.get('first_name','')
-        # username = request.POST.get('username','')
-        # password = request.POST.get('password','')
-        create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": "riri", "password": "11111"})
-        # create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "riri", "password": "11111"})
+        # create_user_response = modelsapi.create_user(request.POST)
+        create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "beconsistent", "password": "11111"})
         modelsapi.create_auth(create_user_response["username"])
         return create_user_response
 

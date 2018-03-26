@@ -28,8 +28,7 @@ def signup(request):
         # print ("About to perform the POST request...")
         post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
         # post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        # req = urllib.request.Request('http://exp-api:8000/api/v1/users/', data=post_encoded, method='POST')
-        response = requests.post('http://exp-api:8000/api/v1/users/',post_data,headers={'Content-Type': 'application/json'})
+        response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(post_data),headers={'Content-Type': 'application/json'})
         return render(request, 'login.html')
 
 
