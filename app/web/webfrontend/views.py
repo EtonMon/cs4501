@@ -37,12 +37,23 @@ def signup(request):
 
 @csrf_exempt
 def login(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'index.html', {'form': form})
+        payload = json.dumps(request.POST)
+        response = requests.post('http://exp-api:8000/api/v1/login/', data=payload)
+        return HttpResponse(response)
+
     # if request.method == 'POST':
     #     data = request.body
     #     str_data = data.decode('utf-8')
     #     json_data = json.loads(str_data)
     #     return HttpResponse(json_data["last_name"])
-    return render(request, 'login.html')
+        return render(request, 'index.html')
 
 # def login(request):
 #     # If we received a GET request instead of a POST request
@@ -57,24 +68,6 @@ def login(request):
 #     # Creates a new instance of our login_form and gives it our POST data
 #     f = login_form(request.POST)
 #     return render(request, 'signup.html')
-
-def get_name(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = LoginForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/login/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
-
-    return render(request, 'login.html', {'form': form})
 
 
 def search(request):
