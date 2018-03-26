@@ -84,7 +84,7 @@ def login(request):
         if userinfo["results"][0]["username"] == username and userinfo["results"][0]["password"] == password:
             return HttpResponse("IT WORKS!!!")
             auth = modelsapi.create_auth(user_data["username"])
-
+        return HttpResponse("Password or username is incorrect")
         # return HttpResponse(json.dumps(user_data))
         # else:
         #     return HttpResponse(user_data)
