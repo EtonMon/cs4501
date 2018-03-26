@@ -55,21 +55,6 @@ def login(request):
     #     return HttpResponse(json_data["last_name"])
         return render(request, 'index.html')
 
-# def login(request):
-#     # If we received a GET request instead of a POST request
-#     if request.method == 'GET':
-#         # display the login form page
-#         return render(request, 'login.html')
-#
-#     if not f.is_valid():
-#       # Form was bad -- send them back to login page and show them an error
-#       return render('signup.html', ...)
-#
-#     # Creates a new instance of our login_form and gives it our POST data
-#     f = login_form(request.POST)
-#     return render(request, 'signup.html')
-
-
 def search(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')

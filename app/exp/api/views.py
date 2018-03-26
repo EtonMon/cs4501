@@ -72,16 +72,19 @@ def create_user(request):
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
-        data = request.body
-        str = data.decode('utf-8')
-        convert_to_json = json.loads(str)
+        data = request.body  #grabs data from inputs in forms
+        str = data.decode('utf-8') #decodes bytes to strings
+        convert_to_json = json.loads(str) #convert string to json
         username = convert_to_json['username']
         password = convert_to_json['password']
         userinfo = modelsapi.get_user_by_username(username)
         # userjson = userinfo["results"][0]["username"]
-        # if userinfo["results"][0]["username"] is username && userinfo["results"][0]["password"] is password:
-             # auth = modelsapi.create_auth(user_data["username"])
-        return HttpResponse(json.dumps(userinfo))
+        if userinfo["count"] == 0:
+            return HttpResponse("NOPE")
+        if userinfo["results"][0]["username"] == username and userinfo["results"][0]["password"] == password:
+            return HttpResponse("IT WORKS!!!")
+            auth = modelsapi.create_auth(user_data["username"])
+
         # return HttpResponse(json.dumps(user_data))
         # else:
         #     return HttpResponse(user_data)
