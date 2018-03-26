@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from . import modelsapi
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.contrib.auth import hashers
 
 # Create your views here.
 def index(request):
@@ -58,8 +59,9 @@ def create_user(request):
         first_name = json_data["first_name"]
         username = json_data["username"]
         password = json_data["password"]
+        hashed_pw = hashers.make_password(password)
 
-        create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": password})
+        create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": hashed_pw})
 
         # create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "baaahhhuuuuu", "password": "11111"})
         mode = modelsapi.create_auth(create_user_response["username"])
