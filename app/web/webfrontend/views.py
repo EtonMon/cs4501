@@ -9,6 +9,7 @@ from django.http import Http404
 from .forms import LoginForm, SignUpForm
 from django.http import HttpResponseRedirect
 import json
+import requests
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 
@@ -23,12 +24,12 @@ def signup(request):
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        csrf_token = get_token(request)
-        print ("About to perform the POST request...")
+        # csrf_token = get_token(request)
+        # print ("About to perform the POST request...")
         post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
-        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        req = urllib.request.Request('http://exp-api:8000/api/v1/users/', data=post_encoded, method='POST')
+        # post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        # req = urllib.request.Request('http://exp-api:8000/api/v1/users/', data=post_encoded, method='POST')
+        response = requests.post('http://exp-api:8000/api/v1/users/',post_data,headers={'Content-Type': 'application/json'})
         return render(request, 'login.html')
 
 
