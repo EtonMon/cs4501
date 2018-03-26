@@ -4,6 +4,7 @@ from rest_framework import generics
 from django.http import JsonResponse
 from . import modelsapi
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 def index(request):
@@ -48,12 +49,22 @@ def poem_detail_json(request, pk):
 def users_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
-        # create_user_response = modelsapi.create_user({"first_name": "using read", "last_name": "wtf", "username": "ihaethis", "password": "password"})
         return JsonResponse(modelsapi.get_users(page))
     elif request.method == 'POST':
-        # create_user_response = modelsapi.create_user(request.POST)
-        create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "beconsistent", "password": "11111"})
-        modelsapi.create_auth(create_user_response["username"])
+        data = request.body
+        str = data.decode('utf-8')
+        json_data = json.loads(str)
+        last_name = json_data["last_name"]
+        first_name = json_data["first_name"]
+        username = json_data["username"]
+        password = json_data["password"]
+
+        create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": password})
+
+        # create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "baaahhhuuuuu", "password": "11111"})
+        mode = modelsapi.create_auth(create_user_response["username"])
+        # return HttpResponse(json.dumps(mode))
+        # return HttpResponse(json.dumps(create_user_response))
         return create_user_response
 
 def user_detail_json(request, pk):

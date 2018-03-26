@@ -12,6 +12,7 @@ import json
 import requests
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -26,13 +27,21 @@ def signup(request):
     if request.method == 'POST':
         # csrf_token = get_token(request)
         # print ("About to perform the POST request...")
-        post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
+        # request.POST
+        # post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
         # post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(post_data),headers={'Content-Type': 'application/json'})
-        return render(request, 'login.html')
+        response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(request.POST),headers={'Content-Type': 'application/json'})
+        # 'http://exp-api:8000/api/v1/users/'   'http://localhost:8000/login/'
+        # return HttpResponse(response)
+        return HttpResponseRedirect('/login/')
 
-
+@csrf_exempt
 def login(request):
+    # if request.method == 'POST':
+    #     data = request.body
+    #     str_data = data.decode('utf-8')
+    #     json_data = json.loads(str_data)
+    #     return HttpResponse(json_data["last_name"])
     return render(request, 'login.html')
 
 # def login(request):

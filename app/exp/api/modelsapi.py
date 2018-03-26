@@ -177,11 +177,15 @@ def create_user(post_request):
 
 def create_auth(username):
     user = get_user_by_username(username)
-    id = user["id"]
+    # whatisuser = str(user)
+    id = user["results"][0]["id"]
     authenticator = hmac.new(
         key = settings.SECRET_KEY.encode('utf-8'),
         msg = os.urandom(32),
         digestmod = 'sha256',
     ).hexdigest()
-    payload={"id":id, "authenticator":authenticator}
-    response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=post_request)
+    payload={"user_id":id, "authenticator":authenticator}
+    # post_data = {'password': whatisuser, 'last_name': 'testing', 'username': 'blehh2222', 'first_name': 'password'}
+    response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=payload)
+    # response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_data)
+    return response.json()

@@ -167,7 +167,7 @@ class CustomUserListCreateView(generics.ListCreateAPIView):
         queryset = Custom_User.objects.all()
         username = self.request.query_params.get('username', None)
         if username is not None:
-            queryset = queryset.filter(username="ethan")
+            queryset = queryset.filter(username=username)
         return queryset
 
 class AuthCreateView(generics.CreateAPIView):
