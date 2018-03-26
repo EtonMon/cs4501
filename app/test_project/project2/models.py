@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import hashers
 from . import fields
+import uuid
 
 
 class Custom_User(models.Model):
@@ -15,7 +16,7 @@ class Custom_User(models.Model):
 
 class Authenticator(models.Model):
     user_id = models.IntegerField()
-    authenticator = models.AutoField(primary_key=True)
+    authenticator = models.UUIDField(primary_key=True, editable = False, default = uuid.uuid4)
     date_created = models.DateTimeField(auto_now_add=True)
 
 class Song(models.Model):
