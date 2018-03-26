@@ -185,3 +185,4 @@ def create_auth(username):
     ).hexdigest()
     payload={"id":id, "authenticator":authenticator}
     response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=payload)
+    return response.json()
