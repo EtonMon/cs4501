@@ -12,41 +12,70 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-# Create your views here.
 def index(request):
     return HttpResponse("Exp API")
 
 def songs_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_songs(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_songs(page))
+    elif request.method == 'POST':
+        post_dict = request.POST.dict()
+        return JsonResponse(modelsapi.create_song(post_dict))
+
+    return JsonResponse({'ok':False})
 
 def song_detail_json(request, pk):
     return JsonResponse(modelsapi.get_song(pk))
 
 def images_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_images(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_images(page))
+    elif request.method == 'POST':
+        post_dict = request.POST.dict()
+        return JsonResponse(modelsapi.create_image(post_dict))
+
+    return JsonResponse({'ok':False})
 
 def image_detail_json(request, pk):
     return JsonResponse(modelsapi.get_image(pk))
 
 def stories_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_stories(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_stories(page))
+    elif request.method == 'POST':
+        post_dict = request.POST.dict()
+        return JsonResponse(modelsapi.create_story(post_dict))
+
+    return JsonResponse({'ok':False})
 
 def story_detail_json(request, pk):
     return JsonResponse(modelsapi.get_story(pk))
 
 def music_videos_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_music_videos(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_music_videos(page))
+    elif request.method == 'POST':
+        post_dict = request.POST.dict()
+        return JsonResponse(modelsapi.create_music_video(post_dict))
+
+    return JsonResponse({'ok':False})
 
 def music_video_detail_json(request, pk):
     return JsonResponse(modelsapi.get_music_video(pk))
 
 def poems_json(request):
-    page = request.GET.get('page', 1)
-    return JsonResponse(modelsapi.get_poems(page))
+    if request.method == 'GET':
+        page = request.GET.get('page', 1)
+        return JsonResponse(modelsapi.get_poems(page))
+    elif request.method == 'POST':
+        post_dict = request.POST.dict()
+        return JsonResponse(modelsapi.create_poem(post_dict))
+
+    return JsonResponse({'ok':False})
 
 def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))

@@ -36,6 +36,11 @@ def get_song(pk):
     print(resp)
     return resp
 
+def add_song(song_dict):
+    payload = song_dict
+    response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
+    return response.json()
+
 def get_images(page):
     # make a GET request and parse the returned JSON
     # note, no timeouts, error handling or all the other things needed to do this for real
@@ -61,6 +66,11 @@ def get_image(pk):
 
     print(resp)
     return resp
+
+def add_image(image_dict):
+    payload = image_dict
+    response = requests.post('http://models-api:8000/project2/api/v1/image/create/', data=payload)
+    return response.json()
 
 def get_stories(page):
     # make a GET request and parse the returned JSON
@@ -88,6 +98,11 @@ def get_story(pk):
     print(resp)
     return resp
 
+def add_story(story_dict):
+    payload = story_dict
+    response = requests.post('http://models-api:8000/project2/api/v1/story/create/', data=payload)
+    return response.json()
+
 def get_music_videos(page):
     # make a GET request and parse the returned JSON
     # note, no timeouts, error handling or all the other things needed to do this for real
@@ -114,6 +129,11 @@ def get_music_video(pk):
     print(resp)
     return resp
 
+def add_music_video(music_vid_dict):
+    payload = music_vid_dict
+    response = requests.post('http://models-api:8000/project2/api/v1/music_videos/create/', data=payload)
+    return response.json()
+
 def get_poems(page):
     # make a GET request and parse the returned JSON
     # note, no timeouts, error handling or all the other things needed to do this for real
@@ -139,6 +159,11 @@ def get_poem(pk):
 
     print(resp)
     return resp
+
+def add_poem(poem_dict):
+    payload = poem_dict
+    response = requests.post('http://models-api:8000/project2/api/v1/poems/create/', data=payload)
+    return response.json()
 
 def get_users(page):
     # make a GET request and parse the returned JSON
