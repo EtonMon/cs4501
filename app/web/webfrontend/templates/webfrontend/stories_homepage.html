@@ -6,4 +6,5 @@
        <a href="{% url 'story_detail' object.id %}" class="list-group-item"> {{object.title}} </a>
     {% endfor%}
     </ul>
+    <a class="btn btn-primary" href="{% url 'create_story'%}" role="button">Add Story</a>
 {% endblock %}

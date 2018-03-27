@@ -1,10 +1,10 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="wrapper">
-<form action="/create_song/" method="post">
+<form action="/create_poem/" method="post">
   {% csrf_token %}
     {{form}}
     <input type="submit" value="Submit" />
 </form>
-</div>
+
 {% endblock %}

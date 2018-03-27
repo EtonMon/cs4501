@@ -6,7 +6,8 @@ from django.http import HttpResponseNotFound
 from urllib.request import urlopen
 from django.http import JsonResponse
 from django.http import Http404
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, StoryForm, MusicVideoForm
+from .forms import SongForm, PoemForm, ImageForm
 from django.http import HttpResponseRedirect
 import json
 import requests
@@ -102,6 +103,26 @@ def SongDetailView(request, id):
         'song_detail.html',
         context={'data': json_data, 'username': user_data['username']}
     )
+
+def create_song(request):
+    if request.method == 'GET':
+        form = SongForm()
+        return render(request, 'create_song.html', {'form': form})
+    if request.method == 'POST':
+        form = SongSubmitForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'create_song.html', {'form': form})
+        payload = json.dumps(request.POST)
+        response = requests.post('http://exp-api:8000/api/v1/create_song/', data=request.POST.dict())
+        return HttpResponse(response)
+
+    # if request.method == 'POST':
+    #     data = request.body
+    #     str_data = data.decode('utf-8')
+    #     json_data = json.loads(str_data)
+    #     return HttpResponse(json_data["last_name"])
+        return render(request, 'index.html')
+
 
 def music_videos(request):
     """sending an exp service request to retrieve json data for music videos"""
@@ -213,6 +234,24 @@ def ImageDetailView(request, id):
         context={'data': json_data, 'username': user_data['username']}
     )
 
+def create_image(request):
+    if request.method == 'GET':
+        form = ImageForm()
+        return render(request, 'create_image.html', {'form': form})
+    if request.method == 'POST':
+        form = ImageForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'create_image.html', {'form': form})
+        payload = json.dumps(request.POST)
+        response = requests.post('http://exp-api:8000/api/v1/create_image/', data=request.POST.dict())
+        return HttpResponse(response)
+
+    # if request.method == 'POST':
+    #     data = request.body
+    #     str_data = data.decode('utf-8')
+    #     json_data = json.loads(str_data)
+    #     return HttpResponse(json_data["last_name"])
+        return render(request, 'index.html')
 
 def poems(request):
     """sending an exp service request to retrieve json data for poems"""
@@ -246,6 +285,34 @@ def PoemDetailView(request, id):
         'poem_detail.html',
         context={'data': json_data, 'username': user_data['username']}
     )
+
+def create_story(request):
+    if request.method == 'GET':
+        form = StoryForm()
+        return render(request, 'create_story.html', {'form': form})
+
+def create_musicvideo(request):
+    if request.method == 'GET':
+        form = MusicVideoForm()
+        return render(request, 'create_musicvideo.html', {'form': form})
+def create_poem(request):
+    if request.method == 'GET':
+        form = PoemForm()
+        return render(request, 'create_poem.html', {'form': form})
+    if request.method == 'POST':
+        form = PoemForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'create_poem.html', {'form': form})
+        payload = json.dumps(request.POST)
+        response = requests.post('http://exp-api:8000/api/v1/create_poem/', data=request.POST.dict())
+        return HttpResponse(response)
+
+    # if request.method == 'POST':
+    #     data = request.body
+    #     str_data = data.decode('utf-8')
+    #     json_data = json.loads(str_data)
+    #     return HttpResponse(json_data["last_name"])
+        return render(request, 'index.html')
 
 
 def handler404(request):
