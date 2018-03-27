@@ -6,6 +6,11 @@ from . import modelsapi
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth import hashers
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -97,4 +102,8 @@ def login(request):
         post_dict = request.POST.dict()
         if modelsapi.verify_login(post_dict):
             create_auth_resp = modelsapi.create_auth(post_dict["username"])
-            return create_auth_resp
+            create_auth_resp['status_code'] = 201
+            #return HttpResponse(str(create_auth_resp))
+            return JsonResponse(create_auth_resp)
+    resp = {'ok':False}
+    return JsonResponse(resp)

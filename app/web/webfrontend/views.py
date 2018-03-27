@@ -45,7 +45,7 @@ def login(request):
         if not form.is_valid():
             return render(request, 'index.html', {'form': form})
         payload = json.dumps(request.POST)
-        response = requests.post('http://exp-api:8000/api/v1/login/', data=payload)
+        response = requests.post('http://exp-api:8000/api/v1/login/', data=request.POST.dict())
         return HttpResponse(response)
 
     # if request.method == 'POST':

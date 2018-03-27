@@ -201,7 +201,9 @@ def get_auth(username):
 
 def get_stored_pw(username):
     user = get_user_by_username(username)
-    user_pw = user["results"][0]["password"]
+    user_pw = None
+    if user["results"]:
+        user_pw = user["results"][0]["password"]
     return user_pw
 
 def verify_login(login_info):
