@@ -166,6 +166,7 @@ def get_user(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def get_user_by_username(username):
     payload = {'username':username}
     response = requests.get('http://models-api:8000/project2/api/v1/users/', params=payload)
@@ -176,6 +177,7 @@ def create_user(post_request):
     response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_request)
     return response.json()
 
+@csrf_exempt
 def create_auth(username):
     user = get_user_by_username(username)
     # whatisuser = str(user)

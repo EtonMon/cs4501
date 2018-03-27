@@ -47,7 +47,7 @@ def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))
 
 @csrf_exempt
-def users_json(request):
+def create_user(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_users(page))
@@ -67,6 +67,26 @@ def users_json(request):
         # return HttpResponse(json.dumps(mode))
         # return HttpResponse(json.dumps(create_user_response))
         return create_user_response
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        data = request.body  #grabs data from inputs in forms
+        str = data.decode('utf-8') #decodes bytes to strings
+        convert_to_json = json.loads(str) #convert string to json
+        username = convert_to_json['username']
+        password = convert_to_json['password']
+        userinfo = modelsapi.get_user_by_username(username)
+        # userjson = userinfo["results"][0]["username"]
+        if userinfo["count"] == 0:
+            return HttpResponse("NOPE")
+        if userinfo["results"][0]["username"] == username and userinfo["results"][0]["password"] == password:
+            return HttpResponse("IT WORKS!!!")
+            auth = modelsapi.create_auth(user_data["username"])
+        return HttpResponse("Password or username is incorrect")
+        # return HttpResponse(json.dumps(user_data))
+        # else:
+        #     return HttpResponse(user_data)
 
 def user_detail_json(request, pk):
     return JsonResponse(modelsapi.get_user(pk))

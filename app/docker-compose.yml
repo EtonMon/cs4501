@@ -36,4 +36,4 @@ web:
     ports:
       - "8000:8000"
 
-    command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
+    command: bash -c "pip install djangorestframework && pip install requests && pip install --upgrade django-crispy-forms && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
