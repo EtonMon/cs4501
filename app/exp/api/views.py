@@ -64,10 +64,17 @@ def users_json(request):
         create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": hashed_pw})
 
         # create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "baaahhhuuuuu", "password": "11111"})
-        mode = modelsapi.create_auth(create_user_response["username"])
         # return HttpResponse(json.dumps(mode))
         # return HttpResponse(json.dumps(create_user_response))
         return create_user_response
 
 def user_detail_json(request, pk):
     return JsonResponse(modelsapi.get_user(pk))
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        post_dict = request.POST.dict()
+        if modelsapi.verify_login(post_dict):
+            create_auth_resp = modelsapi.create_auth(post_dict["username"])
+            return create_auth_resp

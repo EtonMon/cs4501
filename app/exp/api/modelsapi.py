@@ -5,6 +5,7 @@ import os
 import hmac
 import requests
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import hashers
 
 # import django settings file
 from django.conf import settings
@@ -189,3 +190,20 @@ def create_auth(username):
     response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=payload)
     # response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_data)
     return response.json()
+
+def get_auth(username):
+    user = get_user_by_username(username)
+    user_id = user["results"][0]["id"]
+    response = requests.get('http://models-api:8000/project2/api/v1/auth/'+user_id)
+    return response.json()
+
+def get_stored_pw(username):
+    user = get_user_by_username(username)
+    user_pw = user["results"][0]["password"]
+    return user_pw
+
+def verify_login(login_info):
+    username = login_info["username"]
+    password = login_info["password"]
+    stored_pw = get_stored_pw(username)
+    return hashers.check_password(password, stored_pw)

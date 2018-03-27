@@ -174,3 +174,17 @@ class AuthCreateView(generics.CreateAPIView):
     """Handles POST requests for authenticators"""
     queryset = models.Authenticator.objects.all()
     serializer_class = serializers.AuthenticatorSerializer
+
+class AuthRetrieveView(generics.RetrieveAPIView):
+    """Handles GET requests for a single authenticator identified by its user_id"""
+    queryset = models.Authenticator.objects.all()
+    serializer_class = serializers.AuthenticatorSerializer
+    lookup_field = 'user_id'
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        user_id = self.kwargs['user_id']
+        return models.Authenticator.objects.filter(user_id=user_id)

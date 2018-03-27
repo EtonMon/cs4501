@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^v1/poems/(?P<pk>[0-9]+)/$', views.poem_detail_json),
     url(r'^v1/users/$', views.users_json),
     url(r'^v1/users/(?P<pk>[0-9]+)/$', views.user_detail_json),
+    url(r'^v1/login/$', views.login)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
