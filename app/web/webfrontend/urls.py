@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^home/$', views.index, name='index'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'^songs/$', views.songs, name='songs'),
     url(r'^songs/(?P<id>\d+)/$', views.SongDetailView, name='song_detail'),
     url(r'^music_videos/$', views.music_videos, name='music_videos'),
