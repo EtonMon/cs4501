@@ -55,6 +55,13 @@ def login(request):
     #     return HttpResponse(json_data["last_name"])
         return render(request, 'index.html')
 
+@csrf_exempt
+def logout(request):
+    if request.method == 'GET':
+        return render(request, 'logout.html')
+    if request.method == 'POST':
+        return HttpResponseRedirect('/login/')
+
 def search(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
