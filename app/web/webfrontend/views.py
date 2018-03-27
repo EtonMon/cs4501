@@ -6,7 +6,8 @@ from django.http import HttpResponseNotFound
 from urllib.request import urlopen
 from django.http import JsonResponse
 from django.http import Http404
-from .forms import LoginForm, SignUpForm, SongForm, PoemForm, ImageForm
+from .forms import LoginForm, SignUpForm, StoryForm, MusicVideoForm
+from .forms import SongForm, PoemForm, ImageForm
 from django.http import HttpResponseRedirect
 import json
 import requests
@@ -285,6 +286,15 @@ def PoemDetailView(request, id):
         context={'data': json_data, 'username': user_data['username']}
     )
 
+def create_story(request):
+    if request.method == 'GET':
+        form = StoryForm()
+        return render(request, 'create_story.html', {'form': form})
+
+def create_musicvideo(request):
+    if request.method == 'GET':
+        form = MusicVideoForm()
+        return render(request, 'create_musicvideo.html', {'form': form})
 def create_poem(request):
     if request.method == 'GET':
         form = PoemForm()
