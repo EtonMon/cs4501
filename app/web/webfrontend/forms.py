@@ -9,3 +9,16 @@ class SignUpForm(forms.Form):
     password = forms.CharField(label='Password', max_length=1000)
     last_name = forms.CharField(label='Last name', max_length=70)
     first_name = forms.CharField(label='First Name', max_length=70)
+
+class SongForm(forms.Form):
+    title = forms.CharField(label='Title', max_length=100)
+    artists = forms.CharField(label='Artist', max_length=100)
+
+class PoemForm(forms.Form):
+    title = forms.CharField(label='Title', max_length=100)
+    artists = forms.CharField(label='Artist', max_length=100)
+    text = forms.CharField(label='Enter Text Here', max_length=10000)
+
+class ImageForm(forms.Form):
+    title = forms.CharField(label='Title', max_length=100)
+    artists = forms.CharField(label='Artist', max_length=100)
