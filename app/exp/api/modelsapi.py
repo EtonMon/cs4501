@@ -211,3 +211,6 @@ def verify_login(login_info):
     password = login_info["password"]
     stored_pw = get_stored_pw(username)
     return hashers.check_password(password, stored_pw)
+
+def delete(auth):
+    response = requests.get('http://models-api:8000/project2/api/v1/auth/'+auth)
