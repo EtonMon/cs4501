@@ -188,3 +188,8 @@ class AuthRetrieveView(generics.RetrieveAPIView):
         """
         user_id = self.kwargs['user_id']
         return models.Authenticator.objects.filter(user_id=user_id)
+
+class AuthDestroyView(generics.DestroyAPIView):
+    """Handles DELETE requests for a single authenticator identified by its pk (the authenticator value)"""
+    queryset = models.Authenticator.objects.all()
+    serializer_class = serializers.AuthenticatorSerializer

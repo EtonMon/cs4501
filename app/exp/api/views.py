@@ -110,4 +110,4 @@ def login(request):
 
 def logout(request):
     authenticator = request.get_cookie('auth')
-    
+    return JsonResponse(modelsapi.delete_auth(authenticator))
