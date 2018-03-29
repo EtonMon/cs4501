@@ -21,7 +21,6 @@ def songs_json(request):
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_songs(page))
     if request.method == 'POST':
-        # post_dict = request.POST.dict()
         data = request.body
         str_data = data.decode('utf-8')
         json_data = json.loads(str_data)
@@ -30,8 +29,6 @@ def songs_json(request):
         owner = json_data["owner"]
         song_json = modelsapi.add_song({"title": title, "artists": artists, "owner": owner})
         return song_json
-        # return JsonResponse(modelsapi.create_song(post_dict))
-
     return JsonResponse({'ok':False})
 
 def song_detail_json(request, pk):
@@ -71,7 +68,6 @@ def stories_json(request):
         owner = json_data["owner"]
         story_json = modelsapi.add_story({"title": title, "artists": artists, "owner": owner, "text": text})
         return story_json
-
     return JsonResponse({'ok':False})
 
 def story_detail_json(request, pk):
@@ -84,7 +80,6 @@ def music_videos_json(request):
     elif request.method == 'POST':
         post_dict = request.POST.dict()
         return JsonResponse(modelsapi.create_music_video(post_dict))
-
     return JsonResponse({'ok':False})
 
 def music_video_detail_json(request, pk):
@@ -105,7 +100,6 @@ def poems_json(request):
         owner = json_data["owner"]
         image_json = modelsapi.add_poem({"title": title, "artists": artists, "owner": owner, "text": text})
         return image_json
-
     return JsonResponse({'ok':False})
 
 def poem_detail_json(request, pk):
