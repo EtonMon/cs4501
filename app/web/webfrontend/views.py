@@ -14,11 +14,13 @@ import requests
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.urls import reverse
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    username = request.COOKIES.get('username')
+    return render(request, 'index.html', context={'username': username})
 
 @csrf_exempt
 def signup(request):
@@ -26,13 +28,7 @@ def signup(request):
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
     if request.method == 'POST':
-        # csrf_token = get_token(request)
-        # print ("About to perform the POST request...")
-        # request.POST
-        # post_data = {'first_name': 'lololololololol', 'last_name': 'testing', 'username': 'bbbbbbb', 'password': 'password'}
-        # post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
         response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(request.POST),headers={'Content-Type': 'application/json'})
-        # 'http://exp-api:8000/api/v1/users/'   'http://localhost:8000/login/'
         # return HttpResponse(response)
         return HttpResponseRedirect('/login/')
 
@@ -47,21 +43,61 @@ def login(request):
             return render(request, 'index.html', {'form': form})
         payload = json.dumps(request.POST)
         response = requests.post('http://exp-api:8000/api/v1/login/', data=request.POST.dict())
-        return HttpResponse(response)
+        response_str = response.content.decode('utf-8')
+        response_json = json.loads(response_str)
+        try: 
+            authenticator = response_json['authenticator']
+            user_id = str(response_json['user_id'])
+            response = HttpResponseRedirect('/home/')
+            response.set_cookie("auth", authenticator)
+            response.set_cookie("id", user_id)
+            response.set_cookie("username", form.cleaned_data['username'])
+            return response
+        except:
+            return HttpResponseRedirect('/login/')
 
-    # if request.method == 'POST':
-    #     data = request.body
-    #     str_data = data.decode('utf-8')
-    #     json_data = json.loads(str_data)
-    #     return HttpResponse(json_data["last_name"])
-        return render(request, 'index.html')
+#@csrf_exempt
+# def login(request):
+#     if request.method == 'GET':
+#         next = request.GET.get('songs') or reverse('login')
+#         form = LoginForm()
+#         return render(request, 'login.html', {'form': form, 'next': next})
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+        
+#         if not form.is_valid():
+#             return render(request, 'index.html', {'form': form})
+        
+#         # Sanitize username and password fields
+#         username = form.cleaned_data['username']
+#         password = form.cleaned_data['password']
+
+#         next = form.cleaned_data.get('songs') or reverse('login')
+
+#         payload = {"username": username, "password": password}
+#         response = requests.post('http://exp-api:8000/api/v1/login/', data=payload)
+
+#         response_str = response.content.decode('utf-8')
+#         response_json = json.loads(response_str)
+#         try: 
+#             userid = response_json['user_id']
+#             authenticator = response_json['authenticator']
+#             response = HttpResponseRedirect(next)
+#             response.set_cookie("auth", authenticator)
+#             response.set_cookie("user_id", userid)
+#             return response
+#             # return HttpResponse(response)
+#         except:
+#             return HttpResponseRedirect('/login/')
 
 @csrf_exempt
 def logout(request):
-    if request.method == 'GET':
-        return render(request, 'logout.html')
-    if request.method == 'POST':
-        return HttpResponseRedirect('/login/')
+    requests.post('http://exp-api:8000/api/v1/logout/', data={"auth": request.COOKIES.get('auth'), "user_id": request.COOKIES.get('user_id')})
+    response = HttpResponseRedirect('/home/')
+    response.delete_cookie('auth')
+    response.delete_cookie('id')
+    response.delete_cookie('username')
+    return response
 
 def search(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
@@ -103,26 +139,6 @@ def SongDetailView(request, id):
         'song_detail.html',
         context={'data': json_data, 'username': user_data['username']}
     )
-
-def create_song(request):
-    if request.method == 'GET':
-        form = SongForm()
-        return render(request, 'create_song.html', {'form': form})
-    if request.method == 'POST':
-        form = SongSubmitForm(request.POST)
-        if not form.is_valid():
-            return render(request, 'create_song.html', {'form': form})
-        payload = json.dumps(request.POST)
-        response = requests.post('http://exp-api:8000/api/v1/create_song/', data=request.POST.dict())
-        return HttpResponse(response)
-
-    # if request.method == 'POST':
-    #     data = request.body
-    #     str_data = data.decode('utf-8')
-    #     json_data = json.loads(str_data)
-    #     return HttpResponse(json_data["last_name"])
-        return render(request, 'index.html')
-
 
 def music_videos(request):
     """sending an exp service request to retrieve json data for music videos"""
@@ -234,25 +250,6 @@ def ImageDetailView(request, id):
         context={'data': json_data, 'username': user_data['username']}
     )
 
-def create_image(request):
-    if request.method == 'GET':
-        form = ImageForm()
-        return render(request, 'create_image.html', {'form': form})
-    if request.method == 'POST':
-        form = ImageForm(request.POST)
-        if not form.is_valid():
-            return render(request, 'create_image.html', {'form': form})
-        payload = json.dumps(request.POST)
-        response = requests.post('http://exp-api:8000/api/v1/create_image/', data=request.POST.dict())
-        return HttpResponse(response)
-
-    # if request.method == 'POST':
-    #     data = request.body
-    #     str_data = data.decode('utf-8')
-    #     json_data = json.loads(str_data)
-    #     return HttpResponse(json_data["last_name"])
-        return render(request, 'index.html')
-
 def poems(request):
     """sending an exp service request to retrieve json data for poems"""
     req = urllib.request.Request('http://exp-api:8000/api/v1/poems/')
@@ -286,34 +283,69 @@ def PoemDetailView(request, id):
         context={'data': json_data, 'username': user_data['username']}
     )
 
+@csrf_exempt
 def create_story(request):
     if request.method == 'GET':
         form = StoryForm()
         return render(request, 'create_story.html', {'form': form})
-
+    
+@csrf_exempt
 def create_musicvideo(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = MusicVideoForm()
         return render(request, 'create_musicvideo.html', {'form': form})
+
+@csrf_exempt
 def create_poem(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = PoemForm()
         return render(request, 'create_poem.html', {'form': form})
     if request.method == 'POST':
-        form = PoemForm(request.POST)
-        if not form.is_valid():
-            return render(request, 'create_poem.html', {'form': form})
-        payload = json.dumps(request.POST)
-        response = requests.post('http://exp-api:8000/api/v1/create_poem/', data=request.POST.dict())
-        return HttpResponse(response)
+        owner = int(request.COOKIES.get('id'))
+        title = request.POST['title']
+        artists = request.POST['artists']
+        text = request.POST['text']
+        json_post = {"title": title, "artists": artists, "owner": owner, "text": text}
+        response = requests.post('http://exp-api:8000/api/v1/poems/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        return HttpResponseRedirect('/poems/')
 
-    # if request.method == 'POST':
-    #     data = request.body
-    #     str_data = data.decode('utf-8')
-    #     json_data = json.loads(str_data)
-    #     return HttpResponse(json_data["last_name"])
-        return render(request, 'index.html')
+@csrf_exempt
+def create_image(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect('/home/')
+    if request.method == 'GET':
+        form = ImageForm()
+        return render(request, 'create_image.html', {'form': form})
+    if request.method == 'POST':
+        owner = int(request.COOKIES.get('id'))
+        title = request.POST['title']
+        artists = request.POST['artists']
+        json_post = {"title": title, "artists": artists, "owner": owner}
+        response = requests.post('http://exp-api:8000/api/v1/images/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        return HttpResponseRedirect('/images/')
 
+@csrf_exempt
+def create_song(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect('/home/')
+    if request.method == 'GET':
+        form = SongForm()
+        return render(request, 'create_song.html', {'form': form})
+    if request.method == 'POST':
+        owner = int(request.COOKIES.get('id'))
+        title = request.POST['title']
+        artists = request.POST['artists']
+        json_post = {"title": title, "artists": artists, "owner": owner}
+        response = requests.post('http://exp-api:8000/api/v1/songs/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        return HttpResponseRedirect('/songs/')
 
 def handler404(request):
     return render(request, '404.html', status=404)

@@ -81,6 +81,40 @@ def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))
 
 @csrf_exempt
+def create_song(request):
+    data = request.body
+    str_data = data.decode('utf-8')
+    json_data = json.loads(str_data)
+    title = json_data["title"]
+    artists = json_data["artists"]
+    owner = json_data["owner"]
+    song_json = modelsapi.add_song({"title": title, "artists": artists, "owner": owner})
+    return song_json
+
+@csrf_exempt
+def create_image(request):
+    data = request.body
+    str_data = data.decode('utf-8')
+    json_data = json.loads(str_data)
+    title = json_data["title"]
+    artists = json_data["artists"]
+    owner = json_data["owner"]
+    image_json = modelsapi.add_image({"title": title, "artists": artists, "owner": owner})
+    return image_json
+
+@csrf_exempt
+def create_poem(request):
+    data = request.body
+    str_data = data.decode('utf-8')
+    json_data = json.loads(str_data)
+    title = json_data["title"]
+    artists = json_data["artists"]
+    text = json_data["text"]
+    owner = json_data["owner"]
+    image_json = modelsapi.add_poem({"title": title, "artists": artists, "owner": owner, "text": text})
+    return image_json
+
+@csrf_exempt
 def create_user(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
@@ -94,13 +128,29 @@ def create_user(request):
         username = json_data["username"]
         password = json_data["password"]
         hashed_pw = hashers.make_password(password)
-
         create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": hashed_pw})
-
-        # create_user_response = modelsapi.create_user({"first_name": "last", "last_name": "lkjlkjlj", "username": "baaahhhuuuuu", "password": "11111"})
-        # return HttpResponse(json.dumps(mode))
-        # return HttpResponse(json.dumps(create_user_response))
         return create_user_response
+
+def user_detail_json(request, pk):
+    return JsonResponse(modelsapi.get_user(pk))
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        post_dict = request.POST.dict()
+        if modelsapi.verify_login(post_dict):
+            create_auth_resp = modelsapi.create_auth(post_dict["username"])
+            create_auth_resp['status_code'] = 201
+            return JsonResponse(create_auth_resp)
+    resp = {'ok':False}
+    return JsonResponse(resp)
+
+@csrf_exempt
+def logout(request):
+    post_dict = request.POST.dict()
+    return JsonResponse(modelsapi.delete_auth(post_dict['auth']))
+    # return JsonResponse(modelsapi.delete_auth(authenticator))
+
 #
 # @csrf_exempt
 # def login(request):
@@ -121,22 +171,3 @@ def create_user(request):
 #         # return HttpResponse(json.dumps(user_data))
 #         # else:
 #         #     return HttpResponse(user_data)
-
-def user_detail_json(request, pk):
-    return JsonResponse(modelsapi.get_user(pk))
-
-@csrf_exempt
-def login(request):
-    if request.method == 'POST':
-        post_dict = request.POST.dict()
-        if modelsapi.verify_login(post_dict):
-            create_auth_resp = modelsapi.create_auth(post_dict["username"])
-            create_auth_resp['status_code'] = 201
-            #return HttpResponse(str(create_auth_resp))
-            return JsonResponse(create_auth_resp)
-    resp = {'ok':False}
-    return JsonResponse(resp)
-
-def logout(request):
-    authenticator = request.get_cookie('auth')
-    return JsonResponse(modelsapi.delete_auth(authenticator))

@@ -1,11 +1,18 @@
 {% extends "base_generic.html" %}
 {% block content %}
-  <!-- Main component for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <h1>Share your interests</h1>
-    <p>You can post about music, stories, photos, music videos, and poems. </p>
-    <p>
-      <a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Register &raquo;</a>
-    </p>
-  </div>
+<!-- Main component for a primary marketing message or call to action -->
+{% if request.COOKIES.auth %}
+<div class="jumbotron">
+	<h1>Welcome {{username}}!</h1>
+</div>
+{% else %}
+<div class="jumbotron">
+	<h1>Share your interests</h1>
+	<p>You can post about music, stories, photos, music videos, and poems. </p>
+	<p>
+		<a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Register &raquo;</a>
+	</p>
+</div>
+{% endif %}
 {% endblock %}
+

@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="wrapper">
-<form action="/create_song/" method="post">
+<form action="{% url 'create_song' %}" class="form-signin" method="post">
   {% csrf_token %}
     {{form}}
     <input type="submit" value="Submit" />

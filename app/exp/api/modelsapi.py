@@ -36,6 +36,7 @@ def get_song(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def add_song(song_dict):
     payload = song_dict
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
@@ -67,9 +68,10 @@ def get_image(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def add_image(image_dict):
     payload = image_dict
-    response = requests.post('http://models-api:8000/project2/api/v1/image/create/', data=payload)
+    response = requests.post('http://models-api:8000/project2/api/v1/images/create/', data=payload)
     return response.json()
 
 def get_stories(page):
@@ -98,6 +100,7 @@ def get_story(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def add_story(story_dict):
     payload = story_dict
     response = requests.post('http://models-api:8000/project2/api/v1/story/create/', data=payload)
@@ -129,6 +132,7 @@ def get_music_video(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def add_music_video(music_vid_dict):
     payload = music_vid_dict
     response = requests.post('http://models-api:8000/project2/api/v1/music_videos/create/', data=payload)
@@ -160,6 +164,7 @@ def get_poem(pk):
     print(resp)
     return resp
 
+@csrf_exempt
 def add_poem(poem_dict):
     payload = poem_dict
     response = requests.post('http://models-api:8000/project2/api/v1/poems/create/', data=payload)
@@ -218,6 +223,7 @@ def create_auth(username):
     # response = requests.post('http://models-api:8000/project2/api/v1/users/', data=post_data)
     return response.json()
 
+@csrf_exempt
 def get_auth(username):
     user = get_user_by_username(username)
     user_id = user["results"][0]["id"]

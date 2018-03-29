@@ -52,9 +52,15 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto mr-5">
+      {% if request.COOKIES.auth %}
+      <li class="nav-item">
+        <a href="{% url 'logout' %}"><b>Logout</b></a>
+      </li>
+      {% else %}
       <li class="nav-item">
         <a href="{% url 'login' %}"><b>Login</b></a>
       </li>
+      {% endif %}
     </ul>
   </nav>
 </div>
