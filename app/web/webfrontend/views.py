@@ -285,6 +285,9 @@ def PoemDetailView(request, id):
 
 @csrf_exempt
 def create_story(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = StoryForm()
         return render(request, 'create_story.html', {'form': form})

@@ -1,10 +1,12 @@
 {% extends "base_generic.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="wrapper">
-<form action="{% url 'create_story' %}" method="post">
+<!-- <form action="{% url 'create_story' %}" method="post">
   {% csrf_token %}
     {{form}}
     <input type="submit" value="Submit" />
 </form>
-</div>
+</div> -->
+{% crispy form %}
 {% endblock %}

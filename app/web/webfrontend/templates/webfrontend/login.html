@@ -1,35 +1,15 @@
 {% extends "base_generic.html" %}
 {% block content %}
+
 <div class="wrapper">
-  <form class="form-signin" action="/login/" method="post">
+  {% load crispy_forms_tags %}
+  <!-- <form class="form-signin" action="/login/" method="post">
     {% csrf_token %}
-      <!-- <h2 class="form-signin-heading">Sign up</h2>
-      <input id="username" class="form-control" type="text" name="username" placeholder="Username" >
-      <input id="password" class="form-control" type="text" name="password" placeholder="Password" >
-      <input id="last_name" class="form-control" type="text" name="last_name" placeholder="Last Name" >
-      <input id="first_name" class="form-control" type="text" name="first_name" placeholder="First Name" >
-      <button class="btn btn-lg btn-primary btn-block" type="submit" id="loginbutton">Submit</button> -->
       {{form}}
       <input type="submit" value="Submit" />
-      <a href="http://localhost:8000/signup/"><p style="text-align:center">Don't have an Account? Sign up here!</a>
-</form>
-<!-- <form class="form-signin" method="post" action="#">
-    <h2 class="form-signin-heading">Login</h2>
-        <input name="username" class="form-control" placeholder="Username" id="username">
-        <input type="password" name="Password" class="form-control" placeholder="Password" id="password">
-        <label class="checkbox">
-            <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" onclick="return false" id="loginbutton">Submit</button>
-    <br/>
+      <a href="{% url 'signup' %}"><p style="text-align:center">Don't have an Account? Sign up here!</a>
 </form> -->
+{% crispy form %}
+<a href="{% url 'signup' %}"><p style="text-align:center">Don't have an Account? Sign up here!</a>
 </div>
-<!-- <form action="/login/" method="post">
-  {% csrf_token %}
-    <label for="username">Your name: </label>
-    <input id="username" type="text" name="username" value="{{ current_name }}">
-    <label for="password">Password: </label>
-    <input id="password" type="hidden" name="username" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form> -->
 {% endblock %}
