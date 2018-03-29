@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="wrapper">
-<form action="/create_story/" method="post">
+<form action="{% url 'create_story' %}" method="post">
   {% csrf_token %}
     {{form}}
     <input type="submit" value="Submit" />

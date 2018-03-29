@@ -288,15 +288,23 @@ def create_story(request):
     if request.method == 'GET':
         form = StoryForm()
         return render(request, 'create_story.html', {'form': form})
+    if request.method == 'POST':
+        owner = int(request.COOKIES.get('id'))
+        title = request.POST['title']
+        artists = request.POST['artists']
+        text = request.POST['text']
+        json_post = {"title": title, "artists": artists, "owner": owner, "text": text}
+        response = requests.post('http://exp-api:8000/api/v1/stories/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        return HttpResponseRedirect('/stories/')
     
 @csrf_exempt
-def create_musicvideo(request):
+def create_music_video(request):
     auth = request.COOKIES.get('auth')
     if not auth:
         return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = MusicVideoForm()
-        return render(request, 'create_musicvideo.html', {'form': form})
+        return render(request, 'create_music_video.html', {'form': form})
 
 @csrf_exempt
 def create_poem(request):
@@ -312,7 +320,7 @@ def create_poem(request):
         artists = request.POST['artists']
         text = request.POST['text']
         json_post = {"title": title, "artists": artists, "owner": owner, "text": text}
-        response = requests.post('http://exp-api:8000/api/v1/poems/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        response = requests.post('http://exp-api:8000/api/v1/poems/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
         return HttpResponseRedirect('/poems/')
 
 @csrf_exempt
@@ -328,7 +336,7 @@ def create_image(request):
         title = request.POST['title']
         artists = request.POST['artists']
         json_post = {"title": title, "artists": artists, "owner": owner}
-        response = requests.post('http://exp-api:8000/api/v1/images/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        response = requests.post('http://exp-api:8000/api/v1/images/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
         return HttpResponseRedirect('/images/')
 
 @csrf_exempt
@@ -344,7 +352,7 @@ def create_song(request):
         title = request.POST['title']
         artists = request.POST['artists']
         json_post = {"title": title, "artists": artists, "owner": owner}
-        response = requests.post('http://exp-api:8000/api/v1/songs/create/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        response = requests.post('http://exp-api:8000/api/v1/songs/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
         return HttpResponseRedirect('/songs/')
 
 def handler404(request):

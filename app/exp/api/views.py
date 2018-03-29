@@ -15,39 +15,62 @@ logger = logging.getLogger(__name__)
 def index(request):
     return HttpResponse("Exp API")
 
+@csrf_exempt
 def songs_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_songs(page))
-    elif request.method == 'POST':
-        post_dict = request.POST.dict()
-        return JsonResponse(modelsapi.create_song(post_dict))
+    if request.method == 'POST':
+        # post_dict = request.POST.dict()
+        data = request.body
+        str_data = data.decode('utf-8')
+        json_data = json.loads(str_data)
+        title = json_data["title"]
+        artists = json_data["artists"]
+        owner = json_data["owner"]
+        song_json = modelsapi.add_song({"title": title, "artists": artists, "owner": owner})
+        return song_json
+        # return JsonResponse(modelsapi.create_song(post_dict))
 
     return JsonResponse({'ok':False})
 
 def song_detail_json(request, pk):
     return JsonResponse(modelsapi.get_song(pk))
 
+@csrf_exempt
 def images_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_images(page))
     elif request.method == 'POST':
-        post_dict = request.POST.dict()
-        return JsonResponse(modelsapi.create_image(post_dict))
-
+        data = request.body
+        str_data = data.decode('utf-8')
+        json_data = json.loads(str_data)
+        title = json_data["title"]
+        artists = json_data["artists"]
+        owner = json_data["owner"]
+        image_json = modelsapi.add_image({"title": title, "artists": artists, "owner": owner})
+        return image_json
     return JsonResponse({'ok':False})
 
 def image_detail_json(request, pk):
     return JsonResponse(modelsapi.get_image(pk))
 
+@csrf_exempt
 def stories_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_stories(page))
     elif request.method == 'POST':
-        post_dict = request.POST.dict()
-        return JsonResponse(modelsapi.create_story(post_dict))
+        data = request.body
+        str_data = data.decode('utf-8')
+        json_data = json.loads(str_data)
+        title = json_data["title"]
+        artists = json_data["artists"]
+        text = json_data["text"]
+        owner = json_data["owner"]
+        story_json = modelsapi.add_story({"title": title, "artists": artists, "owner": owner, "text": text})
+        return story_json
 
     return JsonResponse({'ok':False})
 
@@ -67,52 +90,26 @@ def music_videos_json(request):
 def music_video_detail_json(request, pk):
     return JsonResponse(modelsapi.get_music_video(pk))
 
+@csrf_exempt
 def poems_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_poems(page))
     elif request.method == 'POST':
-        post_dict = request.POST.dict()
-        return JsonResponse(modelsapi.create_poem(post_dict))
+        data = request.body
+        str_data = data.decode('utf-8')
+        json_data = json.loads(str_data)
+        title = json_data["title"]
+        artists = json_data["artists"]
+        text = json_data["text"]
+        owner = json_data["owner"]
+        image_json = modelsapi.add_poem({"title": title, "artists": artists, "owner": owner, "text": text})
+        return image_json
 
     return JsonResponse({'ok':False})
 
 def poem_detail_json(request, pk):
     return JsonResponse(modelsapi.get_poem(pk))
-
-@csrf_exempt
-def create_song(request):
-    data = request.body
-    str_data = data.decode('utf-8')
-    json_data = json.loads(str_data)
-    title = json_data["title"]
-    artists = json_data["artists"]
-    owner = json_data["owner"]
-    song_json = modelsapi.add_song({"title": title, "artists": artists, "owner": owner})
-    return song_json
-
-@csrf_exempt
-def create_image(request):
-    data = request.body
-    str_data = data.decode('utf-8')
-    json_data = json.loads(str_data)
-    title = json_data["title"]
-    artists = json_data["artists"]
-    owner = json_data["owner"]
-    image_json = modelsapi.add_image({"title": title, "artists": artists, "owner": owner})
-    return image_json
-
-@csrf_exempt
-def create_poem(request):
-    data = request.body
-    str_data = data.decode('utf-8')
-    json_data = json.loads(str_data)
-    title = json_data["title"]
-    artists = json_data["artists"]
-    text = json_data["text"]
-    owner = json_data["owner"]
-    image_json = modelsapi.add_poem({"title": title, "artists": artists, "owner": owner, "text": text})
-    return image_json
 
 @csrf_exempt
 def create_user(request):
@@ -149,7 +146,6 @@ def login(request):
 def logout(request):
     post_dict = request.POST.dict()
     return JsonResponse(modelsapi.delete_auth(post_dict['auth']))
-    # return JsonResponse(modelsapi.delete_auth(authenticator))
 
 #
 # @csrf_exempt
@@ -171,3 +167,37 @@ def logout(request):
 #         # return HttpResponse(json.dumps(user_data))
 #         # else:
 #         #     return HttpResponse(user_data)
+
+# @csrf_exempt
+# def create_song(request):
+#     data = request.body
+#     str_data = data.decode('utf-8')
+#     json_data = json.loads(str_data)
+#     title = json_data["title"]
+#     artists = json_data["artists"]
+#     owner = json_data["owner"]
+#     song_json = modelsapi.add_song({"title": title, "artists": artists, "owner": owner})
+#     return song_json
+
+# @csrf_exempt
+# def create_image(request):
+#     data = request.body
+#     str_data = data.decode('utf-8')
+#     json_data = json.loads(str_data)
+#     title = json_data["title"]
+#     artists = json_data["artists"]
+#     owner = json_data["owner"]
+#     image_json = modelsapi.add_image({"title": title, "artists": artists, "owner": owner})
+#     return image_json
+
+# @csrf_exempt
+# def create_poem(request):
+#     data = request.body
+#     str_data = data.decode('utf-8')
+#     json_data = json.loads(str_data)
+#     title = json_data["title"]
+#     artists = json_data["artists"]
+#     text = json_data["text"]
+#     owner = json_data["owner"]
+#     image_json = modelsapi.add_poem({"title": title, "artists": artists, "owner": owner, "text": text})
+#     return image_json
