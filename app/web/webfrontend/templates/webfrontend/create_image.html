@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="wrapper">
-<form action="{% url 'create_image' %}" method="post">
+<form action="/create_image/" method="post">
   {% csrf_token %}
     {{form}}
     <input type="submit" value="Submit" />
