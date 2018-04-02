@@ -31,11 +31,17 @@ def signup(request):
         return render(request, 'signup.html', {'form': form})
     if request.method == 'POST':
         response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(request.POST),headers={'Content-Type': 'application/json'})
+        if response.json()["user_in_db"]:
+            messages.error(request, "That username already exists.")
+            form = SignUpForm()
+            return render(request, 'signup.html', {'form': form})
         # return HttpResponse(response)
         return HttpResponseRedirect('/login/')
 
 @csrf_exempt
 def login(request):
+    if 'auth' in request.COOKIES:
+        return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = LoginForm()
         return render(request, 'login.html', {'form': form})

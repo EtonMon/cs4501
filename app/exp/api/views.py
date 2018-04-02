@@ -119,6 +119,9 @@ def create_user(request):
         username = json_data["username"]
         password = json_data["password"]
         hashed_pw = hashers.make_password(password)
+        db_user = modelsapi.get_user_by_username(username)
+        if db_user["results"]:
+            return JsonResponse({'user_in_db':True})
         create_user_response = modelsapi.create_user({"first_name": first_name, "last_name": last_name, "username": username, "password": hashed_pw})
         return create_user_response
 
