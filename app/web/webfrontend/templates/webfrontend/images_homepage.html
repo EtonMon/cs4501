@@ -5,6 +5,6 @@
     {% for object in data%}
        <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}} </a>
     {% endfor%}
-    </ul>
     <a class="btn btn-primary" href="{% url 'create_image'%}" role="button">Add Image</a>
+    </ul>
 {% endblock %}

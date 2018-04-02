@@ -2,6 +2,13 @@
 {% block content %}
 
 <div class="wrapper">
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} style="text-align:center" class="list-group-item list-group-item-danger" {%endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
   {% load crispy_forms_tags %}
   <!-- <form class="form-signin" action="/login/" method="post">
     {% csrf_token %}

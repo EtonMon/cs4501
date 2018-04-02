@@ -34,7 +34,7 @@ class SignUpForm(forms.Form):
 
 class StoryForm(forms.Form):
     title = forms.CharField(label='Title', max_length=100)
-    artists = forms.CharField(label='Artist', max_length=100)
+    artists = forms.CharField(label='Author', max_length=100)
     text = forms.CharField(label='Description',
         widget = forms.Textarea(),
     )
