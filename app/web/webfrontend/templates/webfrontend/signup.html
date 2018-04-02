@@ -1,8 +1,16 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <div class="wrapper">
+
+  {% if messages %}
+  <ul class="list-group">
+      {% for message in messages %}
+      <li class="list-group-item list-group-item-warning">{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
 {% load crispy_forms_tags %}
- 
+
 {% crispy form %}
 <!-- <form class="form-signin" action="/signup/" method="post">
   {% csrf_token %}

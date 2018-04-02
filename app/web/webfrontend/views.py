@@ -15,6 +15,7 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.urls import reverse
+from django.contrib import messages
 
 # Create your views here.
 
@@ -29,6 +30,10 @@ def signup(request):
         return render(request, 'signup.html', {'form': form})
     if request.method == 'POST':
         response = requests.post('http://exp-api:8000/api/v1/users/',data=json.dumps(request.POST),headers={'Content-Type': 'application/json'})
+        if response.json()["user_in_db"]:
+            messages.error(request, "That username already exists.")
+            form = SignUpForm()
+            return render(request, 'signup.html', {'form': form})
         # return HttpResponse(response)
         return HttpResponseRedirect('/login/')
 
@@ -45,7 +50,7 @@ def login(request):
         response = requests.post('http://exp-api:8000/api/v1/login/', data=request.POST.dict())
         response_str = response.content.decode('utf-8')
         response_json = json.loads(response_str)
-        try: 
+        try:
             authenticator = response_json['authenticator']
             user_id = str(response_json['user_id'])
             response = HttpResponseRedirect('/home/')
@@ -64,10 +69,10 @@ def login(request):
 #         return render(request, 'login.html', {'form': form, 'next': next})
 #     if request.method == 'POST':
 #         form = LoginForm(request.POST)
-        
+
 #         if not form.is_valid():
 #             return render(request, 'index.html', {'form': form})
-        
+
 #         # Sanitize username and password fields
 #         username = form.cleaned_data['username']
 #         password = form.cleaned_data['password']
@@ -79,7 +84,7 @@ def login(request):
 
 #         response_str = response.content.decode('utf-8')
 #         response_json = json.loads(response_str)
-#         try: 
+#         try:
 #             userid = response_json['user_id']
 #             authenticator = response_json['authenticator']
 #             response = HttpResponseRedirect(next)
@@ -299,7 +304,7 @@ def create_story(request):
         json_post = {"title": title, "artists": artists, "owner": owner, "text": text}
         response = requests.post('http://exp-api:8000/api/v1/stories/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
         return HttpResponseRedirect('/stories/')
-    
+
 @csrf_exempt
 def create_music_video(request):
     auth = request.COOKIES.get('auth')
