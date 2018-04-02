@@ -39,6 +39,8 @@ def signup(request):
 
 @csrf_exempt
 def login(request):
+    if 'auth' in request.COOKIES:
+        return HttpResponseRedirect('/home/')
     if request.method == 'GET':
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
