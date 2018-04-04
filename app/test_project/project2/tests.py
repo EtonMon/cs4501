@@ -1,11 +1,11 @@
 from django.contrib.gis.geos import factory
 from django.test import TestCase
 from rest_framework.test import APITestCase
-from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User
+from .models import Song, Image, Story, Feedback, Music_Video, Poem, Custom_User, Authenticator
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.core.urlresolvers import reverse
-from .views import SongDetailsView, ImageDetailsView, StoryDetailsView, FeedbackDetailsView, Music_Video_DetailsView, Poem_DetailsView, CustomUserDetailsView
+from .views import SongDetailsView, ImageDetailsView, StoryDetailsView, FeedbackDetailsView, Music_Video_DetailsView, Poem_DetailsView, CustomUserDetailsView, signup
 
 # Create your tests here.
 class SongTestCase(TestCase):
@@ -503,6 +503,28 @@ class Custom_UserAPITestCase(TestCase):
             reverse('custom_user_list'), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, user)
+
+class AuthenticatorAPITestCase(TestCase):
+    """Test suite for the api views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+        self.custom_user_data = {'first_name': 'Halle', 'last_name': 'Berry', 'username': 'storm'}
+        self.response = self.client.post(
+            reverse('create_custom_user'),
+            self.custom_user_data,
+            format="json")
+
+    def test_api_can_create_a_custom_user_and_authenticator(self):
+        """POST: Test the api has custom user creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Custom_User.objects.get().first_name, 'Halle')
+        self.assertEqual(Custom_User.objects.get().last_name, 'Berry')
+        self.assertEqual(Custom_User.objects.get().username, 'storm')
+
+    #was trying to figure out how to create a user and authenticator separately and link the two...what I tried didn't work so well.     
+
 
 class FeedbackAPITestCase(TestCase):
     """Test suite for the api views."""
