@@ -35,11 +35,11 @@ urlpatterns = [
     url(r'^api/v1/users/$',
         views.CustomUserListCreateView.as_view(), name="custom_user_list"),
     url(r'^api/v1/auth/$',
-        views.AuthCreateView.as_view()),
+        views.AuthCreateView.as_view(), name = "create_authenticator"),
     url(r'^api/v1/auth/(?P<user_id>[0-9]+)/$',
-        views.AuthRetrieveView.as_view()),
+        views.AuthRetrieveView.as_view(), name = "retrieve_authenticator"),
     url(r'^api/v1/auth/(?P<pk>.+)/delete$',
-        views.AuthDestroyView.as_view())
+        views.AuthDestroyView.as_view(), name = "destroy_authenticator")
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
