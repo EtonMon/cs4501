@@ -1,10 +1,7 @@
 {% extends "base_generic.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="wrapper">
-<form action="{% url 'create_song' %}" class="form-signin" method="post">
-  {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Submit" />
-</form>
-</div>
+
+{% crispy form %}
 {% endblock %}

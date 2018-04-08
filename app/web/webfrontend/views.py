@@ -68,40 +68,6 @@ def login(request):
             messages.error(request, "Either username or password was invalid. Please try again.")
             return render(request, 'login.html', {'form': form})
 
-#@csrf_exempt
-# def login(request):
-#     if request.method == 'GET':
-#         next = request.GET.get('songs') or reverse('login')
-#         form = LoginForm()
-#         return render(request, 'login.html', {'form': form, 'next': next})
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-
-#         if not form.is_valid():
-#             return render(request, 'index.html', {'form': form})
-
-#         # Sanitize username and password fields
-#         username = form.cleaned_data['username']
-#         password = form.cleaned_data['password']
-
-#         next = form.cleaned_data.get('songs') or reverse('login')
-
-#         payload = {"username": username, "password": password}
-#         response = requests.post('http://exp-api:8000/api/v1/login/', data=payload)
-
-#         response_str = response.content.decode('utf-8')
-#         response_json = json.loads(response_str)
-#         try:
-#             userid = response_json['user_id']
-#             authenticator = response_json['authenticator']
-#             response = HttpResponseRedirect(next)
-#             response.set_cookie("auth", authenticator)
-#             response.set_cookie("user_id", userid)
-#             return response
-#             # return HttpResponse(response)
-#         except:
-#             return HttpResponseRedirect('/login/')
-
 @csrf_exempt
 def logout(request):
     requests.post('http://exp-api:8000/api/v1/logout/', data={"auth": request.COOKIES.get('auth'), "user_id": request.COOKIES.get('user_id')})
@@ -320,6 +286,13 @@ def create_music_video(request):
     if request.method == 'GET':
         form = MusicVideoForm()
         return render(request, 'create_music_video.html', {'form': form})
+    if request.method == 'POST':
+        owner = int(request.COOKIES.get('id'))
+        title = request.POST['title']
+        artists = request.POST['artists']
+        json_post = {"title": title, "artists": artists, "owner": owner}
+        response = requests.post('http://exp-api:8000/api/v1/music_videos/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
+        return HttpResponseRedirect('/music_videos/')
 
 @csrf_exempt
 def create_poem(request):

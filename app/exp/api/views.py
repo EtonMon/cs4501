@@ -73,13 +73,20 @@ def stories_json(request):
 def story_detail_json(request, pk):
     return JsonResponse(modelsapi.get_story(pk))
 
+@csrf_exempt
 def music_videos_json(request):
     if request.method == 'GET':
         page = request.GET.get('page', 1)
         return JsonResponse(modelsapi.get_music_videos(page))
     elif request.method == 'POST':
-        post_dict = request.POST.dict()
-        return JsonResponse(modelsapi.create_music_video(post_dict))
+        data = request.body
+        str_data = data.decode('utf-8')
+        json_data = json.loads(str_data)
+        title = json_data["title"]
+        artists = json_data["artists"]
+        owner = json_data["owner"]
+        image_json = modelsapi.add_music_video({"title": title, "artists": artists, "owner": owner})
+        return image_json
     return JsonResponse({'ok':False})
 
 def music_video_detail_json(request, pk):

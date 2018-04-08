@@ -69,11 +69,35 @@ class PoemForm(forms.Form):
 class MusicVideoForm(forms.Form):
     title = forms.CharField(label='Title', max_length=40)
     artists = forms.CharField(label='Artist', max_length=100)
+    helper = FormHelper()
+    helper.layout = Layout(
+        Field('title', css_class='input-xlarge'),
+        Field('artists', css_class='input-xlarge'),
+        FormActions(
+            Submit('submit', 'Submit', css_class="btn-primary"),
+        )
+    )
 
 class SongForm(forms.Form):
     title = forms.CharField(label='Title', max_length=40)
     artists = forms.CharField(label='Artist', max_length=100)
+    helper = FormHelper()
+    helper.layout = Layout(
+        Field('title', css_class='input-xlarge'),
+        Field('artists', css_class='input-xlarge'),
+        FormActions(
+            Submit('submit', 'Submit', css_class="btn-primary"),
+        )
+    )
 
 class ImageForm(forms.Form):
     title = forms.CharField(label='Title', max_length=40)
     artists = forms.CharField(label='Artist', max_length=100)
+    helper = FormHelper()
+    helper.layout = Layout(
+        Field('title', css_class='input-xlarge'),
+        Field('artists', css_class='input-xlarge'),
+        FormActions(
+            Submit('submit', 'Submit', css_class="btn-primary"),
+        )
+    )
