@@ -36,7 +36,7 @@ def signup(request):
                 messages.error(request, "That username already exists.")
                 form = SignUpForm()
                 return render(request, 'signup.html', {'form': form})
-        except: 
+        except:
             return HttpResponseRedirect('/login/')
 
 @csrf_exempt

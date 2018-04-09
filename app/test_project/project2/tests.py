@@ -521,12 +521,30 @@ class Authenticator_UserAPITestCase(TestCase):
             self.authenticator_data,
             format="multipart")
 
-    def test_api_can_create_a_custom_user(self):
+    def test_api_can_create_authenticator(self):
         """POST: Test the api has custom user creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Authenticator.objects.get().user_id, 4)
-        self.assertEqual(Authenticator.objects.get().authenticator, self.authen)
+        #self.assertEqual(Authenticator.objects.get().authenticator, self.authen)
 
+    def test_api_can_get_authenticator(self):
+        auth = Authenticator.objects.get()
+        response = self.client.get(
+            reverse('retrieve_authenticator',
+            kwargs={'user_id': auth.user_id}), format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, auth)
+
+    # def test_api_can_delete_authenticator(self):
+    #     """DELETE: Test the api can delete a custom user."""
+    #     auth = Authenticator.objects.get()
+    #     response = self.client.delete(
+    #         reverse('destroy_authenticator', kwargs={'pk': auth.user_id}),
+    #         format='json',
+    #         follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
 class FeedbackAPITestCase(TestCase):
     """Test suite for the api views."""
 

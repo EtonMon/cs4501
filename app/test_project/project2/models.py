@@ -16,8 +16,11 @@ class Custom_User(models.Model):
 
 class Authenticator(models.Model):
     user_id = models.IntegerField()
-    authenticator = models.UUIDField(primary_key=True, editable = True, default = uuid.uuid4)
+    authenticator = models.UUIDField(primary_key=True, editable = False, default = uuid.uuid4)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}".format(self.user_id)
 
 class Song(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
