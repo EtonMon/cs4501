@@ -525,16 +525,17 @@ class Authenticator_UserAPITestCase(TestCase):
         """POST: Test the api has custom user creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Authenticator.objects.get().user_id, 4)
-        #self.assertEqual(Authenticator.objects.get().authenticator, self.authen)
+        self.assertEqual(Authenticator.objects.get().authenticator, self.authen)
 
     def test_api_can_get_authenticator(self):
         auth = Authenticator.objects.get()
+        print(auth.user_id)
         response = self.client.get(
             reverse('retrieve_authenticator',
-            kwargs={'user_id': auth.user_id}), format="json")
+            kwargs={'user_id': auth.user_id}), format="multipart")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, auth)
+        self.assertContains(response, auth.user_id)
 
     # def test_api_can_delete_authenticator(self):
     #     """DELETE: Test the api can delete a custom user."""

@@ -2,6 +2,7 @@ import urllib.request
 import urllib.parse
 import json
 import os
+import uuid
 import hmac
 import requests
 from django.views.decorators.csrf import csrf_exempt
@@ -212,11 +213,7 @@ def create_auth(username):
     user = get_user_by_username(username)
     # whatisuser = str(user)
     id = user["results"][0]["id"]
-    authenticator = hmac.new(
-        key = settings.SECRET_KEY.encode('utf-8'),
-        msg = os.urandom(32),
-        digestmod = 'sha256',
-    ).hexdigest()
+    authenticator = uuid.uuid4()
     payload={"user_id":id, "authenticator":authenticator}
     # post_data = {'password': whatisuser, 'last_name': 'testing', 'username': 'blehh2222', 'first_name': 'password'}
     response = requests.post('http://models-api:8000/project2/api/v1/auth/', data=payload)
