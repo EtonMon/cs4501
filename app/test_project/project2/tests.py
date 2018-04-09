@@ -529,7 +529,7 @@ class Authenticator_UserAPITestCase(TestCase):
 
     def test_api_can_get_authenticator(self):
         auth = Authenticator.objects.get()
-        print(auth.user_id)
+
         response = self.client.get(
             reverse('retrieve_authenticator',
             kwargs={'user_id': auth.user_id}), format="multipart")
@@ -537,15 +537,16 @@ class Authenticator_UserAPITestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, auth.user_id)
 
-    # def test_api_can_delete_authenticator(self):
-    #     """DELETE: Test the api can delete a custom user."""
-    #     auth = Authenticator.objects.get()
-    #     response = self.client.delete(
-    #         reverse('destroy_authenticator', kwargs={'pk': auth.user_id}),
-    #         format='json',
-    #         follow=True)
+    def test_api_can_delete_authenticator(self):
+        """DELETE: Test the api can delete a custom user."""
+        auth = Authenticator.objects.get()
+        print(auth.user_id)
+        response = self.client.delete(
+            reverse('retrieve_authenticator', kwargs={'user_id': auth.user_id}),
+            format='multipart',
+            follow=True)
 
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
 class FeedbackAPITestCase(TestCase):
     """Test suite for the api views."""
 
