@@ -22,13 +22,3 @@ try:
                 print(json.loads((message.value).decode('utf-8')))
 except:
     print("----------------KAFA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
-
-
-# print("----------------ATTEMPTING TO CONNECT TO KAFKA----------------------")
-# consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
-# print("----------------BATCH SUCCESSFULLY CONNECTED TO KAFKA----------------------")
-# retry = False
-
-# print("----------------LISTENING FOR NEW LISTINGS----------------------")
-# for message in consumer:
-#             print(json.loads((message.value).decode('utf-8')))
