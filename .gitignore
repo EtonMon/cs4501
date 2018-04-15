@@ -3,4 +3,4 @@
 *.pyc
 *.pyo
 bashcommands.txt
-
+.vscode/settings.json
