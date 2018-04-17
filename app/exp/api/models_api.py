@@ -41,16 +41,15 @@ def get_song(pk):
 @csrf_exempt
 def add_song(song_dict):
     payload = song_dict
+    k = json.dumps(song_dict)
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
-    id = response['id']
-    title = response['title']
-    artists = response['artists']
-    owner = response['owner']
-    new_item = {'id':id,'title':title,'artists':artists,'owner':owner}
-    kafka_api.send_to_kafka(new_item)
-    
-    return new_item
-    #return response.json()
+    # id = response['id']
+    # title = response['title']
+    # artists = response['artists']
+    # owner = response['owner']
+    # new_item = {'id':1,'title':"title",'artists':"artists",'owner':"owner"}
+    kafka = kafka_api.send_to_kafka(response.json())
+    return response.json()
 
 def get_images(page):
     # make a GET request and parse the returned JSON
