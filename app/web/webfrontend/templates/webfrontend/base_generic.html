@@ -50,6 +50,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'poems' %}">Poem</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'search' %}">Search</a>
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto mr-5">
       {% if request.COOKIES.auth %}
@@ -72,6 +75,3 @@
 </div> <!-- /container -->
 </body>
 </html>
-
-
-
