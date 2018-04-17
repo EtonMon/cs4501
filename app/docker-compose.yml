@@ -15,7 +15,7 @@ exp:
     image: tp33/django
     links:
       -  models:models-api
-
+      -  kafka:kafka
     volumes:
       - ./exp/:/app
 

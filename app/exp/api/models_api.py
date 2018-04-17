@@ -7,6 +7,7 @@ import hmac
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import hashers
+from . import kafka_api
 
 # import django settings file
 from django.conf import settings
@@ -41,7 +42,15 @@ def get_song(pk):
 def add_song(song_dict):
     payload = song_dict
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
-    return response.json()
+    id = response['id']
+    title = response['title']
+    artists = response['artists']
+    owner = response['owner']
+    new_item = {'id':id,'title':title,'artists':artists,'owner':owner}
+    kafka_api.send_to_kafka(new_item)
+    
+    return new_item
+    #return response.json()
 
 def get_images(page):
     # make a GET request and parse the returned JSON

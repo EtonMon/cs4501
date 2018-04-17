@@ -19,6 +19,7 @@ for i in range(timeout):
 try:
     print("----------------ATTEMPTING TO LISTEN FOR NEW LISTINGS----------------------", flush=True)
     for message in consumer:
-                print(json.loads((message.value).decode('utf-8')))
+        print("item received",flush=True)
+        print(json.loads((message.value).decode('utf-8')),flush=True)
 except:
     print("----------------KAFA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)

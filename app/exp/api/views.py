@@ -28,7 +28,8 @@ def songs_json(request):
         artists = json_data["artists"]
         owner = json_data["owner"]
         song_json = models_api.add_song({"title": title, "artists": artists, "owner": owner})
-        return song_json
+        #return song_json
+        return JsonResponse(song_json)
     return JsonResponse({'ok':False})
 
 def song_detail_json(request, pk):
