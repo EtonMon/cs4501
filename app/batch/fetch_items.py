@@ -22,4 +22,4 @@ try:
         print("item received",flush=True)
         print(json.loads((message.value).decode('utf-8')),flush=True)
 except:
-    print("----------------KAFA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
+    print("----------------KAFKA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
