@@ -48,7 +48,7 @@ def add_song(song_dict):
     # artists = response['artists']
     # owner = response['owner']
     # new_item = {'id':1,'title':"title",'artists':"artists",'owner':"owner"}
-    kafka = kafka_api.send_to_kafka(response.json())
+    kafka_api.send_to_kafka(response.json())
     return response.json()
 
 def get_images(page):
