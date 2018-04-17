@@ -6,7 +6,6 @@ import time
 # Attempting to establish with kafka every second for 20 seconds
 timeout = 20
 es = Elasticsearch(['es'])
-
 for i in range(timeout):
     time.sleep(1)
     try:
@@ -27,4 +26,4 @@ try:
         es.index(index='listing_index', doc_type='listing', id=new_listing['id'], body=new_listing)
         es.indices.refresh(index="listing_index")
 except:
-    print("----------------KAFKA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
+    print("----------------KAFA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
