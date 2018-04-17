@@ -26,4 +26,4 @@ try:
         es.index(index='listing_index', doc_type='listing', id=new_listing['id'], body=new_listing)
         es.indices.refresh(index="listing_index")
 except:
-    print("----------------KAFA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
+    print("----------------KAFKA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
