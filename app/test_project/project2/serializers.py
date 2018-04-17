@@ -40,7 +40,7 @@ class Music_Video_Serializer(serializers.ModelSerializer):
 class Poem_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Poem
-        fields = ('id', 'title', 'artists', 'time_posted', 'owner')
+        fields = ('id', 'title', 'artists', 'text', 'time_posted', 'owner')
         read_only_fields = ('time_posted', 'time_posted')
 
 

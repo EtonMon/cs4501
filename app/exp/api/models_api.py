@@ -81,6 +81,7 @@ def get_image(pk):
 def add_image(image_dict):
     payload = image_dict
     response = requests.post('http://models-api:8000/project2/api/v1/images/create/', data=payload)
+    kafka_api.send_to_kafka(response.json())
     return response.json()
 
 def get_stories(page):
@@ -113,6 +114,7 @@ def get_story(pk):
 def add_story(story_dict):
     payload = story_dict
     response = requests.post('http://models-api:8000/project2/api/v1/story/create/', data=payload)
+    kafka_api.send_to_kafka(response.json())
     return response.json()
 
 def get_music_videos(page):
@@ -145,6 +147,7 @@ def get_music_video(pk):
 def add_music_video(music_vid_dict):
     payload = music_vid_dict
     response = requests.post('http://models-api:8000/project2/api/v1/music_videos/create/', data=payload)
+    kafka_api.send_to_kafka(response.json())
     return response.json()
 
 def get_poems(page):
@@ -177,6 +180,7 @@ def get_poem(pk):
 def add_poem(poem_dict):
     payload = poem_dict
     response = requests.post('http://models-api:8000/project2/api/v1/poems/create/', data=payload)
+    kafka_api.send_to_kafka(response.json())
     return response.json()
 
 def get_users(page):

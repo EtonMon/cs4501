@@ -70,7 +70,7 @@ class Poem(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT_TITLE")
     artists = models.CharField(max_length=50, default="NO_ARTIST")
     owner = models.ForeignKey(Custom_User, default=1, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.TextField(max_length=1000, default="text")
     time_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
