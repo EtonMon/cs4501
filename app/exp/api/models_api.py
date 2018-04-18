@@ -45,6 +45,8 @@ def add_song(song_dict):
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
     json_data = response.json()
     json_data['type'] = "song"
+    user_data = get_user(json_data['owner'])
+    json_data['username'] = user_data['username']
     kafka_api.send_to_kafka(json_data)
     return response.json()
 
@@ -80,6 +82,8 @@ def add_image(image_dict):
     response = requests.post('http://models-api:8000/project2/api/v1/images/create/', data=payload)
     json_data = response.json()
     json_data['type'] = "image"
+    user_data = get_user(json_data['owner'])
+    json_data['username'] = user_data['username']
     kafka_api.send_to_kafka(json_data)
     return response.json()
 
@@ -115,6 +119,8 @@ def add_story(story_dict):
     response = requests.post('http://models-api:8000/project2/api/v1/story/create/', data=payload)
     json_data = response.json()
     json_data['type'] = "story"
+    user_data = get_user(json_data['owner'])
+    json_data['username'] = user_data['username']
     kafka_api.send_to_kafka(json_data)
     return response.json()
 
@@ -150,6 +156,8 @@ def add_music_video(music_vid_dict):
     response = requests.post('http://models-api:8000/project2/api/v1/music_videos/create/', data=payload)
     json_data = response.json()
     json_data['type'] = "music_video"
+    user_data = get_user(json_data['owner'])
+    json_data['username'] = user_data['username']
     kafka_api.send_to_kafka(json_data)
     return response.json()
 
@@ -185,6 +193,8 @@ def add_poem(poem_dict):
     response = requests.post('http://models-api:8000/project2/api/v1/poems/create/', data=payload)
     json_data = response.json()
     json_data['type'] = "poem"
+    user_data = get_user(json_data['owner'])
+    json_data['username'] = user_data['username']
     kafka_api.send_to_kafka(json_data)
     return response.json()
 
