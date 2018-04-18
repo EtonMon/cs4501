@@ -43,12 +43,9 @@ def add_song(song_dict):
     payload = song_dict
     k = json.dumps(song_dict)
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
-    # id = response['id']
-    # title = response['title']
-    # artists = response['artists']
-    # owner = response['owner']
-    # new_item = {'id':1,'title':"title",'artists':"artists",'owner':"owner"}
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    json_data['type'] = "song"
+    kafka_api.send_to_kafka(json_data)
     return response.json()
 
 def get_images(page):
@@ -81,7 +78,9 @@ def get_image(pk):
 def add_image(image_dict):
     payload = image_dict
     response = requests.post('http://models-api:8000/project2/api/v1/images/create/', data=payload)
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    json_data['type'] = "image"
+    kafka_api.send_to_kafka(json_data)
     return response.json()
 
 def get_stories(page):
@@ -114,7 +113,9 @@ def get_story(pk):
 def add_story(story_dict):
     payload = story_dict
     response = requests.post('http://models-api:8000/project2/api/v1/story/create/', data=payload)
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    json_data['type'] = "story"
+    kafka_api.send_to_kafka(json_data)
     return response.json()
 
 def get_music_videos(page):
@@ -147,7 +148,9 @@ def get_music_video(pk):
 def add_music_video(music_vid_dict):
     payload = music_vid_dict
     response = requests.post('http://models-api:8000/project2/api/v1/music_videos/create/', data=payload)
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    json_data['type'] = "music_video"
+    kafka_api.send_to_kafka(json_data)
     return response.json()
 
 def get_poems(page):
@@ -180,7 +183,9 @@ def get_poem(pk):
 def add_poem(poem_dict):
     payload = poem_dict
     response = requests.post('http://models-api:8000/project2/api/v1/poems/create/', data=payload)
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    json_data['type'] = "poem"
+    kafka_api.send_to_kafka(json_data)
     return response.json()
 
 def get_users(page):
