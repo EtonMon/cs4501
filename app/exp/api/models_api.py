@@ -43,12 +43,13 @@ def add_song(song_dict):
     payload = song_dict
     k = json.dumps(song_dict)
     response = requests.post('http://models-api:8000/project2/api/v1/songs/create/', data=payload)
-    # id = response['id']
-    # title = response['title']
-    # artists = response['artists']
-    # owner = response['owner']
-    # new_item = {'id':1,'title':"title",'artists':"artists",'owner':"owner"}
-    kafka_api.send_to_kafka(response.json())
+    json_data = response.json()
+    id = json_data['id']
+    title = json_data['title']
+    artists = json_data['artists']
+    owner = json_data['owner']
+    new_item = {'id':id,'title':title,'artists':artists,'owner':owner, 'type': "song"}
+    kafka_api.send_to_kafka(new_item)
     return response.json()
 
 def get_images(page):
