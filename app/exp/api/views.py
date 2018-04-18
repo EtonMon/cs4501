@@ -8,6 +8,7 @@ import json
 from django.contrib.auth import hashers
 # import the logging library
 import logging
+from . import es_api
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -150,6 +151,15 @@ def login(request):
 def logout(request):
     post_dict = request.POST.dict()
     return JsonResponse(models_api.delete_auth(post_dict['auth']))
+
+def search(request):
+    if request.method == 'POST':
+        post_dict = request.Post.dict()
+        query = post_dict["query"]
+        elastic_results = es_api.query(query)
+        return JsonResponse(elastic_results)
+    return JsonResponse({'ok':False})
+
 
 #
 # @csrf_exempt
