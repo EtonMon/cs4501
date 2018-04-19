@@ -79,12 +79,18 @@ def logout(request):
     return response
 
 def search(request):
-    req = urllib.request.Request('http://exp-api:8000/api/v1/songs/')
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
-    return render(request,
-    'search.html',
-    context={'data': json_data['results']})
+    if request.method == 'POST':
+        response = requests.post('http://exp-api:8000/api/v1/search/', data=request.POST.dict())
+        response_str = response.content.decode('utf-8')
+        response_json = json.loads(response_str)
+        if response_json['empty']==True:
+            print(response_json)
+            return HttpResponseNotFound('<h1>Page not found</h1>')
+        return render(request,
+        'search.html',
+        context={'data': response_json['results']})
+    else:
+        return HttpResponseNotFound('<h1>Page isnt found</h1>')
 
 def songs(request):
     """sending an exp service request to retrieve json data for songs"""
@@ -344,6 +350,28 @@ def create_song(request):
         response = requests.post('http://exp-api:8000/api/v1/songs/',data=json.dumps(json_post),headers={'Content-Type': 'application/json'})
         return HttpResponseRedirect('/songs/')
 
+"""
+def SearchDetailView(request, id):
+    sending an exp service request to retrieve json data for a specific poem
+    try:
+        req = urllib.request.Request('http://exp-api:8000/api/v1/search/'+id)
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
+
+        this get's the owner's id and sends an exp service request to get their username back
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
+    return render(
+        request,
+        'search.html',
+        context={'data': json_data, 'username': user_data['username']}
+    )
+"""
 def handler404(request):
     return render(request, '404.html', status=404)
 
