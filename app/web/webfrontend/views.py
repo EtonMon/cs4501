@@ -78,6 +78,7 @@ def logout(request):
     response.delete_cookie('username')
     return response
 
+@csrf_exempt
 def search(request):
     if request.method == 'POST':
         response = requests.post('http://exp-api:8000/api/v1/search/', data=request.POST.dict())

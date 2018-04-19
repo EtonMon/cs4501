@@ -152,9 +152,10 @@ def logout(request):
     post_dict = request.POST.dict()
     return JsonResponse(models_api.delete_auth(post_dict['auth']))
 
+@csrf_exempt
 def search(request):
     if request.method == 'POST':
-        post_dict = request.Post.dict()
+        post_dict = request.POST.dict()
         query = post_dict["query"]
         elastic_results = es_api.query(query)
         return JsonResponse(elastic_results)
