@@ -124,11 +124,15 @@ def music_videos(request):
     req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     json_data = json.loads(resp_json)
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/')
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
 
+    # return HttpResponse(json_data['results'])
     return render(
         request,
         'music_videos_homepage.html',
-        context={'data': json_data['results']}
+        context={'data': json_data['results'], 'user_data': user_data['results']}
     )
 
 def MusicVideoDetailView(request, id):
