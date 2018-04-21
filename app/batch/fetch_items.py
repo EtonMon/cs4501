@@ -16,6 +16,22 @@ for i in range(timeout):
     except:
         print("----------------CONNECTION TO KAFKA FAILED----------------------", flush=True)
 
+# Create ES index by adding and deleting trivial listing
+for i in range(timeout):
+    time.sleep(1)
+    try:
+        print("----------------ATTEMPTING TO CREATE ES INDEX----------------------", flush=True)
+        some_new_listing = {'title': 'Used MacbookAir 13"', 'description': 'This is a used Macbook Air in great condition', 'id':42, 'type':'None'}
+        es.index(index='listing_index', doc_type='listing', id=some_new_listing['id'], body=some_new_listing)
+        es.indices.refresh(index="listing_index")
+        es.delete(index='listing_index', doc_type='listing', id=some_new_listing['id'])
+        es.indices.refresh(index="listing_index")
+        print("----------------INDEX CREATION SUCCESSFUL----------------------", flush=True)
+        break
+    except:
+        print("----------------INDEX CREATION FAILED----------------------", flush=True)
+
+
 # Attempts to process messages from kafka if connection established
 try:
     print("----------------ATTEMPTING TO LISTEN FOR NEW LISTINGS----------------------", flush=True)
