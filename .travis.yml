@@ -15,6 +15,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - pwd
+  - cd app
   - ls
   - docker-compose up
