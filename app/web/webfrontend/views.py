@@ -85,8 +85,8 @@ def search(request):
         response_str = response.content.decode('utf-8')
         response_json = json.loads(response_str)
         if response_json['empty']==True:
-            print(response_json)
-            return HttpResponseNotFound('<h1>Page not found</h1>')
+            return render(request,
+            'search_not_found.html')
         return render(request,
         'search.html',
         context={'data': response_json['results']})

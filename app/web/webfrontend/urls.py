@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^poems/create/$', views.create_poem, name='create_poem'),
     url(r'^poems/(?P<id>\d+)/$', views.PoemDetailView, name='poem_detail'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^searchnot/$', views.search, name='search_not_found'),
     #url(r'^search/(?P<id>\d+)/$', views.SearchDetailView, name='search_detail'),
 ]
