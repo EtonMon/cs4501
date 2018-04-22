@@ -3,8 +3,14 @@
 <!--    Parsing json data. Accessing 'title' in json.-->
     <ul class="list-group">
     {% for object in data%}
-       <a href="{% url 'poem_detail' object.id %}" class="list-group-item"> {{object.title}} </a>
+       <a href="{% url 'poem_detail' object.id %}" class="list-group-item"> {{object.title}} 
+		<div class="d-flex w-100 justify-content-between">
+      <small> by {{object.artists}}</small>
+      <small> {{object.time_posted}}</small>
+    </div>
+    <!-- <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> -->
+       </a>
     {% endfor%}
-    <a class="btn btn-primary" href="{% url 'create_poem'%}" role="button">Add Poem</a>
+    <a class="btn btn-primary" href="{% url 'create_poem'%}" role="button">Add Video</a>
     </ul>
 {% endblock %}
