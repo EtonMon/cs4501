@@ -11,12 +11,12 @@ env:
 before_install:
   - docker pull mysql:5.7.14
   - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/db:/var/lib/mysql  mysql:5.7.14
-  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash
-  - mysql -uroot -p'$3cureUS' -h db
-  - create user 'www'@'%' identified by '$3cureUS';
-  - create database cs4501 character set utf8;
-  - grant all on cs4501.* to 'www'@'%';
-  - exit
+  # - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash
+  # - mysql -uroot -p'$3cureUS' -h db
+  # - create user 'www'@'%' identified by '$3cureUS';
+  # - create database cs4501 character set utf8;
+  # - grant all on cs4501.* to 'www'@'%';
+  # - exit
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
@@ -26,4 +26,9 @@ before_install:
 script:
   - cd app
   - pwd
+  # - mysql -u USER -pPASSWORD <<EOF
+  # - SQL_QUERY 1
+  # - SQL_QUERY 2
+  # - SQL_QUERY N
+  # - EOF
   - docker-compose up
