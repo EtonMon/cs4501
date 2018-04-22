@@ -2,20 +2,21 @@
 {% block content %}
 
 <div class="jumbotron">
+  <h2 style="text-align: center; margin-bottom: 40px;">Results for <i>{{query}}</i></h2>
   {% for object in data.songs%}
-     <a href="{% url 'song_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+     <a href="{% url 'song_detail' object.id %}" class="list-group-item"> {{object.title}}, {{object.artists}},  Song </a>
   {% endfor%}
   {% for object in data.music_videos%}
-     <a href="{% url 'music_video_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+     <a href="{% url 'music_video_detail' object.id %}" class="list-group-item"> {{object.title}}, {{object.artists}},  Music Video </a>
   {% endfor%}
   {% for object in data.images%}
-     <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+     <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}}, {{object.artists}},  Image </a>
   {% endfor%}
   {% for object in data.poems%}
-     <a href="{% url 'poem_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+     <a href="{% url 'poem_detail' object.id %}" class="list-group-item"> {{object.title}}, {{object.artists}},  Poem </a>
   {% endfor%}
   {% for object in data.stories%}
-     <a href="{% url 'story_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+     <a href="{% url 'story_detail' object.id %}" class="list-group-item"> {{object.title}}, {{object.artists}},  Story </a>
   {% endfor%}
 </div>
 

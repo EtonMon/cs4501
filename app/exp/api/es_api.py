@@ -1,7 +1,7 @@
 # Functions to interact with elastic search
 from elasticsearch import Elasticsearch
 
-def query(query_string):
+def query(query_string, typename):
     """Json structure: {'empty':(is it empty), 'results':{'songs':...,'images':...,'stories':..., etc}}"""
 
     es = Elasticsearch(['es'])
@@ -15,6 +15,7 @@ def query(query_string):
 
         response = {}
         response['empty'] = False
+        response['type'] = typename
         results = {}
         songs = []
         images = []
@@ -24,7 +25,7 @@ def query(query_string):
 
         for listing in hits:
             print(listing['_source']['type'])
-            if listing['_source']['type'] == 'song':
+            if listing['_source']['type'] == 'song' and (typename == "" or typename == "songs"):
                 id = listing['_source']['id']
                 username = listing['_source']['username']
                 owner = listing['_source']['owner']
@@ -34,7 +35,7 @@ def query(query_string):
                 
                 songs.append({'id':id,'username':username,'owner':owner,'type':type,'title':title,'artists':artists})
 
-            elif listing['_source']['type'] =='image':
+            elif listing['_source']['type'] =='image' and (typename == "" or typename == "images"):
                 id = listing['_source']['id']
                 username = listing['_source']['username']
                 owner = listing['_source']['owner']
@@ -44,7 +45,7 @@ def query(query_string):
                 
                 images.append({'id':id,'username':username,'owner':owner,'type':type,'title':title,'artists':artists})
 
-            elif listing['_source']['type'] == 'story':
+            elif listing['_source']['type'] == 'story' and (typename == "" or typename == "stories"):
                 id = listing['_source']['id']
                 username = listing['_source']['username']
                 owner = listing['_source']['owner']
@@ -55,7 +56,7 @@ def query(query_string):
                 
                 stories.append({'id':id,'username':username,'owner':owner,'type':type,'title':title,'artists':artists,'text':text})
 
-            elif listing['_source']['type'] == 'music_video':
+            elif listing['_source']['type'] == 'music_video' and (typename == "" or typename == "music_videos"):
                 id = listing['_source']['id']
                 username = listing['_source']['username']
                 owner = listing['_source']['owner']
@@ -65,7 +66,7 @@ def query(query_string):
                 
                 music_videos.append({'id':id,'username':username,'owner':owner,'type':type,'title':title,'artists':artists})
 
-            elif listing['_source']['type'] == 'poem':
+            elif listing['_source']['type'] == 'poem' and (typename == "" or typename == "poems"):
                 id = listing['_source']['id']
                 username = listing['_source']['username']
                 owner = listing['_source']['owner']

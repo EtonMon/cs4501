@@ -18,7 +18,9 @@
     margin-left: auto;
     margin-right: auto;
   }
-
+  .custom-select {
+    width: 100px;
+  }
 </style>
 </head>
 
@@ -51,9 +53,18 @@
         <a class="nav-link" href="{% url 'poems' %}">Poem</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="form-inline my-2 my-lg-0 ml-5" method="POST" action="{% url 'search' %}">
+      <select class="custom-select" name="type" id="type">
+        <option></option>
+        <option value="stories">Story</option>
+        <option value="songs">Song</option>
+        <option value="images">Image</option>
+        <option value="music_videos">Music Videos</option>
+        <option value="poems">Poems</option>
+      </select>
+      <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search" name="query">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="return validate()">Search</button>
+
     </form>
     <ul class="navbar-nav ml-auto mr-5">
       {% if request.COOKIES.auth %}
@@ -74,5 +85,17 @@
   {% block content %}{% endblock %}
 
 </div> <!-- /container -->
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+      if(document.getElementById("search").value === "") {
+          return false;
+      }
+  });
+  function validate() {
+      if(document.getElementById("search").value === "") {
+          return false;
+      }
+  }
+</script>
 </body>
 </html>

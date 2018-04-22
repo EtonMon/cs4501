@@ -157,7 +157,8 @@ def search(request):
     if request.method == 'POST':
         post_dict = request.POST.dict()
         query = post_dict["query"]
-        elastic_results = es_api.query(query)
+        typename = post_dict["type"]
+        elastic_results = es_api.query(query, typename)
         return JsonResponse(elastic_results)
     return JsonResponse({'ok':False})
 

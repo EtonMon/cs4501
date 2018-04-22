@@ -82,14 +82,15 @@ def logout(request):
 def search(request):
     if request.method == 'POST':
         response = requests.post('http://exp-api:8000/api/v1/search/', data=request.POST.dict())
+        formsubmission = request.POST.dict()
         response_str = response.content.decode('utf-8')
         response_json = json.loads(response_str)
         if response_json['empty']==True:
             return render(request,
-            'search_not_found.html')
+            'search.html')
         return render(request,
         'search.html',
-        context={'data': response_json['results']})
+        context={'data': response_json['results'], 'query': formsubmission['query']})
     else:
         return HttpResponseNotFound('<h1>Page isnt found</h1>')
 
