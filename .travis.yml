@@ -31,4 +31,5 @@ script:
   # - SQL_QUERY 2
   # - SQL_QUERY N
   # - EOF
-  - docker-compose up
+  - docker-compose up <<EOF
+  - EOF
