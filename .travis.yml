@@ -16,5 +16,5 @@ before_install:
 
 script:
   - cd app
-  - ls
+  - docker start mysql
   - docker-compose up
