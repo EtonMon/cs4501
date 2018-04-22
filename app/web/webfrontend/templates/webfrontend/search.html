@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<div class="jumbotron">
+  {% for object in data.songs%}
+     <a href="{% url 'song_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+  {% endfor%}
+  {% for object in data.music_videos%}
+     <a href="{% url 'music_video_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+  {% endfor%}
+  {% for object in data.images%}
+     <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+  {% endfor%}
+  {% for object in data.poems%}
+     <a href="{% url 'poem_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+  {% endfor%}
+  {% for object in data.stories%}
+     <a href="{% url 'story_detail' object.id %}" class="list-group-item"> {{object.title}} , {{object.artists}} </a>
+  {% endfor%}
+</div>
+
+{% endblock %}
