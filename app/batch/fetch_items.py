@@ -33,13 +33,15 @@ for i in range(timeout):
 
 
 # Attempts to process messages from kafka if connection established
-try:
-    print("----------------ATTEMPTING TO LISTEN FOR NEW LISTINGS----------------------", flush=True)
-    for message in consumer:
-        print("item received",flush=True)
-        new_listing = json.loads((message.value).decode('utf-8'))
-        print(new_listing,flush=True)
-        es.index(index='listing_index', doc_type='listing', id=new_listing['id'], body=new_listing)
-        es.indices.refresh(index="listing_index")
-except:
-    print("----------------KAFKA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
+for i in range(timeout):
+    time.sleep(1)
+    try:
+        print("----------------ATTEMPTING TO LISTEN FOR NEW LISTINGS----------------------", flush=True)
+        for message in consumer:
+            print("item received",flush=True)
+            new_listing = json.loads((message.value).decode('utf-8'))
+            print(new_listing,flush=True)
+            es.index(index='listing_index', doc_type='listing', id=new_listing['id'], body=new_listing)
+            es.indices.refresh(index="listing_index")
+    except:
+        print("----------------KAFKA CONNECTION NEVER SUCCESSFULLY ESTABLISHED----------------------", flush=True)
