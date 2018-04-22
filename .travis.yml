@@ -16,5 +16,7 @@ before_install:
 
 script:
   - cd app
-  - docker start mysql
+  - docker pull mysql:5.7.14
+  - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' mysql:5.7.14
+  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash
   - docker-compose up
