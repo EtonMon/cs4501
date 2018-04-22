@@ -1,3 +1,5 @@
+notifications:
+  email: false
 language: python
 python:
   - 3.5.2
@@ -9,10 +11,6 @@ env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
 before_install:
-  - docker pull mysql:5.7.14
-  - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
-  # - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
-  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash -c "mysql -uroot -p"'\$3cureUS'""
   # - create user 'www'@'%' identified by '$3cureUS';
   # - create database cs4501 character set utf8;
   # - grant all on cs4501.* to 'www'@'%';
@@ -21,11 +19,17 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker pull mysql:5.7.14
 
+before_script:
+  - docker pull mysql:5.7.14
 
 script:
   - cd app
   - pwd
+  - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
+  # - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
+  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash -c "mysql -uroot -p"'\$3cureUS'" -h db"
   # - mysql -u USER -pPASSWORD <<EOF
   # - SQL_QUERY 1
   # - SQL_QUERY 2
