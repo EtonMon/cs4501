@@ -29,6 +29,7 @@ script:
   - pwd
   - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
   # - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
+  - sudo chmod -R 755 /var/lib/mysql/
   - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash -c "mysql -uroot -p"'\$3cureUS'""
   - mysql -uroot -p'\$3cureUS' -h db
   - create user 'www'@'%' identified by '$3cureUS';
