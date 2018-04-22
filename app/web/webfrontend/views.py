@@ -87,7 +87,7 @@ def search(request):
         response_json = json.loads(response_str)
         if response_json['empty']==True:
             return render(request,
-            'search.html')
+            'search.html', context={'query': formsubmission['query']})
         return render(request,
         'search.html',
         context={'data': response_json['results'], 'query': formsubmission['query']})
