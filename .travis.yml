@@ -37,6 +37,7 @@ script:
   # - docker run -it --name mysql-cmdline -P 3306 --protocol=tcp --link mysql:/home/travis/build/EtonMon/cs4501/app/db mysql:5.7.14 bash -c "mysql -uroot -p"'\$3cureUS'""
   - pwd
   - ls
+  - chmod +x setup-mysql.sh
   - docker run --name mysql-cmdline --link mysql:db mysql:5.7.14 bash setup-mysql.sh
   - docker ps -a
   - cd /home/travis/build/EtonMon/cs4501/app
