@@ -1,18 +1,20 @@
 models:
     image: tp33/django
+    container_name: models
     external_links:
       -  mysql:db
       # -  groupmysql:./db
     volumes:
       - ./test_project/:/app
       # - ~/Documents/uva/isa/cs4501/:/app
-    ports:
-      - "8001:8000"
+    # ports:
+    #   - "8001:8000"
 
     command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py test &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
     # && python /app/manage.py test
 exp:
     image: tp33/django
+    container_name: exp
     links:
       -  models:models-api
       -  kafka:kafka
@@ -20,22 +22,42 @@ exp:
     volumes:
       - ./exp/:/app
 
-    ports:
-      - "8002:8000"
+    # ports:
+    #   - "8002:8000"
 
     command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/exp/wsgi.py"
   #pipenv install requests &&
 
-web:
+web1:
     image: tp33/django
+    container_name: web1
     links:
       -  exp:exp-api
 
     volumes:
       - ./web/:/app
 
-    ports:
-      - "8000:8000"
+    command: bash -c "pip install djangorestframework && pip install requests && pip install --upgrade django-crispy-forms && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
+
+web2:
+    image: tp33/django
+    container_name: web2
+    links:
+      -  exp:exp-api
+
+    volumes:
+      - ./web/:/app
+
+    command: bash -c "pip install djangorestframework && pip install requests && pip install --upgrade django-crispy-forms && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
+
+web3:
+    image: tp33/django
+    container_name: web3
+    links:
+      -  exp:exp-api
+
+    volumes:
+      - ./web/:/app
 
     command: bash -c "pip install djangorestframework && pip install requests && pip install --upgrade django-crispy-forms && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/web/wsgi.py"
 
@@ -50,8 +72,8 @@ kafka:
 es:
     image: elasticsearch:2.0
     container_name: es
-    ports:
-      - "9200:9200"
+    # ports:
+    #   - "9200:9200"
 
 batch:
     image: tp33/django
@@ -63,3 +85,14 @@ batch:
       - es:es
     #command: tail -F /app/fetch_items.py
     command: python /app/fetch_items.py
+
+haproxy:
+    build: ./haproxy
+    container_name: haproxy
+    ports:
+      - "8010:8000"
+   
+    links:
+      - web1
+      - web2
+      - web3
