@@ -1,2 +1,2 @@
 #!/bin/bash
-mysql -uroot -p'hello' -h db --execute "create user 'www'@'%' identified by 'hello'; create database cs4501 character set utf8; grant all on cs4501.* to 'www'@'%';"
+mysql -uroot -p'hello' -h db --execute "create user 'www'@'%' identified by 'hello'; create database cs4501 character set utf8; create database test_cs4501 character set utf8; grant all on cs4501.* to 'www'@'%'; grant all on test_cs4501.* to 'www'@'%';"
