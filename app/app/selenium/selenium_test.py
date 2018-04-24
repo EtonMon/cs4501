@@ -20,19 +20,40 @@ class PythonOrgSearch(unittest.TestCase):
            command_executor='http://selenium-chrome:4444/wd/hub',
            desired_capabilities=DesiredCapabilities.CHROME)
 
-    def test_on_home_page(self):
+    def test_signup_and_login(self):
         driver = self.driver
+        driver.get('http://web:8000/signup/')
+
+        username_input = driver.find_element_by_id('id_username')
+        pw_input = driver.find_element_by_id('id_password')
+        first_name_input = driver.find_element_by_id('id_first_name')
+        last_name_input = driver.find_element_by_id('id_last_name')
+        submit_btn = driver.find_element_by_id('submit-id-submit')
+
+        username_input.send_keys("username")
+        pw_input.send_keys("password")
+        first_name_input.send_keys("john")
+        last_name_input.send_keys("smith")
+        submit_btn.click()
+
+        driver.get('http://web:8000/login/')
+
+        username_input = driver.find_element_by_id('id_username')
+        pw_input = driver.find_element_by_id('id_password')
+        submit_btn = driver.find_element_by_id('submit-id-submit')
+
+        username_input.send_keys("username")
+        pw_input.send_keys("password")
+
+        submit_btn.click()
+
         driver.get('http://web:8000/home/')
-        # self.assertEqual(song_link, True)
-        self.assertIn("Home", driver.title)
-        register_link = driver.find_element_by_xpath('/html/body/div/p[1]/a')
-        register_link.click()
+
+        home_page_title = driver.find_element_by_xpath('/html/body/div[1]/div/h1')
+
+        self.assertEqual("Welcome username!", home_page_title.get_attribute('innerHTML'))
 
 
-        # elem = driver.find_element_by_name("q")
-        # elem.send_keys("pycon")
-        # elem.send_keys(Keys.RETURN)
-        # assert "No results found." not in driver.page_source
 
     def tearDown(self):
         self.driver.close()
