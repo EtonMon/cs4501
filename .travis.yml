@@ -48,3 +48,4 @@ script:
   # - SQL_QUERY N
   # - EOF
   - docker-compose up -d --build
+  - docker ps -a
