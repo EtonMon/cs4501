@@ -47,6 +47,6 @@ script:
   # - SQL_QUERY 2
   # - SQL_QUERY N
   # - EOF
-  - docker-compose up -d --build
-  - docker ps -a
-  - docker exec models bash -c "python /app/manage.py test"
+  - docker-compose up --build
+  # - docker ps -a
+  # - docker exec models bash -c "python /app/manage.py test"
