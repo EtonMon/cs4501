@@ -49,3 +49,4 @@ script:
   # - EOF
   - docker-compose up -d --build
   - docker ps -a
+  - docker exec models bash -c "python /app/manage.py test"
