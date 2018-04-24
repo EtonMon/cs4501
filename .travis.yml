@@ -50,4 +50,4 @@ script:
   - docker-compose up -d --build
   - sleep 30
   - docker ps -a
-  - docker exec models bash -c "python /app/manage.py test --noinput"
+  - docker exec models bash -c "python /app/manage.py test"
