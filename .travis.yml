@@ -51,3 +51,5 @@ script:
   - sleep 30
   - docker ps -a
   - docker exec models bash -c "python /app/manage.py test"
+  - docker start selenium-test
+  - docker exec selenium-test bash -c "python selenium_test.py"
