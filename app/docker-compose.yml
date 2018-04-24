@@ -102,7 +102,7 @@ selenium-test:
     - web1:web
   volumes:
     - ./app/selenium:/app
-  command: bash -c "pip install selenium==2.48 && python selenium_test.py"
+  command: bash -c "pip install selenium==2.48"
 
 haproxy:
     build: ./haproxy
