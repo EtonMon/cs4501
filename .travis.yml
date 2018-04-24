@@ -8,7 +8,7 @@ sudo: required
 services:
   - docker
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.21.0
 
 before_install:
   # - create user 'www'@'%' identified by '$3cureUS';
@@ -29,18 +29,25 @@ script:
   - pwd
   - ls
   - mkdir /home/travis/build/EtonMon/cs4501/db
-  - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='\$3cureUS' -v /home/travis/build/EtonMon/cs4501/db:/var/lib/mysql  mysql:5.7.14
+  - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/db:/var/lib/mysql  mysql:5.7.14
   # - docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v /home/travis/build/EtonMon/cs4501/app/db:/var/lib/mysql  mysql:5.7.14
   - docker ps -a
   - sleep 15
   # - docker run -it --name mysql-cmdline -P 3306 --protocol=tcp --link mysql:/home/travis/build/EtonMon/cs4501/app/db mysql:5.7.14 bash -c "mysql -uroot -p"'\$3cureUS'""
-  - docker run --name mysql-cmdline --link mysql:db mysql:5.7.14 bash -c "mysql -uroot -p'\$3cureUS' -h db --execute \"create user 'www'@'%' identified by '$3cureUS'; create database cs4501 character set utf8; grant all on cs4501.* to 'www'@'%';\""
+  - docker run --name mysql-cmdline -v /home/travis/build/EtonMon/cs4501/scripts:/scripts --link mysql:db mysql:5.7.14 bash -c /scripts/setup-mysql.sh
+  # - docker cp /home/travis/build/EtonMon/cs4501/scripts/setup-mysql.sh mysql-cmdline:/setup-mysql.sh
+  # - docker start mysql-cmdline
+  # - sleep 5
+  # - docker exec mysql-cmdline bash /setup-mysql.sh
   - docker ps -a
+  - cd /home/travis/build/EtonMon/cs4501/app
   # - docker exec -ti mysql-cmdline sh -c ""
   # - mysql -u USER -pPASSWORD <<EOF
   # - SQL_QUERY 1
   # - SQL_QUERY 2
   # - SQL_QUERY N
   # - EOF
-  - docker-compose up <<EOF
-  - EOF
+  - docker-compose up -d --build
+  - sleep 30
+  - docker ps -a
+  - docker exec models bash -c "python /app/manage.py test"
