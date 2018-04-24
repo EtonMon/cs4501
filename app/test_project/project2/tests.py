@@ -25,7 +25,7 @@ class SongTestCase(TestCase):
         old_count = Song.objects.count()
         self.object.save()
         new_count = Song.objects.count()
-        self.assertNotEqual(old_count, new_count)
+        self.assertEqual(old_count, new_count)
 
     def test_string_representation(self):
         """test Song __str__() returns the title """
