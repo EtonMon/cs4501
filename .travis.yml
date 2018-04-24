@@ -47,5 +47,4 @@ script:
   # - SQL_QUERY 2
   # - SQL_QUERY N
   # - EOF
-  - docker-compose up <<EOF
-  - EOF
+  - docker-compose up -d --exit-code-from models
