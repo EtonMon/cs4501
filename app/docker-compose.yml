@@ -90,7 +90,7 @@ selenium-chrome:
   image: selenium/standalone-chrome
   container_name: selenium-chrome
   links:
-    - web:web
+    - web1:web
   ports:
     - "4444:4444"
 
@@ -99,7 +99,7 @@ selenium-test:
   container_name: selenium-test
   links:
     - selenium-chrome:selenium-chrome
-    - web:web
+    - web1:web
   volumes:
     - ./app/selenium:/app
   command: bash -c "pip install selenium==2.48 && python selenium_test.py"

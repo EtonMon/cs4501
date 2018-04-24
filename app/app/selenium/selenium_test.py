@@ -20,12 +20,15 @@ class PythonOrgSearch(unittest.TestCase):
            command_executor='http://selenium-chrome:4444/wd/hub',
            desired_capabilities=DesiredCapabilities.CHROME)
 
-    def test_search_in_python_org(self):
+    def test_on_home_page(self):
         driver = self.driver
         driver.get('http://web:8000/home/')
-        # song_link = driver.find_element_by_class_name('container')
         # self.assertEqual(song_link, True)
         self.assertIn("Home", driver.title)
+        register_link = driver.find_element_by_xpath('/html/body/div/p[1]/a')
+        register_link.click()
+
+
         # elem = driver.find_element_by_name("q")
         # elem.send_keys("pycon")
         # elem.send_keys(Keys.RETURN)
