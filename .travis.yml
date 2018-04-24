@@ -8,7 +8,7 @@ sudo: required
 services:
   - docker
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.21.0
 
 before_install:
   # - create user 'www'@'%' identified by '$3cureUS';
@@ -47,4 +47,4 @@ script:
   # - SQL_QUERY 2
   # - SQL_QUERY N
   # - EOF
-  - docker-compose up -d --exit-code-from models
+  - docker-compose up --exit-code-from models
