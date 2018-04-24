@@ -20,9 +20,14 @@ class PythonOrgSearch(unittest.TestCase):
            command_executor='http://selenium-chrome:4444/wd/hub',
            desired_capabilities=DesiredCapabilities.CHROME)
 
-    def test_signup_and_login(self):
+    def test_signup_and_login_and_logout(self):
         driver = self.driver
-        driver.get('http://web:8000/signup/')
+
+        driver.get('http://web:8000/home/')
+
+        register_button = driver.find_element_by_xpath('/html/body/div[1]/div/p[2]/a')
+
+        register_button.click()
 
         username_input = driver.find_element_by_id('id_username')
         pw_input = driver.find_element_by_id('id_password')
@@ -53,6 +58,16 @@ class PythonOrgSearch(unittest.TestCase):
 
         self.assertEqual("Welcome username!", home_page_title.get_attribute('innerHTML'))
 
+        logout_button = driver.find_element_by_xpath('/html/body/nav/div/ul[2]/li/a/b')
+
+        logout_button.click()
+
+        driver.get('http://web:8000/home/')
+
+        home_page_title_post_logout = driver.find_element_by_xpath('/html/body/div[1]/div/h1')
+
+        self.assertEqual("Share your interests", home_page_title_post_logout.get_attribute('innerHTML'))
+        
     def test_listing_creation_and_searcn(self):
         driver = self.driver
         driver.get('http://web:8000/signup/')
