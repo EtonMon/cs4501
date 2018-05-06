@@ -34,6 +34,14 @@ def songs_json(request):
     return JsonResponse({'ok':False})
 
 def song_detail_json(request, pk):
+    auth = request.GET["auth"]
+
+    if auth == "True":
+        user_id = int(request.GET["user_id"])
+        item_id = "SONG"+str(pk)
+        log = {"user_id":user_id,"item_id":item_id}
+        kafka_api.send_to_spark_kafka(log)
+
     return JsonResponse(models_api.get_song(pk))
 
 @csrf_exempt
@@ -53,6 +61,14 @@ def images_json(request):
     return JsonResponse({'ok':False})
 
 def image_detail_json(request, pk):
+    auth = request.GET["auth"]
+
+    if auth == "True":
+        user_id = int(request.GET["user_id"])
+        item_id = "IMAGE"+str(pk)
+        log = {"user_id":user_id,"item_id":item_id}
+        kafka_api.send_to_spark_kafka(log)
+
     return JsonResponse(models_api.get_image(pk))
 
 @csrf_exempt
@@ -100,6 +116,14 @@ def music_videos_json(request):
     return JsonResponse({'ok':False})
 
 def music_video_detail_json(request, pk):
+    auth = request.GET["auth"]
+
+    if auth == "True":
+        user_id = int(request.GET["user_id"])
+        item_id = "MUSICVID"+str(pk)
+        log = {"user_id":user_id,"item_id":item_id}
+        kafka_api.send_to_spark_kafka(log)
+
     return JsonResponse(models_api.get_music_video(pk))
 
 @csrf_exempt
@@ -120,6 +144,14 @@ def poems_json(request):
     return JsonResponse({'ok':False})
 
 def poem_detail_json(request, pk):
+    auth = request.GET["auth"]
+
+    if auth == "True":
+        user_id = int(request.GET["user_id"])
+        item_id = "POEM"+str(pk)
+        log = {"user_id":user_id,"item_id":item_id}
+        kafka_api.send_to_spark_kafka(log)
+
     return JsonResponse(models_api.get_poem(pk))
 
 @csrf_exempt
