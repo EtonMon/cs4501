@@ -81,7 +81,6 @@ def story_detail_json(request, pk):
         user_id = int(request.GET["user_id"])
         item_id = "STORY"+str(pk)
         log = {"user_id":user_id,"item_id":item_id}
-        log ={"user_id":"test","item_id":"test"}
         kafka_api.send_to_spark_kafka(log)
     
     return JsonResponse(models_api.get_story(pk))
