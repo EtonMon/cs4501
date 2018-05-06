@@ -75,14 +75,12 @@ def stories_json(request):
 @csrf_exempt
 def story_detail_json(request, pk):
     auth = request.GET["auth"]
-    
-    if auth:
-        
+
+    if auth == "True":
         user_id = int(request.GET["user_id"])
         item_id = "STORY"+str(pk)
         log = {"user_id":user_id,"item_id":item_id}
         kafka_api.send_to_spark_kafka(log)
-    
     return JsonResponse(models_api.get_story(pk))
 
 @csrf_exempt
