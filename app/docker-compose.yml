@@ -19,11 +19,12 @@ exp:
       -  models:models-api
       -  kafka:kafka
       -  es:es
+      -  spark-kafka:spark-kafka
     volumes:
       - ./exp/:/app
 
-    # ports:
-    #   - "8002:8000"
+    ports:
+      - "8002:8000"
 
     command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/exp/wsgi.py"
   #pipenv install requests &&

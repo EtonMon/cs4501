@@ -9,6 +9,7 @@ from django.contrib.auth import hashers
 # import the logging library
 import logging
 from . import es_api
+from . import kafka_api
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -71,7 +72,18 @@ def stories_json(request):
         return story_json
     return JsonResponse({'ok':False})
 
+@csrf_exempt
 def story_detail_json(request, pk):
+    auth = request.GET["auth"]
+    
+    if auth:
+        
+        user_id = int(request.GET["user_id"])
+        item_id = "STORY"+str(pk)
+        log = {"user_id":user_id,"item_id":item_id}
+        log ={"user_id":"test","item_id":"test"}
+        kafka_api.send_to_spark_kafka(log)
+    
     return JsonResponse(models_api.get_story(pk))
 
 @csrf_exempt

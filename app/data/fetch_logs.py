@@ -8,7 +8,7 @@ for i in range(timeout):
     time.sleep(1)
     try:
         print("----------------ATTEMPTING TO CONNECT TO SPARK-KAFKA----------------------", flush=True)
-        consumer = KafkaConsumer('new-log-topic', group_id='log-indexer', bootstrap_servers=['spark-kafka:9092'])
+        consumer = KafkaConsumer('new-logs-topic', group_id='logs-indexer', bootstrap_servers=['spark-kafka:9092'])
         print("----------------SUCCESSFULLY CONNECTED TO SPARK-KAFKA----------------------", flush=True)
         break
     except:

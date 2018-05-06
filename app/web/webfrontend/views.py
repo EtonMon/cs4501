@@ -178,18 +178,23 @@ def stories(request):
 
 def StoryDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific story"""
-    try:
-        req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id)
-        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        json_data = json.loads(resp_json)
+    # try:
+    auth = request.COOKIES.get('auth')
+    auth_bool = True
+    if not auth:
+        auth_bool = False
 
-        """this get's the owner's id and sends an exp service request to get their username back"""
-        userid = str(json_data['owner'])
-        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-        user_data = json.loads(user_json)
-    except:
-        return HttpResponseNotFound('<h1>Page not found</h1>')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    json_data = json.loads(resp_json)
+
+    """this get's the owner's id and sends an exp service request to get their username back"""
+    userid = str(json_data['owner'])
+    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+    user_data = json.loads(user_json)
+    # except:
+    #     return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
