@@ -109,7 +109,12 @@ def songs(request):
 def SongDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific song"""
     try:
-        req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id)
+        auth = request.COOKIES.get('auth')
+        auth_bool = True
+        if not auth:
+            auth_bool = False
+
+        req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
@@ -146,7 +151,12 @@ def music_videos(request):
 def MusicVideoDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific music video"""
     try:
-        req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id)
+        auth = request.COOKIES.get('auth')
+        auth_bool = True
+        if not auth:
+            auth_bool = False
+
+        req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
@@ -229,7 +239,12 @@ def images(request):
 def ImageDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific image"""
     try:
-        req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id)
+        auth = request.COOKIES.get('auth')
+        auth_bool = True
+        if not auth:
+            auth_bool = False
+
+        req = urllib.request.Request('http://exp-api:8000/api/v1/images/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 
@@ -261,7 +276,12 @@ def poems(request):
 def PoemDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific poem"""
     try:
-        req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id)
+        auth = request.COOKIES.get('auth')
+        auth_bool = True
+        if not auth:
+            auth_bool = False
+
+        req = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
 

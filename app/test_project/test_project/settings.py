@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'project2.apps.Project2Config',
+    'django_mysql',
 ]
 
 

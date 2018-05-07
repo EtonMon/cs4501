@@ -67,55 +67,8 @@ class PythonOrgSearch(unittest.TestCase):
         home_page_title_post_logout = driver.find_element_by_xpath('/html/body/div[1]/div/h1')
 
         self.assertEqual("Share your interests", home_page_title_post_logout.get_attribute('innerHTML'))
-        
-    def test_listing_creation_and_searcn(self):
-        driver = self.driver
-        driver.get('http://web:8000/signup/')
 
-        username_input = driver.find_element_by_id('id_username')
-        pw_input = driver.find_element_by_id('id_password')
-        first_name_input = driver.find_element_by_id('id_first_name')
-        last_name_input = driver.find_element_by_id('id_last_name')
-        submit_btn = driver.find_element_by_id('submit-id-submit')
 
-        username_input.send_keys("username2")
-        pw_input.send_keys("password2")
-        first_name_input.send_keys("john")
-        last_name_input.send_keys("smith")
-        submit_btn.click()
-
-        driver.get('http://web:8000/login/')
-
-        username_input = driver.find_element_by_id('id_username')
-        pw_input = driver.find_element_by_id('id_password')
-        submit_btn = driver.find_element_by_id('submit-id-submit')
-
-        username_input.send_keys("username2")
-        pw_input.send_keys("password2")
-
-        submit_btn.click()
-
-        driver.get('http://web:8000/songs/create/')
-
-        title_input = driver.find_element_by_id('id_title')
-        artist_input = driver.find_element_by_id('id_artists')
-        submit_btn = driver.find_element_by_id('submit-id-submit')
-
-        title_input.send_keys("mysong")
-        artist_input.send_keys("anartist")
-        submit_btn.click()
-
-        driver.get('http://web:8000/home/')
-
-        search_input = driver.find_element_by_id('search')
-        submit_btn = driver.find_element_by_xpath('/html/body/nav/div/form/button')
-
-        search_input.send_keys("mysong")
-        submit_btn.click()
-
-        song_search = driver.find_element_by_xpath('/html/body/div[1]/div/a')
-
-        self.assertEqual(" mysong, anartist,  Song ", song_search.get_attribute('innerHTML'))
 
     def tearDown(self):
         self.driver.close()

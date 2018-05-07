@@ -9,5 +9,5 @@ def send_to_kafka(new_listing):
 
 @csrf_exempt
 def send_to_spark_kafka(new_log):
-    producer = KafkaProducer(bootstrap_servers='spark-kafka:9092')
+    producer = KafkaProducer(bootstrap_servers='kafka:9092')
     producer.send('new-logs-topic', json.dumps(new_log).encode('utf-8'))
