@@ -193,3 +193,8 @@ class AuthDestroyView(generics.DestroyAPIView):
     """Handles DELETE requests for a single authenticator identified by its pk (the authenticator value)"""
     queryset = models.Authenticator.objects.all()
     serializer_class = serializers.AuthenticatorSerializer
+
+class SparkEntryDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+    queryset = models.Spark_Entries.objects.all()
+    serializer_class = serializers.SparkEntrySerializer

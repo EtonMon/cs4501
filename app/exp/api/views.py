@@ -203,6 +203,20 @@ def search(request):
         return JsonResponse(elastic_results)
     return JsonResponse({'ok':False})
 
+def get_recommendations_for_song(request, pk):
+    return JsonResponse({"recommendations":models_api.get_recommendations("SONG"+str(pk))})
+
+def get_recommendations_for_poem(request, pk):
+    return JsonResponse({"recommendations":models_api.get_recommendations("POEM"+str(pk))})
+
+def get_recommendations_for_music_video(request, pk):
+    return JsonResponse({"recommendations":models_api.get_recommendations("MUSICVID"+str(pk))})
+
+def get_recommendations_for_story(request, pk):
+    return JsonResponse({"recommendations":models_api.get_recommendations("STORY"+str(pk))})
+
+def get_recommendations_for_image(request, pk):
+    return JsonResponse({"recommendations":models_api.get_recommendations("IMAGE"+str(pk))})
 
 #
 # @csrf_exempt

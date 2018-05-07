@@ -94,5 +94,5 @@ class Feedback(models.Model):
         return "{}".format(self.ratings)
 
 class Spark_Entries(models.Model):
-    item_id = models.CharField(max_length=50, default="DEFAULT_ITEM_ID")
-    recommended_items = ListTextField(base_field = models.CharField(max_length=20))
+    item_id = models.CharField(max_length=50, default="DEFAULT_ITEM_ID", primary_key=True)
+    recommended_items = models.TextField()
