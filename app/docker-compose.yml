@@ -10,7 +10,7 @@ models:
     # ports:
     #   - "8001:8000"
 
-    command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
+    command: bash -c "pip install djangorestframework && pip install requests && pip install django-mysql && python /app/manage.py makemigrations && python /app/manage.py migrate &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
     # && python /app/manage.py test
 exp:
     image: tp33/django
@@ -143,7 +143,7 @@ spark-master:
 
 spark-worker:
   image: gettyimages/spark
-  command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+  command: bash -c "bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 && bash init.sh"
   container_name: spark-worker
   hostname: spark-worker
   environment:
