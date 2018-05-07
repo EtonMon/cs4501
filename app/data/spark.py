@@ -1,5 +1,14 @@
 from pyspark import SparkContext
 
+
+def extract_pair(line):
+	pairlist = []
+	iterablelist = list(line[1])
+	for i in range(0, len(iterablelist)):
+		for j in range(i+1, len(iterablelist)):
+			pairlist.append((line[0], (iterablelist[i], iterablelist[j])))
+	return (pairlist)
+
 sc = SparkContext("spark://spark-master:7077", "PopularItems")
 
 data = sc.textFile("/tmp/data/access.log", 2)     # each worker loads a piece of the data file
@@ -13,10 +22,11 @@ print(user_to_items.collect())
 # userid, [itemid, itemid, itemid]
 user_to_items_list = pairs.map(lambda pair: ((pair[1]),(pair[0]))).groupByKey()
 # user_to_items_list = user_to_items.keys().groupByKey()
-# print(user_to_items_list.map(lambda x : {x[0]: list(x[1])}).collect())
+print(user_to_items_list.map(lambda x : {x[0]: list(x[1])}).collect())
 
 # userid, (itemid, itemid)
-user_to_item_tuple = user_to_items_list.map(lambda user, itemlist: (user, (itemlist[0], itemlist[1])))
+user_to_item_tuple = user_to_items_list.flatMap(lambda line: extract_pair(line))
+print(user_to_item_tuple.collect())
 
 # (itemid, itemid), [userid, userid, userid] 
 item_tuple_to_userlist = user_to_item_tuple.keys().groupByKey()
