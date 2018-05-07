@@ -87,23 +87,23 @@ batch:
     #command: tail -F /app/fetch_items.py
     command: python /app/fetch_items.py
 
-selenium-chrome:
-  image: selenium/standalone-chrome
-  container_name: selenium-chrome
-  links:
-    - web1:web
-  # ports:
-  #   - "4444:4444"
+# selenium-chrome:
+#   image: selenium/standalone-chrome
+#   container_name: selenium-chrome
+#   links:
+#     - web1:web
+#   # ports:
+#   #   - "4444:4444"
 
-selenium-test:
-  image: tp33/django
-  container_name: selenium-test
-  links:
-    - selenium-chrome:selenium-chrome
-    - web1:web
-  volumes:
-    - ./app/selenium:/app
-  command: bash -c "pip install selenium==2.48 && python selenium_test.py"
+# selenium-test:
+#   image: tp33/django
+#   container_name: selenium-test
+#   links:
+#     - selenium-chrome:selenium-chrome
+#     - web1:web
+#   volumes:
+#     - ./app/selenium:/app
+#   command: bash -c "pip install selenium==2.48 && python selenium_test.py"
 
 haproxy:
     build: ./haproxy
