@@ -8,6 +8,7 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import hashers
 from . import kafka_api
+import ast
 
 # import django settings file
 from django.conf import settings
@@ -287,7 +288,11 @@ def get_recommendations(item_id):
     response = requests.get('http://models-api:8000/project2/api/v1/recommendations/'+item_id)
     response = response.json() 
     recommendations = response["results"][0]["recommended_items"]
-    recommendations.split(",")
+    # recommendations = recommendations.replace("[","")
+    # recommendations = recommendations.replace("]","")
+    # recommendations = recommendations.replace("'","")
+    # recommendations.split(",")
+    recommendations = ast.literal_eval(recommendations)
 
     same_type_recs = []
 

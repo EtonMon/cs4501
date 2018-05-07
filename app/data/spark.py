@@ -56,7 +56,7 @@ for idval in exists_list:
     appendlist = []
     for thing in final_mappings:
         if thing[0] == idval:
-            appendlist.append(thing[1])
+            appendlist.append(str(thing[1]))
     use_tuple = (idval, appendlist)
     return_list.append(use_tuple)
 
