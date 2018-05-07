@@ -10,7 +10,7 @@ models:
     # ports:
     #   - "8001:8000"
 
-    command: bash -c "pip install djangorestframework && pip install requests && python /app/manage.py makemigrations && python /app/manage.py migrate &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
+    command: bash -c "pip install djangorestframework && pip install requests && pip install django-mysql && python /app/manage.py makemigrations && python /app/manage.py migrate &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
     # && python /app/manage.py test
 exp:
     image: tp33/django
@@ -19,7 +19,6 @@ exp:
       -  models:models-api
       -  kafka:kafka
       -  es:es
-      -  spark-kafka:spark-kafka
     volumes:
       - ./exp/:/app
 
@@ -143,7 +142,7 @@ spark-master:
 
 spark-worker:
   image: gettyimages/spark
-  command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+  command: bash -c "bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 && bash init.sh"
   container_name: spark-worker
   hostname: spark-worker
   environment:
@@ -166,13 +165,13 @@ spark-worker:
   volumes:
     - ./data:/tmp/data
 
-spark-kafka:
-    image: spotify/kafka
-    container_name: spark-kafka
-    environment:
-      ADVERTISED_HOST: kafka
-      ADVERTISED_PORT: 9092
-    hostname: kafka
+# spark-kafka:
+#     image: spotify/kafka
+#     container_name: spark-kafka
+#     environment:
+#       ADVERTISED_HOST: kafka
+#       ADVERTISED_PORT: 9092
+#     hostname: kafka
 
 spark-batch:
     image: tp33/django
@@ -180,5 +179,5 @@ spark-batch:
     volumes:
       - ./data:/app
     links:
-      - spark-kafka:spark-kafka
+      - kafka:kafka
     command: python /app/fetch_logs.py

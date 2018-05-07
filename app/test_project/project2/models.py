@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import hashers
 from . import fields
+from django_mysql.models import ListTextField
 import uuid
 
 
@@ -91,3 +92,7 @@ class Feedback(models.Model):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.ratings)
+
+class Spark_Entries(models.Model):
+    item_id = models.CharField(max_length=50, default="DEFAULT_ITEM_ID")
+    recommended_items = ListTextField(base_field = models.CharField(max_length=20))

@@ -113,7 +113,7 @@ def SongDetailView(request, id):
         auth_bool = True
         if not auth:
             auth_bool = False
-            
+
         req = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
@@ -155,7 +155,7 @@ def MusicVideoDetailView(request, id):
         auth_bool = True
         if not auth:
             auth_bool = False
-            
+
         req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         json_data = json.loads(resp_json)
