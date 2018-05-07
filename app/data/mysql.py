@@ -7,6 +7,7 @@ def update_db(recommendations):
                                 db='cs4501',
                                 charset='utf8mb4',
                                 cursorclass=pymysql.cursors.DictCursor)
+    
     try:
         with connection.cursor() as cursor:
             # Create a new record
