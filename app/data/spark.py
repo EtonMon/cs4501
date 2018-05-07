@@ -42,7 +42,25 @@ use_count = count.map(lambda x : {x[0]: len(x[1])})
 
 filtered_count = count.filter(lambda x: len(x[1]) > 1)
 
-print(filtered_count.map(lambda x : x[0]).collect())
+final_mappings = filtered_count.map(lambda x : x[0]).collect()
+
+print(final_mappings)
+return_list = []
+exists_list = []
+for item in final_mappings:
+    if item[0] not in exists_list:
+        exists_list.append(item[0])
+for idval in exists_list:
+    appendlist = []
+    for thing in final_mappings:
+        if thing[0] == idval:
+            appendlist.append(thing[1])
+    use_tuple = (idval, appendlist)
+    return_list.append(use_tuple)
+
+print(return_list)
+
+mysql.update_db(return_list)
 #print(count.collect())
 sc.stop()
 # print(count.collect())
