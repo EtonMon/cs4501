@@ -55,3 +55,8 @@ class AuthenticatorSerializer(serializers.ModelSerializer):
         model = models.Authenticator
         fields = ('user_id', 'authenticator')
         read_only_fields = ('date_created', 'date_created')
+
+class SparkEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Spark_Entries
+        fields = ('item_id', 'recommended_items')

@@ -270,3 +270,29 @@ def verify_login(login_info):
 def delete_auth(auth):
     response = requests.delete('http://models-api:8000/project2/api/v1/auth/'+auth+'/delete')
     return response
+
+def get_recommendations(item_id):
+    item_type = ""
+    if item_id.startswith("SONG"):
+        item_type = "SONG"
+    elif item_id.startswith("MUSIC_VID"):
+        item_type = "MUSIC_VID"
+    elif item_id.startswith("POEM"):
+        item_type = "POEM"
+    elif item_id.startswith("STORY"):
+        item_type = "STORY"
+    else:
+        item_type = "IMAGE"
+
+    response = requests.get('http://models-api:8000/project2/api/v1/recommendations/'+item_id)
+    response = response.json() 
+    recommendations = response["results"][0]["recommended_items"]
+    recommendations.split(",")
+
+    same_type_recs = []
+
+    for recommendation in recommendations:
+        if recommendation.startswith(item_type):
+            same_type_recs.append(int(recommendation[item_type.__len__():]))
+
+    return same_type_recs

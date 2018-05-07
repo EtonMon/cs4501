@@ -153,6 +153,8 @@ spark-worker:
     SPARK_WORKER_WEBUI_PORT: 8081
   links:
     - spark-master
+  external_links:
+    -  mysql:db
   expose:
     - 7012
     - 7013

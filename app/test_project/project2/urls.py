@@ -39,7 +39,9 @@ urlpatterns = [
     url(r'^api/v1/auth/(?P<user_id>[0-9]+)/$',
         views.AuthRetrieveView.as_view(), name = "retrieve_authenticator"),
     url(r'^api/v1/auth/(?P<pk>.+)/delete$',
-        views.AuthDestroyView.as_view(), name = "destroy_authenticator")
+        views.AuthDestroyView.as_view(), name = "destroy_authenticator"),
+    url(r'^api/v1/recommendations/(?P<pk>.+)/$',
+        views.SparkEntryDetailsView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
