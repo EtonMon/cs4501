@@ -37,6 +37,12 @@ print(item_tuple_to_userlist.map(lambda x : {x[0]: list(x[1])}).collect())
 count = item_tuple_to_userlist.reduceByKey(lambda x: len(x.values()))
 
 print(count.map(lambda x : {x[0]: len(x[1])}).collect())
+
+use_count = count.map(lambda x : {x[0]: len(x[1])})
+
+filtered_count = count.filter(lambda x: len(x[1]) > 1)
+
+print(filtered_count.map(lambda x : x[0]).collect())
 #print(count.collect())
 sc.stop()
 # print(count.collect())
