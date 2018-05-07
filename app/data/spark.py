@@ -28,14 +28,16 @@ print(user_to_items_list.map(lambda x : {x[0]: list(x[1])}).collect())
 user_to_item_tuple = user_to_items_list.flatMap(lambda line: extract_pair(line))
 print(user_to_item_tuple.collect())
 
-# (itemid, itemid), [userid, userid, userid] 
+# (itemid, itemid), [userid, userid, userid]
 item_tuple_to_userlist = user_to_item_tuple.map(lambda pair: ((pair[1]),(pair[0]))).groupByKey()
 # print(item_tuple_to_userlist.collect())
 print(item_tuple_to_userlist.map(lambda x : {x[0]: list(x[1])}).collect())
 # item_tuple_to_userlist = user_to_item_tuple.keys().groupByKey()
 
-count = item_tuple_to_userlist.reduceByKey(lambda x,y: int(x)+len(y)) 
-print(count.collect())
+count = item_tuple_to_userlist.reduceByKey(lambda x: len(x.values()))
+
+print(count.map(lambda x : {x[0]: len(x[1])}).collect())
+#print(count.collect())
 sc.stop()
 # print(count.collect())
 # print(list((j[0], list(j[1])) for j in itemsGrouped.take(1)))
@@ -47,4 +49,3 @@ sc.stop()
 # for page_id, count in output:
 #     print ("page_id %s count %d" % (page_id, count))
 # print ("Popular items done")
-
