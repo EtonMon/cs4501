@@ -7,8 +7,8 @@ models:
     volumes:
       - ./test_project/:/app
       # - ~/Documents/uva/isa/cs4501/:/app
-    # ports:
-    #   - "8001:8000"
+    ports:
+      - "8001:8000"
 
     command: bash -c "pip install djangorestframework && pip install requests && pip install django-mysql && python /app/manage.py makemigrations && python /app/manage.py migrate &&  python /app/manage.py loaddata /app/db.json && mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/test_project/wsgi.py"
     # && python /app/manage.py test
