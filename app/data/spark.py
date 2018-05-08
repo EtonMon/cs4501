@@ -45,7 +45,7 @@ while True:
 
     use_count = count.map(lambda x : {x[0]: len(x[1])})
 
-    filtered_count = count.filter(lambda x: len(x[1]) > 1)
+    filtered_count = count.filter(lambda x: len(x[1]) > 2)
 
     final_mappings = filtered_count.map(lambda x : x[0]).collect()
 

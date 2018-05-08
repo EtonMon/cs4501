@@ -124,13 +124,13 @@ def SongDetailView(request, id):
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
 
-        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/recommendations/' + id)
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/songs/recommendations/' + id)
         recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
         recommended_data = json.loads(recommended_json)
         id_list = recommended_data['recommendations']
-        
+
         itemslist = []
-        
+
         for itemid in id_list:
             itemreq = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+str(itemid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
             item_decoded = urllib.request.urlopen(itemreq).read().decode('utf-8')
@@ -184,9 +184,9 @@ def MusicVideoDetailView(request, id):
         recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
         recommended_data = json.loads(recommended_json)
         music_videos_list = recommended_data['recommendations']
-        
+
         music_videos = []
-        
+
         for musicvideoid in music_videos_list:
             musicvideoreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+str(musicvideoid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
             musicvideo_decoded = urllib.request.urlopen(musicvideoreq).read().decode('utf-8')
@@ -230,20 +230,19 @@ def StoryDetailView(request, id):
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
-        
-        """send request for recommendations list for single item"""
+
         recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/recommendations/' + id)
         recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
         recommended_data = json.loads(recommended_json)
-        story_list = recommended_data['recommendations']
-        
-        story_dict = {}
-        
-        for storyid in story_list:
-            storyreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+storyid+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
-            story_decoded = urllib.request.urlopen(storyreq).read().decode('utf-8')
-            story_data = json.loads(story_decoded)
-            story_dict.update(story_data)
+        id_list = recommended_data['recommendations']
+
+        itemslist = []
+
+        for itemid in id_list:
+            itemreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+str(itemid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            item_decoded = urllib.request.urlopen(itemreq).read().decode('utf-8')
+            item_data = json.loads(item_decoded)
+            itemslist.append(item_data)
 
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
@@ -251,7 +250,7 @@ def StoryDetailView(request, id):
     return render(
         request,
         'story_detail.html',
-        context={'data': json_data, 'username': user_data['username'], 'recommendations': story_dict}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': itemslist}
     )
 
 def feedbacks(request):
@@ -295,12 +294,25 @@ def ImageDetailView(request, id):
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
+
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/images/recommendations/' + id)
+        recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
+        recommended_data = json.loads(recommended_json)
+        id_list = recommended_data['recommendations']
+
+        itemslist = []
+
+        for itemid in id_list:
+            itemreq = urllib.request.Request('http://exp-api:8000/api/v1/images/'+str(itemid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            item_decoded = urllib.request.urlopen(itemreq).read().decode('utf-8')
+            item_data = json.loads(item_decoded)
+            itemslist.append(item_data)
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
     return render(
         request,
         'image_detail.html',
-        context={'data': json_data, 'username': user_data['username']}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': itemslist}
     )
 
 def poems(request):
@@ -332,13 +344,27 @@ def PoemDetailView(request, id):
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
+
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/poems/recommendations/' + id)
+        recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
+        recommended_data = json.loads(recommended_json)
+        id_list = recommended_data['recommendations']
+
+        itemslist = []
+
+        for itemid in id_list:
+            itemreq = urllib.request.Request('http://exp-api:8000/api/v1/poems/'+str(itemid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            item_decoded = urllib.request.urlopen(itemreq).read().decode('utf-8')
+            item_data = json.loads(item_decoded)
+            itemslist.append(item_data)
+
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'poem_detail.html',
-        context={'data': json_data, 'username': user_data['username']}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': itemslist}
     )
 
 @csrf_exempt
