@@ -63,8 +63,8 @@ while True:
         use_tuple = (idval, appendlist)
         return_list.append(use_tuple)
 
-    print(return_list)
-  
+    #print(return_list)
+
     mysql.update_db(return_list)
     time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
