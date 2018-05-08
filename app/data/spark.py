@@ -11,7 +11,13 @@ def extract_pair(line):
 			pairlist.append((line[0], (iterablelist[i], iterablelist[j])))
 	return (pairlist)
 
-sc = SparkContext("spark://spark-master:7077", "PopularItems")
+while True:
+    try:
+        print("----------------ATTEMPTING TO EXECUTE SPARK----------------------", flush=True)
+        sc = SparkContext("spark://spark-master:7077", "PopularItems")
+        break
+    except:
+        print("----------------SPARK FAILED----------------------", flush=True)
 
 data = sc.textFile("/tmp/data/access.log", 2)     # each worker loads a piece of the data file
 
