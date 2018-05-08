@@ -295,7 +295,7 @@ def get_recommendations(item_id):
         recommendations = ast.literal_eval(recommendations)
 
         for recommendation in recommendations:
-            if recommendation.startswith(item_type):
+            if recommendation.startswith(item_type) and int(recommendation[item_type.__len__():]) != int(item_id[item_type.__len__():]):
                 same_type_recs.append(int(recommendation[item_type.__len__():]))
 
     return same_type_recs
