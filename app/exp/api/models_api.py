@@ -276,8 +276,8 @@ def get_recommendations(item_id):
     item_type = ""
     if item_id.startswith("SONG"):
         item_type = "SONG"
-    elif item_id.startswith("MUSIC_VID"):
-        item_type = "MUSIC_VID"
+    elif item_id.startswith("MUSICVID"):
+        item_type = "MUSICVID"
     elif item_id.startswith("POEM"):
         item_type = "POEM"
     elif item_id.startswith("STORY"):
@@ -286,18 +286,16 @@ def get_recommendations(item_id):
         item_type = "IMAGE"
 
     response = requests.get('http://models-api:8000/project2/api/v1/recommendations/'+item_id)
-    response = response.json() 
-    recommendations = response["results"][0]["recommended_items"]
-    # recommendations = recommendations.replace("[","")
-    # recommendations = recommendations.replace("]","")
-    # recommendations = recommendations.replace("'","")
-    # recommendations.split(",")
-    recommendations = ast.literal_eval(recommendations)
+    response = response.json()
 
     same_type_recs = []
 
-    for recommendation in recommendations:
-        if recommendation.startswith(item_type):
-            same_type_recs.append(int(recommendation[item_type.__len__():]))
+    if 'recommended_items' in response.keys():
+        recommendations = response["recommended_items"]
+        recommendations = ast.literal_eval(recommendations)
+
+        for recommendation in recommendations:
+            if recommendation.startswith(item_type):
+                same_type_recs.append(int(recommendation[item_type.__len__():]))
 
     return same_type_recs
