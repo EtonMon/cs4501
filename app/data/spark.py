@@ -12,9 +12,10 @@ def extract_pair(line):
 	return (pairlist)
 
 starttime=time.time()
-while True:
-    sc = SparkContext("spark://spark-master:7077", "PopularItems")
 
+sc = SparkContext("spark://spark-master:7077", "PopularItems")
+
+while True:
     data = sc.textFile("/tmp/data/access.log", 2)     # each worker loads a piece of the data file
 
     pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split each line of it's partition
@@ -65,7 +66,7 @@ while True:
     print(return_list)
   
     mysql.update_db(return_list)
-    time.sleep(120.0 - ((time.time() - starttime) % 120.0))
+    time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
 #print(count.collect())
 sc.stop()
