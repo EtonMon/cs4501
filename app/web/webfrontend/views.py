@@ -123,13 +123,26 @@ def SongDetailView(request, id):
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/'+userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
+
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/recommendations/' + id)
+        recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
+        recommended_data = json.loads(recommended_json)
+        id_list = recommended_data['recommendations']
+        
+        itemslist = []
+        
+        for itemid in id_list:
+            itemreq = urllib.request.Request('http://exp-api:8000/api/v1/songs/'+str(itemid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            item_decoded = urllib.request.urlopen(itemreq).read().decode('utf-8')
+            item_data = json.loads(item_decoded)
+            itemslist.append(item_data)
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'song_detail.html',
-        context={'data': json_data, 'username': user_data['username']}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': itemslist}
     )
 
 def music_videos(request):
@@ -150,42 +163,42 @@ def music_videos(request):
 
 def MusicVideoDetailView(request, id):
     """sending an exp service request to retrieve json data for a specific music video"""
-    # try:
-    auth = request.COOKIES.get('auth')
-    auth_bool = True
-    if not auth:
-        auth_bool = False
+    try:
+        auth = request.COOKIES.get('auth')
+        auth_bool = True
+        if not auth:
+            auth_bool = False
 
-    req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    json_data = json.loads(resp_json)
+        req = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+id+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        json_data = json.loads(resp_json)
 
-    """this get's the owner's id and sends an exp service request to get their username back"""
-    userid = str(json_data['owner'])
-    userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
-    user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
-    user_data = json.loads(user_json)
+        """this get's the owner's id and sends an exp service request to get their username back"""
+        userid = str(json_data['owner'])
+        userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
+        user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
+        user_data = json.loads(user_json)
 
-    """send request for recommendations list for single item"""
-    recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/recommendations/' + id)
-    recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
-    recommended_data = json.loads(recommended_json)
-    story_list = recommended_data['recommendations']
-    
-    story_dict = []
-    
-    for storyid in story_list:
-        storyreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+str(storyid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
-        story_decoded = urllib.request.urlopen(storyreq).read().decode('utf-8')
-        story_data = json.loads(story_decoded)
-        story_dict.append(story_data)
-    # except:
-    #     return HttpResponseNotFound('<h1>Page not found</h1>')
+        """send request for recommendations list for single item"""
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/recommendations/' + id)
+        recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
+        recommended_data = json.loads(recommended_json)
+        music_videos_list = recommended_data['recommendations']
+        
+        music_videos = []
+        
+        for musicvideoid in music_videos_list:
+            musicvideoreq = urllib.request.Request('http://exp-api:8000/api/v1/music_videos/'+str(musicvideoid)+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            musicvideo_decoded = urllib.request.urlopen(musicvideoreq).read().decode('utf-8')
+            musicvideo_data = json.loads(musicvideo_decoded)
+            music_videos.append(musicvideo_data)
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'music_video_detail.html',
-        context={'data': json_data, 'username': user_data['username'],'recommendations':story_dict}
+        context={'data': json_data, 'username': user_data['username'],'recommendations':music_videos}
     )
 
 def stories(request):

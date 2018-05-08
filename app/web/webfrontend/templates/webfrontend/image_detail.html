@@ -8,4 +8,16 @@
         <li><b>Posted by</b>: {{username}} </li>
     </ul>
 </div>
+<h2>Users who viewed this item also viewed these</h2>
+<ul class="list-group">
+    {% for object in recommendations%}
+       <a href="{% url 'image_detail' object.id %}" class="list-group-item"> {{object.title}} 
+		<div class="d-flex w-100 justify-content-between">
+      <small> by {{object.artists}}</small>
+      <small> {{object.time_posted}}</small>
+    </div>
+    <!-- <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> -->
+       </a>
+    {% endfor%}
+    </ul>
 {% endblock %}
