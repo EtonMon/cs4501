@@ -208,14 +208,23 @@ def StoryDetailView(request, id):
         recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/recommendations' + id)
         recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
         recommended_data = json.loads(recommended_json)
+        story_list = recommended_data['recommendations']
         
+        story_dict = {}
+        
+        for storyid in story_list:
+            storyreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/'+storyid+"?auth="+str(auth_bool)+"&user_id="+str(request.COOKIES.get('id')))
+            story_decoded = urllib.request.urlopen(storyreq).read().decode('utf-8')
+            story_data = json.loads(story_decoded)
+            story_dict.update(story_data)
+
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'story_detail.html',
-        context={'data': json_data, 'username': user_data['username'], 'recommendations': recommended_data}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': story_dict}
     )
 
 def feedbacks(request):
