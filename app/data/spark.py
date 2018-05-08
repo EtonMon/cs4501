@@ -1,4 +1,6 @@
 from pyspark import SparkContext
+import mysql
+import time
 
 
 def extract_pair(line):
@@ -17,26 +19,26 @@ pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split ea
 
 # userid, itemid
 user_to_items = pairs.map(lambda pair: (pair[1], pair[0]))      # re-layout the data to ignore the user id
-print(user_to_items.collect())
+# print(user_to_items.collect())
 
 # userid, [itemid, itemid, itemid]
 user_to_items_list = pairs.map(lambda pair: ((pair[1]),(pair[0]))).groupByKey()
 # user_to_items_list = user_to_items.keys().groupByKey()
-print(user_to_items_list.map(lambda x : {x[0]: list(x[1])}).collect())
+# print(user_to_items_list.map(lambda x : {x[0]: list(x[1])}).collect())
 
 # userid, (itemid, itemid)
 user_to_item_tuple = user_to_items_list.flatMap(lambda line: extract_pair(line))
-print(user_to_item_tuple.collect())
+# print(user_to_item_tuple.collect())
 
 # (itemid, itemid), [userid, userid, userid]
 item_tuple_to_userlist = user_to_item_tuple.map(lambda pair: ((pair[1]),(pair[0]))).groupByKey()
 # print(item_tuple_to_userlist.collect())
-print(item_tuple_to_userlist.map(lambda x : {x[0]: list(x[1])}).collect())
+# print(item_tuple_to_userlist.map(lambda x : {x[0]: list(x[1])}).collect())
 # item_tuple_to_userlist = user_to_item_tuple.keys().groupByKey()
 
 count = item_tuple_to_userlist.reduceByKey(lambda x: len(x.values()))
 
-print(count.map(lambda x : {x[0]: len(x[1])}).collect())
+# print(count.map(lambda x : {x[0]: len(x[1])}).collect())
 
 use_count = count.map(lambda x : {x[0]: len(x[1])})
 
@@ -44,7 +46,7 @@ filtered_count = count.filter(lambda x: len(x[1]) > 1)
 
 final_mappings = filtered_count.map(lambda x : x[0]).collect()
 
-print(final_mappings)
+# print(final_mappings)
 return_list = []
 exists_list = []
 for item in final_mappings:
@@ -59,8 +61,12 @@ for idval in exists_list:
     return_list.append(use_tuple)
 
 print(return_list)
+starttime=time.time()
+while True:
+  
+  mysql.update_db(return_list)
+  time.sleep(120.0 - ((time.time() - starttime) % 120.0))
 
-mysql.update_db(return_list)
 #print(count.collect())
 sc.stop()
 # print(count.collect())

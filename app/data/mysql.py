@@ -15,8 +15,12 @@ def update_db(recommendations):
             cursor.execute(sql)
 
             for item in recommendations:
+                relateditems = ""
+                for i in item[1]:
+                    relateditems+= i + ","
+
                 sql = "INSERT INTO project2_spark_entries (item_id, recommended_items) VALUES (%s, %s)"
-                cursor.execute(sql, (item[0], item[1]))
+                cursor.execute(sql, (item[0], relateditems))
 
         # connection is not autocommit by default. So you must commit to save
         # your changes.

@@ -203,13 +203,19 @@ def StoryDetailView(request, id):
         userreq = urllib.request.Request('http://exp-api:8000/api/v1/users/' + userid)
         user_json = urllib.request.urlopen(userreq).read().decode('utf-8')
         user_data = json.loads(user_json)
+        
+        """send request for recommendations list for single item"""
+        recommendedreq = urllib.request.Request('http://exp-api:8000/api/v1/stories/recommendations' + id)
+        recommended_json = urllib.request.urlopen(recommendedreq).read().decode('utf-8')
+        recommended_data = json.loads(recommended_json)
+        
     except:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
     return render(
         request,
         'story_detail.html',
-        context={'data': json_data, 'username': user_data['username']}
+        context={'data': json_data, 'username': user_data['username'], 'recommendations': recommended_data}
     )
 
 def feedbacks(request):
