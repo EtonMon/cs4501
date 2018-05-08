@@ -144,7 +144,7 @@ spark-master:
 
 spark-worker:
   image: gettyimages/spark
-  command: bash -c "apt-get update && apt-get install python3-dev libmysqlclient-dev -y && apt-get install python-pip -y && pip install mysqlclient && apt-get install python-mysqldb && python /tmp/data/spark.py && bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"
+  command: bash -c "apt-get update && apt-get install python3-dev libmysqlclient-dev -y && apt-get install python-pip -y && pip install mysqlclient && apt-get install python-mysqldb && bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"
   container_name: spark-worker
   hostname: spark-worker
   environment:
